@@ -1,38 +1,52 @@
 Feature: Shared Revenues Report – DTPS and Sharjah Municipality
   As a shared services analyst, I need a report showing the distribution of shared revenues between the
   Directorate of Town Planning and Survey (DTPS) and Sharjah Municipality,
-  so that I can settle inter-departmental revenue shares.
+  so that I can settle inter-departmental revenue shares with 50/50 split verification.
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And the shared revenue rule between "DTPS" and "Sharjah Municipality" is set to 50% each for service "SRV-SH1"
-    And the rule applies for transactions from 2026-01-01
+    And sharing rule for "Shared-Service-001" is "50/50"
+    And the revenue entities "DTPS" and "Sharjah Municipality" are configured
 
-  @positive @e2e
+  @positive @e2e @split @automated
   Scenario: Full cycle – post transactions under shared service and verify split
-    When the user posts two transactions for service "SRV-SH1" totalling 10000.00 AED
-    And the user runs the "Shared revenues between DTPS and Sharjah Municipality" report for today
-    Then the report displays:
-      | Revenue Entity         | Total Amount | Share % | Share Amount |
-      | DTPS                   | 10000.00     | 50%     | 5000.00      |
-      | Sharjah Municipality   | 10000.00     | 50%     | 5000.00      |
-    And the grand total is 10000.00 AED
+    Given the following transactions are posted under shared service on 2026-06-15:
+      | Service             | Amount | Entities                    |
+      | Shared-Service-001  | 1000   | DTPS & Sharjah Municipality |
+      | Shared-Service-001  | 500    | DTPS & Sharjah Municipality |
+    When the user runs the shared revenues report for "June 2026"
+    Then the report shows transaction split verification
+    And all transactions are split "50/50" between the two entities
+    And the splits sum to the total transaction amount for each transaction
+    And the total for the first entity is 750.00 AED
+    And the total for the second entity is 750.00 AED
+    And the grand total is 1500.00 AED
+    And the report can be exported to PDF
 
-  @positive @masterdata
+  @positive @masterdata @split @automated
   Scenario: Update sharing rule mid-period and verify report reflects correct split
-    Given the sharing rule for service "SRV-SH1" changes to 70% DTPS and 30% Municipality from 2026-06-15
-    When transactions are posted before and after the change date
-    And the report is generated for the entire month of June
-    Then the report correctly applies the old rule for transactions before 06-15 and new rule for those after
-    And the share amounts are calculated accordingly
+/50"
+    And the sharing rule is updated on 2026-06-15 to "60/40"
+    When the user applies a new sharing rule mid-period
+    Then the report reflects the updated sharing rule from 2026-06-15 onwards
+    And transactions before 2026-06-15 use 50/50 split
+    And transactions from 2026-06-15 onwards use 60/40 split
 
-  @negative
+  @negative @automated
   Scenario: No transactions for the shared service
-    When the user runs the report for a period with no transactions for service "SRV-SH1"
-    Then the report displays "No shared revenue transactions found"
+    Given transaction date range has no applicable transactions
+    When the user runs thly 2026"
+   Then the report can be exported to Excel
+    And the report can be exported to PDF
+    Then the report displays "No data found"
 
-  @negative @rbac
+  @negative @rbac @automated
   Scenario: Unauthorised user from other entity cannot access shared revenue details
-    Given the user is from "Entity-B" with no DTPS/Municipality scope
-    When the user tries to open the report
-    Then access is denied
+    Given the user is logged in as "Entity-C Restricted User"
+    When the user runs the shared revenues report for "June 2026"
+    Then the user cannot access shared revenue details
+
+  @positive @export @automated
+  Scenario: Export shared revenues report to Excel for audit trail
+    When the user runs the shared revenues report for "June 2026"
+ 

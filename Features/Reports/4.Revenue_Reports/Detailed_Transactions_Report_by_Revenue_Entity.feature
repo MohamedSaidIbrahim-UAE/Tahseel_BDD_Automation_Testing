@@ -8,7 +8,7 @@ Feature: Detailed Transactions Report by Revenue Entity
     And services "SRV-100" and "SRV-200" are mapped to revenue entity "Entity-A"
     And service "SRV-300" is mapped to revenue entity "Entity-B"
 
-  @positive @e2e
+  @positive @e2e @automated
   Scenario: Full cycle – post transactions and verify detailed report
     When the user posts the following transactions on 2026-06-09:
       | Transaction | Service  | Amount (AED) | Payment Method |
@@ -20,19 +20,22 @@ Feature: Detailed Transactions Report by Revenue Entity
     And the total amount for "Entity-A" is 1500.00 AED
     And the total amount for "Entity-B" is 2000.00 AED
     And the grand total is 3500.00 AED
+    And the report can be exported to Excel
+    And the report can be exported to PDF
 
-  @positive @filter
+  @positive @filter @automated
   Scenario: Filter report by revenue entity
     When the user filters by "Entity-A"
+    And the user runs the "Detailed Transactions report by revenue entity" for today
     Then only TXN-001 and TXN-002 are displayed
     And the total amount shown is 1500.00 AED
 
-  @negative
+  @negative @automated
   Scenario: No data for future date
     When the user selects a date range with no transactions
     Then the report displays "No data found"
 
-  @negative @rbac
+  @negative @rbac @automated
   Scenario: Unauthorised role access denied
     Given the user is logged in as "Collector"
     When the user attempts to open the detailed revenue entity report
