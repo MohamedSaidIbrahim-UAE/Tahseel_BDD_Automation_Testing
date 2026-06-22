@@ -11,7 +11,6 @@
 
 import { Page } from '@playwright/test';
 import { BaseListPage } from '../base-list.page';
-import { config } from '../../config/config';
 
 export class TotalTransactionsRevenueEntityPage extends BaseListPage {
   // ── Report-specific filter selectors ────────────────────────────────────
@@ -33,7 +32,7 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
   readonly noDataMessage = 'span:has-text("No data"), .empty-state, .no-records-message';
 
   // ── Export controls ─────────────────────────────────────────────────────
-  readonly exportButton = 'button[aria-label*="Export"], button:has-text("Export")';
+  // Note: Export functionality is inherited from BaseListPage.clickExportAndSelectFormat()
   readonly exportPdfOption = 'button:has-text("PDF"), span:has-text("PDF")';
   readonly exportExcelOption = 'button:has-text("Excel"), span:has-text("Excel")';
 
@@ -47,7 +46,7 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
   async navigateToReport(): Promise<void> {
     const reportUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/115f9d66-7ccb-4d1b-be96-2e499583af0c';
     await this.navigateToUrl(reportUrl);
-    await this.wait.forElement(this.reportTable);
+    await this.waitHelper.waitForElement(this.reportTable);
   }
 
   /**
@@ -70,9 +69,9 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
   async selectRevenueEntity(entityName: string): Promise<void> {
     const dropdown = this.page.locator(this.entityFilterDropdown).first();
     await dropdown.click();
-    await this.wait.forElement(`text=${entityName}`);
+    await this.waitHelper.waitForElement(`text=${entityName}`);
     await this.page.locator(`text=${entityName}`).first().click();
-    await this.wait.forNetworkIdle();
+    await this.waitHelper.waitForRequestQuiet();
   }
 
   /**
@@ -80,8 +79,8 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
    */
   async showReport(): Promise<void> {
     await this.click(this.showReportButton);
-    await this.wait.forNetworkIdle();
-    await this.wait.forElement(this.reportTable);
+    await this.waitHelper.waitForRequestQuiet();
+    await this.waitHelper.waitForElement(this.reportTable);
   }
 
   /**
@@ -91,7 +90,7 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
     const clearBtn = this.page.locator(this.clearFilterButton);
     if (await clearBtn.isVisible()) {
       await clearBtn.click();
-      await this.wait.forNetworkIdle();
+      await this.waitHelper.waitForRequestQuiet();
     }
   }
 
@@ -99,7 +98,7 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
    * Verify table is visible
    */
   async verifyReportTableVisible(): Promise<void> {
-    await this.wait.forElement(this.reportTable);
+    await this.waitHelper.waitForElement(this.reportTable);
   }
 
   /**
@@ -219,7 +218,7 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
    * Verify no data message is displayed
    */
   async verifyNoDataMessage(): Promise<void> {
-    await this.wait.forElement(this.noDataMessage);
+    await this.waitHelper.waitForElement(this.noDataMessage);
   }
 
   /**
@@ -232,22 +231,18 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
 
   /**
    * Export report as PDF
+   * Uses inherited clickExportAndSelectFormat() from BaseListPage
    */
   async exportAsPdf(): Promise<void> {
-    await this.click(this.exportButton);
-    await this.wait.forElement(this.exportPdfOption);
-    await this.click(this.exportPdfOption);
-    await this.wait.forNetworkIdle();
+    await this.clickExportAndSelectFormat('PDF');
   }
 
   /**
    * Export report as Excel
+   * Uses inherited clickExportAndSelectFormat() from BaseListPage
    */
   async exportAsExcel(): Promise<void> {
-    await this.click(this.exportButton);
-    await this.wait.forElement(this.exportExcelOption);
-    await this.click(this.exportExcelOption);
-    await this.wait.forNetworkIdle();
+    await this.clickExportAndSelectFormat('Excel');
   }
 
   /**

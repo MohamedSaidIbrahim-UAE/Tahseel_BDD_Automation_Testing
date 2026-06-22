@@ -96,5 +96,10 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "uuid": "^13.0.0"
+  },
+  "dependencies": {
+    "@types/glob": "^8.1.0",
+    "exceljs": "^4.4.0",
+    "glob": "^13.0.6"
   }
 }
