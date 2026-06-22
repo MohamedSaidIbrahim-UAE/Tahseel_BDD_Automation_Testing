@@ -1,0 +1,10 @@
+{
+  "source": "r18.md",
+  "extracted_at": "2026-06-19T06:33:10.181785+00:00",
+  "feature_count": 2,
+  "features": [
+    "Attendance_Report_in_Period.feature",
+    "Login_Report.feature"
+  ],
+  "warnings": []
+}

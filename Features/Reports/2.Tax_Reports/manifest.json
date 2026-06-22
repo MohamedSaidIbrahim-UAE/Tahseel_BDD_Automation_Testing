@@ -1,0 +1,13 @@
+{
+  "source": "r5.md",
+  "extracted_at": "2026-06-19T06:33:10.312600+00:00",
+  "feature_count": 5,
+  "features": [
+    "Tax_Report_Transaction_Details_Tax_Report.feature",
+    "Tax_Report_Transaction_Summary_Tax_Report.feature",
+    "Tax_Report_Transaction_Details_Tax_Report_by_Revenue_Entity.feature",
+    "Tax_Report_Transaction_Summary_Tax_Report_by_Revenue_Entity.feature",
+    "Tax_Report_Tax_Invoice.feature"
+  ],
+  "warnings": []
+}

@@ -1,0 +1,11 @@
+{
+  "source": "r19.md",
+  "extracted_at": "2026-06-19T06:33:10.188168+00:00",
+  "feature_count": 3,
+  "features": [
+    "Temporary_Permission_Report.feature",
+    "Permanent_Permission_Report.feature",
+    "Permanent_Permission_Log_Report.feature"
+  ],
+  "warnings": []
+}

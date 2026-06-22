@@ -1,0 +1,10 @@
+{
+  "source": "r17.md",
+  "extracted_at": "2026-06-19T06:33:10.176058+00:00",
+  "feature_count": 2,
+  "features": [
+    "Visits_Report.feature",
+    "Issue_Tracking_Detail_Report.feature"
+  ],
+  "warnings": []
+}

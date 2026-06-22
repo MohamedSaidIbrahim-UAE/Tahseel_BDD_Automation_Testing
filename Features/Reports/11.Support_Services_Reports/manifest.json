@@ -1,0 +1,10 @@
+{
+  "source": "r14.md",
+  "extracted_at": "2026-06-19T06:33:10.159024+00:00",
+  "feature_count": 2,
+  "features": [
+    "Dependant_Services_Revenue_Summary_Reports.feature",
+    "Dependant_Services_Revenue_Detailed_Reports.feature"
+  ],
+  "warnings": []
+}

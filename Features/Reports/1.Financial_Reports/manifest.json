@@ -1,0 +1,19 @@
+{
+  "source": "r4.md",
+  "extracted_at": "2026-06-19T06:33:10.304233+00:00",
+  "feature_count": 11,
+  "features": [
+    "Financial_Reports_Master_Data_Financial_Services_Report.feature",
+    "Transaction_Fees_For_All_Payment_Methods.feature",
+    "Bank_Transfer_Reports_Sharjah_Islamic_Bank.feature",
+    "Settlement_Reports_Mashreq_Bank.feature",
+    "Settlement_Reports_Sharjah_Islamic_Bank.feature",
+    "Settlement_Reports_UAE_Central_Bank.feature",
+    "Intensive_Settlement_Details_Report.feature",
+    "Federal_Bank_Transfer_Detail_Report.feature",
+    "Bank_Transfers_of_Transaction_Fees_Receipts.feature",
+    "Collectors_Performance_Report.feature",
+    "Grant_Card_History_Logs_Report.feature"
+  ],
+  "warnings": []
+}

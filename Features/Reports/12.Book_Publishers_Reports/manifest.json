@@ -1,0 +1,11 @@
+{
+  "source": "r15.md",
+  "extracted_at": "2026-06-19T06:33:10.165518+00:00",
+  "feature_count": 3,
+  "features": [
+    "Publishers_Summary_Report.feature",
+    "Publishers_Detail_Report.feature",
+    "Detailed_Report_For_Granted_Cards_Transactions_in_Book_Fair.feature"
+  ],
+  "warnings": []
+}

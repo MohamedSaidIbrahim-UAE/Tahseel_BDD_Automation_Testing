@@ -1,0 +1,22 @@
+{
+  "source": "r7.md",
+  "extracted_at": "2026-06-19T06:33:10.342532+00:00",
+  "feature_count": 14,
+  "features": [
+    "Detailed_Transactions_Report_by_Revenue_Entity.feature",
+    "Total_Transactions_Report_by_Revenue_Entity.feature",
+    "Shared_Revenues_Report_DTPS_and_Sharjah_Municipality.feature",
+    "Service_List_Report_Government_Fees_Report.feature",
+    "Shared_Revenues_Report_SEDD_and_SCTDA.feature",
+    "Shared_Revenues_Report_Prevention_and_Safety_Authority_and_SAND.feature",
+    "Transaction_Summary_Report_Based_on_Income_Receivable.feature",
+    "Etisalat_Detailed_Transactions_from_Digital_Sharjah.feature",
+    "Traffic_Violations_Report_Vehicle_and_Drivers_Licensing_Departments.feature",
+    "Transaction_Deposits_Detail_Report.feature",
+    "Shared_Fees_Summary_Sharjah_Municipality_and_Service_Centers.feature",
+    "Placeholder_Report_arName_enName.feature",
+    "Transaction_Summary_Income_Report_Based_on_Collecting_Entities.feature",
+    "Detailed_Report_of_POS_Transactions_by_Revenue_Source.feature"
+  ],
+  "warnings": []
+}

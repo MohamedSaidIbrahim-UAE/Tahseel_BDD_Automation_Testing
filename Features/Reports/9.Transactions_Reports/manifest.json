@@ -1,0 +1,25 @@
+{
+  "source": "r12.md",
+  "extracted_at": "2026-06-19T06:33:10.150176+00:00",
+  "feature_count": 17,
+  "features": [
+    "Detailed_Transactions_Report.feature",
+    "Summary_Transactions_Report.feature",
+    "Detailed_SEDD_Transactions_Report.feature",
+    "E_Voucher_Report_Transaction.feature",
+    "Summary_GITFees_Report_for_Smart_Receipt.feature",
+    "Detailed_Report_of_Smart_Receipt_Services_Fees.feature",
+    "Summary_SEDD_Transactions_Report.feature",
+    "Municipality_Fees_Share_Report_on_Real_Estate_Registration_Directorate_Transactions.feature",
+    "Detailed_Transactions_Report_of_SEDD_According_to_Fees_Entity_Owner.feature",
+    "Aggregated_Transactions_Report_of_SEDD_According_to_Fees_Entity_Owner.feature",
+    "Recovered_Wallet_Transactions_Report.feature",
+    "Detailed_Report_of_Canceled_Transactions.feature",
+    "Transaction_Audit.feature",
+    "Detailed_Report_of_Canceled_Transactions_by_Revenue_Entity.feature",
+    "Esaad_Card_Application_Transaction_Report.feature",
+    "Cheque_Payment_Details_Report.feature",
+    "Beah_Paid_Transaction_Detailed_Report.feature"
+  ],
+  "warnings": []
+}

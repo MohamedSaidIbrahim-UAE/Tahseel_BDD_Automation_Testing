@@ -1,0 +1,18 @@
+{
+  "source": "r9.md",
+  "extracted_at": "2026-06-19T06:33:10.370669+00:00",
+  "feature_count": 10,
+  "features": [
+    "E-Voucher_Loading_Report.feature",
+    "Aggregated_Loading_Report_of_E_Vouchers.feature",
+    "General_Money_Loading_Report.feature",
+    "Summary_Loading_Report.feature",
+    "Tahseel_Account_Load_Details_Report.feature",
+    "Voucher_Load_Details_Report.feature",
+    "Entities_Deposits_Summary_Report.feature",
+    "Daily_Users_Loading_Report_For_Tasheel_Centers.feature",
+    "Detailed_Report_for_Loading_using_Al_Thiqa_Club_Employee_Card.feature",
+    "Total_Service_Charges_for_Loading_Transactions.feature"
+  ],
+  "warnings": []
+}
