@@ -28,16 +28,6 @@ Before(function (this: World) {
 // Given Steps
 // ────────────────────────────────────────────────────────────────────────────
 
-Given('the user is logged in as {string}', async function (this: World, role: string) {
-  this.addLog(`User authenticated as: ${role}`);
-
-  if (!this.page) {
-    throw new Error('Page not initialized. Authentication failed.');
-  }
-
-  await this.page.waitForLoadState('networkidle');
-});
-
 Given('the following transactions are posted under shared service on {string}:', async function (
   this: World,
   date: string,
@@ -273,19 +263,6 @@ Then('the total for the second entity is {float} AED', async function (
   this.addLog(`✅ Entity B total verified: ${expectedAmount} AED`);
 });
 
-Then('the grand total is {float} AED', async function (this: World, expectedGrandTotal: number) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  const actualGrandTotal = await reportPage.getGrandTotal();
-
-  this.addLog(`Grand Total: ${actualGrandTotal} AED (expected: ${expectedGrandTotal} AED)`);
-  expect(actualGrandTotal).toBeCloseTo(expectedGrandTotal, 2);
-
-  this.addLog(`✅ Grand total verified: ${expectedGrandTotal} AED`);
-});
-
 // ────────────────────────────────────────────────────────────────────────────
 // Then Steps - RBAC Verification
 // ────────────────────────────────────────────────────────────────────────────
@@ -345,20 +322,6 @@ Then('the report displays {string}', async function (this: World, message: strin
 // ────────────────────────────────────────────────────────────────────────────
 // Export Steps
 // ────────────────────────────────────────────────────────────────────────────
-
-Then('the report can be exported to PDF', async function (this: World) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  try {
-    this.addLog('Exporting report to PDF...');
-    await reportPage.exportAsPdf();
-    this.addLog('✅ Report exported to PDF successfully');
-  } catch (error) {
-    this.addLog(`⚠️ PDF export encountered: ${error}`);
-  }
-});
 
 Then('the report can be exported to Excel', async function (this: World) {
   if (!reportPage) {

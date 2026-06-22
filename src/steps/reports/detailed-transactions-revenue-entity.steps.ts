@@ -24,17 +24,6 @@ Before(function (this: World) {
 // Given Steps
 // ────────────────────────────────────────────────────────────────────────────
 
-Given('the user is logged in as {string}', async function (this: World, role: string) {
-  // User is already authenticated via storageState.<env>.json loaded by fixtures
-  this.addLog(`User authenticated as: ${role}`);
-
-  if (!this.page) {
-    throw new Error('Page not initialized. Authentication failed.');
-  }
-
-  await this.page.waitForLoadState('networkidle');
-});
-
 Given('the revenue entities {string} and {string} are configured', async function (
   this: World,
   entity1: string,
