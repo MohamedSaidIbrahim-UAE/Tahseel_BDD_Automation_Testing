@@ -57,7 +57,8 @@ Given('sharing rule for {string} is {string}', async function (
 ) {
   // Example: "50/50" or "60/40" or "70/30" or "80/20"
   this.addLog(`Sharing rule for ${serviceName}: ${splitRule}`);
-  this.context.sharingRuleForService = { [serviceName]: splitRule };
+  // Store in this object directly (World class properties)
+  (this as any).sharingRuleForService = { [serviceName]: splitRule };
 });
 
 Given('the sharing rule is updated on {string} to {string}', async function (
@@ -66,13 +67,13 @@ Given('the sharing rule is updated on {string} to {string}', async function (
   newSplitRule: string
 ) {
   this.addLog(`Sharing rule updated on ${date} to: ${newSplitRule}`);
-  this.context.ruleChangeDate = date;
-  this.context.newSharingRule = newSplitRule;
+  (this as any).ruleChangeDate = date;
+  (this as any).newSharingRule = newSplitRule;
 });
 
 Given('the user is a center manager for {string}', async function (this: World, centerName: string) {
   this.addLog(`User role: Center Manager for ${centerName}`);
-  this.context.centerName = centerName;
+  (this as any).centerName = centerName;
 });
 
 Given('transaction date range has no applicable transactions', async function (this: World) {
@@ -184,8 +185,7 @@ Then('all transactions are split {string} between the two entities', async funct
 
   this.addLog(`Verifying ${splitRule} split...`);
 
-  const allVerified = await reportPage.verifyTransactionSplit('dummy', entityAPercentage, entityBPercentage);
-  // Get actual transactions for real verification
+  // Get actual transactions for verification
   const transactions = await reportPage.getAllTransactionsWithSplit();
 
   transactions.forEach(txn => {
@@ -295,7 +295,7 @@ Then('only the data for that center is displayed', async function (this: World) 
     throw new Error('Report page not initialized');
   }
 
-  const centerName = this.context.centerName;
+  const centerName = (this as any).centerName;
   this.addLog(`Verifying center-restricted view for: ${centerName}`);
 
   // In production, verify that only this center's transactions are shown

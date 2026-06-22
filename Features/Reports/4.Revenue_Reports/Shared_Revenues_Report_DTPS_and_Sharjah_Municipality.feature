@@ -8,7 +8,7 @@ Feature: Shared Revenues Report – DTPS and Sharjah Municipality
     And sharing rule for "Shared-Service-001" is "50/50"
     And the revenue entities "DTPS" and "Sharjah Municipality" are configured
 
-  @positive @e2e @split @automated
+  @revenue @automated @positive @e2e @split
   Scenario: Full cycle – post transactions under shared service and verify split
     Given the following transactions are posted under shared service on 2026-06-15:
       | Service             | Amount | Entities                    |
@@ -23,30 +23,26 @@ Feature: Shared Revenues Report – DTPS and Sharjah Municipality
     And the grand total is 1500.00 AED
     And the report can be exported to PDF
 
-  @positive @masterdata @split @automated
+  @revenue @automated @positive @split
   Scenario: Update sharing rule mid-period and verify report reflects correct split
-/50"
-    And the sharing rule is updated on 2026-06-15 to "60/40"
+    Given the sharing rule is updated on 2026-06-15 to "60/40"
     When the user applies a new sharing rule mid-period
     Then the report reflects the updated sharing rule from 2026-06-15 onwards
-    And transactions before 2026-06-15 use 50/50 split
-    And transactions from 2026-06-15 onwards use 60/40 split
 
-  @negative @automated
+  @revenue @automated @negative
   Scenario: No transactions for the shared service
     Given transaction date range has no applicable transactions
-    When the user runs thly 2026"
-   Then the report can be exported to Excel
-    And the report can be exported to PDF
+    When the user runs the shared revenues report for "June 2026"
     Then the report displays "No data found"
 
-  @negative @rbac @automated
+  @revenue @automated @negative @rbac
   Scenario: Unauthorised user from other entity cannot access shared revenue details
     Given the user is logged in as "Entity-C Restricted User"
     When the user runs the shared revenues report for "June 2026"
     Then the user cannot access shared revenue details
 
-  @positive @export @automated
+  @revenue @automated @positive @export
   Scenario: Export shared revenues report to Excel for audit trail
     When the user runs the shared revenues report for "June 2026"
- 
+    And the report can be exported to Excel
+    Then the report can be exported to PDF

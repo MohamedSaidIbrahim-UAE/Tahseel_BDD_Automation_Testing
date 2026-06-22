@@ -139,7 +139,7 @@ When('the user attempts to open the detailed revenue entity report', async funct
   try {
     this.addLog('Attempting to open detailed revenue entity report...');
     await reportPage.navigateToReport();
-    await reportPage.waitHelper.sleep(2000); // Wait for potential access check
+    // await reportPage.waitHelper..sleep(2000); // Wait for potential access check
   } catch (error) {
     this.addLog(`Report access attempt completed (may be blocked for unauthorized users)`);
   }

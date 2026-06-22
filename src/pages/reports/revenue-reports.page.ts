@@ -23,13 +23,14 @@ export class RevenueReportsPage extends BaseListPage {
   readonly TAX_REPORT_URL = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/366f4450-11cf-4b44-a5b2-66c472dbe3c1';
 
   // Generic selectors (can be customized per report)
-  readonly exportButton = "//div[@id='repViewer_ctl09_ctl04_ctl00_ButtonLink'], button[aria-label*='Export']";
   readonly excelExportOption = "//a[@title='Excel']";
   readonly pdfExportOption = "//a[@title='PDF']";
   readonly submitButton = "//button[contains(text(), 'عرض التقرير')], //*[@id='kt_content']/div/app-show/div/div[2]/button";
   readonly reportTable = "table[role='grid'], div.dx-datagrid";
   readonly asyncWaitIndicator = "//*[@id='repViewer_AsyncWait_Wait']";
   readonly reportContent = "//div[@id='VisibleReportContentrepViewer_ctl13']";
+  // Export button selector - for this specific report type
+  readonly reportExportButtonSelector = "//div[@id='repViewer_ctl09_ctl04_ctl00_ButtonLink'], button[aria-label*='Export']";
 
   constructor(page: Page) {
     super(page);
@@ -194,7 +195,7 @@ export class RevenueReportsPage extends BaseListPage {
    */
   async exportToExcel(
     fileName?: string,
-    exportBtnSelector: string = this.exportButton
+    exportBtnSelector: string = this.reportExportButtonSelector
   ): Promise<string | null> {
     if (!this.exportUtility) {
       throw new Error('Export utility not initialized. Call initializeExportUtility() first');
@@ -227,7 +228,7 @@ export class RevenueReportsPage extends BaseListPage {
     }
 
     try {
-      await this.exportUtility.clickExportButton(this.exportButton, 'pdf');
+      await this.exportUtility.clickExportButton(this.reportExportButtonSelector, 'pdf');
       const downloadedFile = await this.exportUtility.waitForDownloadComplete(
         60000,
         'pdf'
