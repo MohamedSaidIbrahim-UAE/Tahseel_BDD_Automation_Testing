@@ -14,7 +14,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "auth:setup": "cross-env TEST_ENV=local ts-node scripts/auth-setup.ts",
+    "auth:setup": "cross-env TEST_ENV=stage ts-node scripts/auth-setup.ts",
     "auth:setup:local": "cross-env TEST_ENV=local ts-node scripts/auth-setup.ts",
     "auth:setup:production": "cross-env TEST_ENV=production ts-node scripts/auth-setup.ts",
     "auth:test": "node test-auth-setup.js",

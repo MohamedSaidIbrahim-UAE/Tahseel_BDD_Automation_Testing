@@ -291,7 +291,7 @@ export class AuthManager {
       { timeout: config.timeout }
     );
     // ── Step 6 (continued): Wait for the Angular dashboard ────────────────────
-    await this.page.waitForURL('**/initial-landing', { timeout: config.timeout });
+    await this.page.waitForURL('**/dashboard', { timeout: config.timeout });
     await this.page.waitForSelector(
       'app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]',
       { timeout: 20000 }
@@ -351,7 +351,7 @@ export class AuthManager {
     // Wait for the app to settle — either land on dashboard or get redirected to login
     // Use a generous timeout since the local Angular app can be slow to bootstrap
     const onDashboard = await this.page
-      .waitForURL('**/initial-landing', { timeout: 20000 })
+      .waitForURL('**/dashboard', { timeout: 20000 })
       .then(() => true)
       .catch(() => false);
 

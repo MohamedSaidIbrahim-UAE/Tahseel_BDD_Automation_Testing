@@ -74,7 +74,7 @@ The framework leverages:
 4. **Set up environment variables**
    Copy `.env.example` to `.env` and fill in the required values:
    ```env
-   BASE_URL=https://stgmasar.srta.gov.ae/masar/
+   BASE_URL=https://staging.tahseel.gov.ae/ManagePortal
    USERNAME=testuser
    PASSWORD=testpass
    # ... other variables

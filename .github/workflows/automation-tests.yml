@@ -58,7 +58,7 @@ jobs:
       - name: Run tests
         run: npm run test:${{ matrix.browser }}
         env:
-          BASE_URL: ${{ secrets.BASE_URL || 'https://stgmasar.srta.gov.ae/masar/' }}
+          BASE_URL: ${{ secrets.BASE_URL || 'https://staging.tahseel.gov.ae/ManagePortal' }}
       
       - name: Convert to Allure
         if: always()

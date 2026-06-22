@@ -3,7 +3,7 @@
  *
  * REAL FLOW (confirmed from auth-setup.ts execution log):
  *
- *  Step 1 — Plaza Angular shell  (https://stgmasar.srta.gov.ae/masar/)
+ *  Step 1 — Plaza Angular shell  (https://staging.tahseel.gov.ae/ManagePortal)
  *            Button: button span[translate="Login.Continue"]
  *            → redirects to Identity Server VerifyUsername page
  * https://stgmasar.srta.gov.ae/masar-sso/Users/VerifyUsername?ReturnUrl=
@@ -15,9 +15,9 @@
  *  Step 3 — Identity Server UnifiedLogin page
  *            (https://stgmasar.srta.gov.ae/masar-sso//Users/UnifiedLogin)
  *            Form: input#Password  +  button#submitButton
- *            → redirects to https://stgmasar.srta.gov.ae/masar/-result?code=...
+ *            → redirects to https://staging.tahseel.gov.ae/ManagePortal-result?code=...
  *
- *  Step 4 — Angular app processes the code and redirects to /initial-landing
+ *  Step 4 — Angular app processes the code and redirects to /dashboard
  *
  * IMPORTANT:
  *  • The identity server uses a self-signed TLS cert — ignoreHTTPSErrors must
@@ -364,12 +364,12 @@ export class LoginPage extends BasePage {
   // ─── Post-login assertions ─────────────────────────────────────────────────
 
   async verifyRedirectedToDashboard(): Promise<void> {
-    await this.page.waitForURL('**/initial-landing', { timeout: config.timeout });
+    await this.page.waitForURL('**/dashboard', { timeout: config.timeout });
     await this.page.waitForSelector(this.dashboardSentinel, { timeout: 20000 });
   }
 
   async verifyDashboardUrl(): Promise<void> {
-    await expect(this.page).toHaveURL(/\/initial-landing/);
+    await expect(this.page).toHaveURL(/\/dashboard/);
   }
 
   async verifyOnLoginPage(): Promise<void> {

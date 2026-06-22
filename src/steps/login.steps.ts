@@ -413,7 +413,7 @@ When('I navigate directly to {string}', async function (this: World, path: strin
   const page = this.getPage();
   if (!page) throw new Error('Page not initialized');
 
-  const baseUrl = process.env.BASE_URL || 'https://stgmasar.srta.gov.ae/masar/';
+  const baseUrl = process.env.BASE_URL || 'https://staging.tahseel.gov.ae/ManagePortal';
   const fullUrl = `${baseUrl.replace(/\/$/, '')}${path}`;
 
   await page.goto(fullUrl);
@@ -476,7 +476,7 @@ When('I navigate to {string} in the new tab', async function (this: World, path:
   const page = this.getPage();
   if (!page) throw new Error('Page not initialized');
 
-  const baseUrl = process.env.BASE_URL || 'https://stgmasar.srta.gov.ae/masar/';
+  const baseUrl = process.env.BASE_URL || 'https://staging.tahseel.gov.ae/ManagePortal';
   const fullUrl = `${baseUrl.replace(/\/$/, '')}${path}`;
 
   await page.goto(fullUrl);
@@ -503,7 +503,7 @@ When('I remain inactive for {int} minutes', async function (this: World, minutes
 
 Then('the dashboard h1 heading should contain text {string}', async function (this: World, text: string) {
   if (!this.dashboardPage) throw new Error('Dashboard page not initialized');
-  await this.dashboardPage.verifyDashboardH1Contains(text);
+  await this.dashboardPage.verifydashboardTitleContains(text);
   this.addLog(`Verified dashboard h1 contains: ${text}`);
 });
 

@@ -56,7 +56,7 @@ loadEnvFile();
 
 export const config: Config = {
   environment: process.env.TEST_ENV || 'local',
-  baseUrl: process.env.BASE_URL || 'https://stgmasar.srta.gov.ae/masar/',
+  baseUrl: process.env.BASE_URL || 'https://staging.tahseel.gov.ae/ManagePortal',
   identityServerUrl: process.env.IDENTITY_SERVER_URL || '',
   browser: (process.env.BROWSER as 'chromium' | 'firefox' | 'webkit') || 'chromium',
   headed: process.env.HEADED === 'true',

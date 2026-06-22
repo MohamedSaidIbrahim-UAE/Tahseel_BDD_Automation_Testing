@@ -75,14 +75,14 @@ function loadEnvFile(): void {
 loadEnvFile();
 
 // ── Config ────────────────────────────────────────────────────────────────────
-const TEST_ENV   = process.env.TEST_ENV || 'local';
-const BASE_URL   = (process.env.BASE_URL || 'https://stgmasar.srta.gov.ae/masar/').replace(/\/$/, '');
-const ENTRY_URL  = `${BASE_URL}/`;
-const USERNAME   = process.env.APP_USERNAME || '';
-const PASSWORD   = process.env.APP_PASSWORD || '';
-const TIMEOUT    = parseInt(process.env.TIMEOUT || '90000', 10);
+const TEST_ENV = process.env.TEST_ENV || 'local';
+const BASE_URL = (process.env.BASE_URL || 'https://staging.tahseel.gov.ae/ManagePortal').replace(/\/$/, '');
+const ENTRY_URL = `${BASE_URL}/`;
+const USERNAME = process.env.APP_USERNAME || '';
+const PASSWORD = process.env.APP_PASSWORD || '';
+const TIMEOUT = parseInt(process.env.TIMEOUT || '90000', 10);
 const PROXY_SERVER = process.env.HTTPS_PROXY || process.env.HTTP_PROXY || '';
-const PROXY_BYPASS = process.env.NO_PROXY    || process.env.no_proxy   || '';
+const PROXY_BYPASS = process.env.NO_PROXY || process.env.no_proxy || '';
 
 /** Per-environment storage state path: storageState.local.json, etc. */
 const STATE_PATH = path.join(process.cwd(), `storageState.${TEST_ENV}.json`);
@@ -105,6 +105,7 @@ const SEL = {
   ].join(', '),
 
   usernameInput: [
+    '[formcontrolname="username"]',
     'input#Username',
     'input[name="Username"]',
     'input[placeholder*="username" i]',
@@ -117,22 +118,25 @@ const SEL = {
   ].join(', '),
 
   passwordInput: [
+    '[formcontrolname="password"]',
     'input#Password',
     'input[name="Password"]',
     'input[placeholder*="password" i]',
   ].join(', '),
   loginBtn: [
+    'button[id*="login"]',
     'button#submitButton',
     'button[type="submit"]',
     'button:has-text("Sign In")',
     'button:has-text("Login")',
   ].join(', '),
 
-  dashboardSentinel:   'app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]',
-  dashboardH1:         'h1',
-  dashboardUrlPattern: /\/initial-landing/,
+  dashboardSentinel: 'div[id*="side_brand"], app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]',
+  dashboardTitle: "[class*='subheader__title']",
+  dashboardUrlPattern: /\/dashboard/,
 
   errorSummary: [
+    '[id*="error"]',
     'div.validation-summary-errors',
     'span.field-validation-error',
     'div.alert-danger',
@@ -192,7 +196,7 @@ function resolveProxySettings(): ResolvedProxy {
     };
 
     const server = settings.ProxyEnable ? settings.ProxyServer?.trim() : '';
-    const pacUrl  = settings.AutoConfigURL?.trim() || '';
+    const pacUrl = settings.AutoConfigURL?.trim() || '';
     if (!server && !pacUrl) return { source: 'none' };
 
     return { server: server || undefined, pacUrl: pacUrl || undefined, source: 'windows-internet-settings' };
@@ -205,7 +209,7 @@ const EFFECTIVE_PROXY = resolveProxySettings();
 
 async function assertHostReachable(urlString: string): Promise<void> {
   const target = new URL(urlString);
-  const port   = Number(target.port || (target.protocol === 'https:' ? 443 : 80));
+  const port = Number(target.port || (target.protocol === 'https:' ? 443 : 80));
 
   try {
     await dns.lookup(target.hostname);
@@ -230,7 +234,7 @@ async function assertHostReachable(urlString: string): Promise<void> {
 
 async function gotoWithRetry(page: Page, url: string, timeout: number): Promise<void> {
   const attempts = [
-    { waitUntil: 'load'             as const, timeout },
+    { waitUntil: 'load' as const, timeout },
     { waitUntil: 'domcontentloaded' as const, timeout: Math.max(30000, Math.floor(timeout * 0.75)) },
     { waitUntil: 'domcontentloaded' as const, timeout: Math.max(20000, Math.floor(timeout * 0.5)) },
   ];
@@ -328,10 +332,10 @@ if (!USERNAME || !PASSWORD) {
 
       for (const channel of fallbackChannels) {
         try {
-          await browser.close().catch(() => {});
-          browser  = await launchBrowser(channel);
-          context  = await browser.newContext({ viewport: { width: 1920, height: 1080 }, ignoreHTTPSErrors: true });
-          page     = await context.newPage();
+          await browser.close().catch(() => { });
+          browser = await launchBrowser(channel);
+          context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, ignoreHTTPSErrors: true });
+          page = await context.newPage();
           await gotoWithRetry(page, ENTRY_URL, TIMEOUT);
           connected = true;
           console.log(`   [Step 1] Navigation succeeded with "${channel}" channel.`);
@@ -415,9 +419,11 @@ if (!USERNAME || !PASSWORD) {
     await waitForVisible(page, SEL.dashboardSentinel);
     console.log('   [Step 4] Angular sidebar sentinel visible.');
 
-    const h1Text = await page.locator(SEL.dashboardH1).first().textContent();
+    const h1Text = await page.locator(SEL.dashboardTitle).first().textContent();
     console.log(`   [Step 4] Dashboard h1 text: "${h1Text}"`);
-    if (!h1Text?.includes('Dashboard')) {
+    if (h1Text?.includes('home') || h1Text?.includes('Home') || h1Text?.includes('الرئيسية')) {
+      console.log('You are in the Dashboard');
+    } else {
       throw new Error(`Dashboard h1 does not contain "Dashboard". Found: "${h1Text}"`);
     }
 
@@ -431,7 +437,7 @@ if (!USERNAME || !PASSWORD) {
   } catch (err) {
     console.error(`\n❌  Auth setup failed [${TEST_ENV.toUpperCase()}]:`, err);
     if (page) await saveDebugScreenshot(page);
-    if (browser) await browser.close().catch(() => {});
+    if (browser) await browser.close().catch(() => { });
     process.exit(1);
   }
 })();

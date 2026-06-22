@@ -76,7 +76,7 @@ export abstract class BasePage {
     const currentUrl = page.url();
 
     // Already on the target page — nothing to do
-    if (currentUrl.includes('/initial-landing') ||
+    if (currentUrl.includes('/dashboard') ||
       (originalUrl && currentUrl.includes(new URL(originalUrl).pathname))) {
       return false;
     }
