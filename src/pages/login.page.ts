@@ -102,7 +102,7 @@ export class LoginPage extends BasePage {
     'button:has-text("Login")',
   ].join(', ');
   readonly submitTxt = 'span#submitText';
-
+  readonly dashboardTitle = "[class*='subheader__title']";
 
   // ── Error indicators (any identity server page) ────────────────────────────
   readonly errorMessage =
@@ -493,5 +493,13 @@ export class LoginPage extends BasePage {
       }
     }
     return false;
+  }
+
+  /**
+ * Verify dashboard Main Title contains specific text
+ */
+  async verifyDashboardTitleContains(text: string): Promise<void> {
+    const h1Text = await this.page.locator(this.dashboardTitle).textContent();
+    expect(h1Text).toContain(text);
   }
 }

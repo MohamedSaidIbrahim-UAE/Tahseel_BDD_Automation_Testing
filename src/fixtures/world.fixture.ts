@@ -3,24 +3,7 @@ import { BrowserFixture } from './browser.fixture'; // Adjust path if necessary
 import { Page } from '@playwright/test';
 import { BasePage } from '../pages/base.page';
 import { testContext } from '../steps/test-context';
-import { DashboardPage } from '../pages/dashboard.page';
 import { LoginPage } from '../pages/login.page';
-import { SiteConfigurationPage } from '../pages/site-configuration.page';
-import { EquipmentBrandPage } from '../pages/equipment-brand.page';
-import { EquipmentTypePage } from '../pages/equipment-type.page';
-import { EquipmentInstancePage } from '../pages/equipment-instance.page';
-import { EquipmentMaintenancePage } from '../pages/equipment-maintenance.page';
-import { PlazaWorkingHoursPage } from '../pages/plaza-working-hours.page';
-import { SystemParametersPage } from '../pages/system-parameters.page';
-import { ServiceCataloguePage } from '../pages/service-catalogue.page';
-import { TruckClassificationPage } from '../pages/truck-classification.page';
-import { TollableClassificationPage } from '../pages/tollable-classification.page';
-import { ManageFeesPage } from '../pages/manage-fees.page';
-import { CompanyProfilesPage } from '../pages/company-profiles.page';
-import { TruckListPage } from '../pages/truck-list.page';
-import { TruckPermitPage } from '../pages/truck-permit.page';
-import { PassesManagementPage } from '../pages/passes-management.page';
-import { ActionLogsPage } from '../pages/action-logs.page';
 import { AuthManager } from '../utils/auth.manager';
 import { UserRegistrationData } from '../models/user.model';
 import * as path from 'path';
@@ -39,24 +22,7 @@ export class World extends CucumberWorld {
   private attachments: Attachment[] = [];
 
   // Page Objects
-  dashboardPage: DashboardPage | null = null;
   loginPage: LoginPage | null = null;
-  siteConfigPage: SiteConfigurationPage | null = null;
-  equipmentBrandPage: EquipmentBrandPage | null = null;
-  equipmentTypePage: EquipmentTypePage | null = null;
-  equipmentInstancePage: EquipmentInstancePage | null = null;
-  equipmentMaintenancePage: EquipmentMaintenancePage | null = null;
-  plazaWorkingHoursPage: PlazaWorkingHoursPage | null = null;
-  systemParametersPage: SystemParametersPage | null = null;
-  serviceCataloguePage: ServiceCataloguePage | null = null;
-  truckClassificationPage: TruckClassificationPage | null = null;
-  tollableClassificationPage: TollableClassificationPage | null = null;
-  manageFeesPage: ManageFeesPage | null = null;
-  companyProfilesPage: CompanyProfilesPage | null = null;
-  truckListPage: TruckListPage | null = null;
-  truckPermitPage: TruckPermitPage | null = null;
-  passesManagementPage: PassesManagementPage | null = null;
-  actionLogsPage: ActionLogsPage | null = null;
 
   // Auth manager — provides token extraction and session recovery
   authManager: AuthManager | null = null;
@@ -95,24 +61,7 @@ export class World extends CucumberWorld {
 
   private initializePageObjects(): void {
     if (this.page) {
-      this.dashboardPage = new DashboardPage(this.page);
       this.loginPage = new LoginPage(this.page);
-      this.siteConfigPage = new SiteConfigurationPage(this.page);
-      this.equipmentBrandPage = new EquipmentBrandPage(this.page);
-      this.equipmentTypePage = new EquipmentTypePage(this.page);
-      this.equipmentInstancePage = new EquipmentInstancePage(this.page);
-      this.equipmentMaintenancePage = new EquipmentMaintenancePage(this.page);
-      this.plazaWorkingHoursPage = new PlazaWorkingHoursPage(this.page);
-      this.systemParametersPage = new SystemParametersPage(this.page);
-      this.serviceCataloguePage = new ServiceCataloguePage(this.page);
-      this.truckClassificationPage = new TruckClassificationPage(this.page);
-      this.tollableClassificationPage = new TollableClassificationPage(this.page);
-      this.manageFeesPage = new ManageFeesPage(this.page);
-      this.companyProfilesPage = new CompanyProfilesPage(this.page);
-      this.truckListPage = new TruckListPage(this.page);
-      this.truckPermitPage = new TruckPermitPage(this.page);
-      this.passesManagementPage = new PassesManagementPage(this.page);
-      this.actionLogsPage = new ActionLogsPage(this.page);
 
       // AuthManager requires both page and context
       const context = this.browserFixture.getContext();
@@ -203,4 +152,5 @@ export class World extends CucumberWorld {
   getTracePath(): string {
     return this.browserFixture.getTracePath();
   }
+  
 }

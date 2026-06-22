@@ -5,6 +5,8 @@ Feature: Total Transactions Report by Revenue Entity
   Background:
     Given the user is logged in as "Finance Admin"
     And revenue entities "Entity-A" and "Entity-B" exist
+    # Note: Users are pre-authenticated via storageState.<env>.json
+    # Revenue entities are master data that should exist in the test environment
 
   @positive @e2e
   Scenario: Summary aggregation after multiple transactions

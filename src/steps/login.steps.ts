@@ -502,8 +502,8 @@ When('I remain inactive for {int} minutes', async function (this: World, minutes
 });
 
 Then('the dashboard h1 heading should contain text {string}', async function (this: World, text: string) {
-  if (!this.dashboardPage) throw new Error('Dashboard page not initialized');
-  await this.dashboardPage.verifydashboardTitleContains(text);
+  if (!this.loginPage) throw new Error('Dashboard page not initialized');
+  await this.loginPage.verifyDashboardTitleContains(text);
   this.addLog(`Verified dashboard h1 contains: ${text}`);
 });
 
