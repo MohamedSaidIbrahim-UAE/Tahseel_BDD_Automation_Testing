@@ -12,6 +12,22 @@ import { resolveActivePage } from './active-page-resolver';
 
 // src/steps/common-ui.steps.ts
 import { DxDropdownHelper } from '../support/components/dx-dropdown.helper';
+import { DxDateBoxHelper } from '../support/components/dx-datebox.helper';
+
+
+When(
+  'I configure the {string} datepicker field to {string} and time {string}',
+  async function (this: World, labelText: string, targetDate: string, targetTime: string) {
+    const activePage = resolveActivePage(this, 'rawPage');
+
+    // 1. Instantiating the clean dynamic component helper onto current active page thread context
+    const dxDateBox = new DxDateBoxHelper(activePage);
+
+    // 2. Dispatch programmatic data entry routine safely
+    await dxDateBox.setDateTimeByLabel(labelText, targetDate, targetTime);
+    this.addLog(`Successfully populated field [${labelText}] configuration state to value: ${targetDate} ${targetTime}`);
+  }
+);
 
 When(
   'I select {string} from the {string} select dropdown',

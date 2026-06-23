@@ -1,13 +1,16 @@
 // src/support/fixtures/custom-fixtures.ts
 import { test as baseTest } from '@playwright/test';
+import { DxDateBoxHelper } from '../support/components/dx-datebox.helper';
 import { DxDropdownHelper } from '../support/components/dx-dropdown.helper';
 
-// Extend base test tracking capabilities
 export const test = baseTest.extend<{
+    dxDateBox: DxDateBoxHelper;
     dxDropdown: DxDropdownHelper;
 }>({
+    dxDateBox: async ({ page }, use) => {
+        await use(new DxDateBoxHelper(page));
+    },
     dxDropdown: async ({ page }, use) => {
-        // Construct the helper instance and pass it out to test routines
         await use(new DxDropdownHelper(page));
     },
 });
