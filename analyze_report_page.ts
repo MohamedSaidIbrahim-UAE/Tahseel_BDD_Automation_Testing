@@ -4,7 +4,7 @@ import * as fs from 'fs';
 const storageState = JSON.parse(fs.readFileSync('storageState.stage.json', 'utf-8'));
 
 async function analyzeReportPage() {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({ headless: false });
   const context: BrowserContext = await browser.newContext({ storageState: storageState as any });
   const page = await context.newPage();
 

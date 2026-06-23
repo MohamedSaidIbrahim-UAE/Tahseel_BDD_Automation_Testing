@@ -177,7 +177,7 @@ const message = ReportValidator.formatValidationError(result);
 export const config = {
   timeout: 30000,  // 30 seconds
   retries: 3,
-  headless: true
+  headless: false
 };
 ```
 

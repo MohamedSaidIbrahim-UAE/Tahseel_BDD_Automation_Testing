@@ -181,36 +181,55 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
     while (attempts < maxAttempts) {
       attempts++;
       try {
-        // Try different button selectors
+        // Try different button selectors - more lenient to match any visible button
         const buttonSelectors = [
           'button:has-text("Show Report")',
           'button:has-text("Search")',
           'button[aria-label*="Show"]',
           'button[aria-label*="Report"]',
           'button[aria-label*="Search"]',
-          'button:nth-of-type(1)',  // First button as fallback
-          'button',                  // Any button
+          'button[class*="btn-primary"]',      // Primary action buttons
+          'button[class*="btn-search"]',
+          'button[class*="apply"]',
+          'button[class*="filter"]',
+          'button[type="submit"]',              // Submit buttons
+          'button:nth-of-type(2)',              // Second button (first is often sidebar toggle)
+          'button:nth-of-type(3)',
+          'button:nth-of-type(4)',
+          'button',                             // Any button
         ];
 
         let buttonClicked = false;
         for (const selector of buttonSelectors) {
           try {
-            const btn = this.page.locator(selector).first();
-            const isAttached = await btn.isVisible({ timeout: 2000 }).catch(() => false);
+            const buttons = this.page.locator(selector);
+            const count = await buttons.count();
             
-            if (isAttached) {
-              await btn.click({ timeout: 5000 });
-              buttonClicked = true;
-              break;
+            // Try each matching button
+            for (let i = 0; i < count; i++) {
+              try {
+                const btn = buttons.nth(i);
+                const isVisible = await btn.isVisible({ timeout: 1000 }).catch(() => false);
+                const isDisabled = await btn.isDisabled().catch(() => false);
+                
+                if (isVisible && !isDisabled) {
+                  await btn.click({ timeout: 5000 });
+                  buttonClicked = true;
+                  break;
+                }
+              } catch {
+                continue;
+              }
             }
+            
+            if (buttonClicked) break;
           } catch {
-            // Try next selector
             continue;
           }
         }
 
         if (buttonClicked) {
-          break; // Button clicked successfully
+          break;
         }
 
         // If no button found, wait and retry
@@ -227,9 +246,20 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
     }
 
     if (attempts >= maxAttempts) {
+      // Debug: log all buttons on the page
+      const allButtons = await this.page.locator('button').all();
+      const buttonDebugInfo = await Promise.all(
+        allButtons.slice(0, 10).map(async btn => {
+          const text = await btn.textContent().catch(() => '');
+          const ariaLabel = await btn.getAttribute('aria-label').catch(() => '');
+          const className = await btn.getAttribute('class').catch(() => '');
+          return `[text:"${text}"|aria:"${ariaLabel}"|class:"${className}"]`;
+        })
+      );
       throw new Error(
         `Show Report button not clickable after ${maxAttempts} attempts. ` +
-        `Last error: ${lastError?.message || 'Button selector not found'}`
+        `Found ${allButtons.length} buttons: ${buttonDebugInfo.join(', ')}. ` +
+        `Last error: ${lastError?.message || 'No visible/clickable button found'}`
       );
     }
     

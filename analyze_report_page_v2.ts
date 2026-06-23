@@ -6,7 +6,7 @@ const storageState = JSON.parse(fs.readFileSync('storageState.stage.json', 'utf-
 
 async function analyzeReportPage() {
   const browser = await chromium.launch({ 
-    headless: true,
+    headless: false,
     args: ['--ignore-certificate-errors']
   });
 
