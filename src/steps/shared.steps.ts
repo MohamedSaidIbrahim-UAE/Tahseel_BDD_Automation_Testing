@@ -10,6 +10,24 @@ import { World } from '../fixtures/world.fixture';
 import { expect } from '@playwright/test';
 import { resolveActivePage } from './active-page-resolver';
 
+// src/steps/common-ui.steps.ts
+import { DxDropdownHelper } from '../support/components/dx-dropdown.helper';
+
+When(
+  'I select {string} from the {string} select dropdown',
+  async function (this: World, optionText: string, labelText: string) {
+    const activePage = resolveActivePage(this, 'rawPage');
+
+    // Initialize the component helper using the current active page context layer
+    const dxSelect = new DxDropdownHelper(activePage);
+
+    // Execute the unified layout selector mechanism safely
+    await dxSelect.selectOptionByLabel(labelText, optionText);
+
+    this.addLog(`Successfully chose dropdown item "${optionText}" relative to label field: "${labelText}".`);
+  }
+);
+
 // ── Shared pagination steps ────────────────────────────────────────────────────
 
 Then('the page navigation element should be visible', async function (this: World) {
