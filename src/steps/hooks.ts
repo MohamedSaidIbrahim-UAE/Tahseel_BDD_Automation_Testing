@@ -1,83 +1,58 @@
-import { Before, After, Status, setWorldConstructor } from '@cucumber/cucumber';
-import { World } from '../fixtures/world.fixture';
+import { Before, After, Status } from '@cucumber/cucumber';
+import { chromium, Browser, BrowserContext, Page, Response } from 'playwright';
 import * as fs from 'fs';
-import { testContext } from './test-context';
+import * as path from 'path';
+import { AuthManager } from '../utils/auth.manager';
 
-setWorldConstructor(World);
+let browser: Browser;
 
-Before(async function (this: World, { pickle }) {
-  testContext.clear(); // Reset before every scenario execution
+Before({ timeout: 60000 }, async function (this: any, scenario) {
+  if (!browser) {
+    browser = await chromium.launch({ headless: true });
+  }
 
-  try {
-    await this.initialize();
-    this.addLog('Test scenario started');
+  const tags = scenario.pickle.tags.map((t: any) => t.name);
+  let context: BrowserContext;
 
-    // Setup dashboard mocks if @mock-dashboard tag is present
-    const hasMockDashboardTag = pickle.tags.some(tag => tag.name === '@mock-dashboard');
-    if (hasMockDashboardTag) {
-      const page = this.getPage();
-      if (!page) {
-        throw new Error('Page is not initialized. Cannot setup dashboard mocks.');
-      }
-      this.addLog('Dashboard mocks setup complete');
+  if (tags.includes('@authenticated')) {
+    const statePath = path.join(process.cwd(), `storageState.${process.env.TEST_ENV || 'local'}.json`);
+    if (fs.existsSync(statePath)) {
+      console.log('[Hooks] Using pre‑baked storageState');
+      context = await browser.newContext({ storageState: statePath });
+    } else {
+      console.log('[Hooks] No storageState found – creating fresh context for login');
+      context = await browser.newContext();
     }
+  } else {
+    context = await browser.newContext();
+  }
 
-    // Graceful degradation for stage environment
-    if (process.env.TEST_ENV === 'stage') {
-      const page = this.getPage();
-      if (page) {
+  const page = await context.newPage();
+  this.context = context;
+  this.page = page;
+  this.authManager = new AuthManager(page, context);
+
+  // Real‑time session violation recovery (401/403 → re‑login)
+  if (tags.includes('@authenticated')) {
+    page.on('response', async (response: Response) => {
+      if ([401, 403].includes(response.status())) {
+        console.warn(`[Hooks] Session violation (${response.status()}). Triggering re‑login...`);
         try {
-          // Verify page is responsive with extended timeout
-          await Promise.race([
-            page.evaluate(() => document.readyState),
-            new Promise((_, reject) =>
-              setTimeout(() => reject(new Error('Initial connectivity check timeout')), 60000)
-            ),
-          ]);
-          this.addLog('Stage environment: Connectivity check passed');
-        } catch (error: any) {
-          this.addLog(`Stage environment: Connectivity check warning: ${error.message}`);
-          // Continue anyway - retry will happen during step execution
+          await this.authManager.reLoginAndSaveState();
+          await page.goto(page.url(), { waitUntil: 'load' });
+        } catch (error) {
+          console.error('[Hooks] Auto‑recovery failed', error);
         }
       }
-    }
-  } catch (error: any) {
-    this.addLog(`Test setup error: ${error.message}`);
-    throw error;
+    });
   }
 });
 
-
-After(async function (this: any, { pickle, result }) {
-  const world = this as World;
-  world.addLog(`Test scenario finished with status: ${result?.status}`);
-
-  // Screenshot on failure
-  if (result?.status === Status.FAILED) {
-    await world.takeScreenshot(`failed-${pickle.name}`).catch(() => undefined);
+After(async function (this: any, scenario) {
+  if (scenario.result?.status === Status.FAILED) {
+    const screenshot = await this.page.screenshot();
+    this.attach(screenshot, 'image/png');
   }
-
-  // Attach logs
-  const logs = world.getLogs();
-  if (logs && typeof this.attach === 'function') {
-    await this.attach(logs, 'text/plain');
-  }
-
-  // Attach screenshots
-  const attachments = world.getAttachments();
-  for (const attachment of attachments) {
-    if (fs.existsSync(attachment.path) && typeof this.attach === 'function') {
-      const fileContent = fs.readFileSync(attachment.path);
-      await this.attach(fileContent, attachment.type);
-    }
-  }
-
-  // Attach trace
-  const tracePath = world.getTracePath();
-  if (tracePath && fs.existsSync(tracePath) && typeof this.attach === 'function') {
-    const traceContent = fs.readFileSync(tracePath);
-    await this.attach(traceContent, 'application/zip');
-  }
-
-  await world.cleanup();
+  await this.page.close();
+  await this.context.close();
 });
