@@ -6,16 +6,19 @@
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:38:12.853Z"
+    "timestamp": "2026-06-23T09:28:24.064Z"
   },
   "Cancelled Refund Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/refund/cancelled-requests",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Cancelled Refund Requests\"",
+      "Inquire Refund Requests"
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
+    "hasExportButton": true,
     "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:38:20.354Z"
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:25.438Z"
   },
   "Home": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/dashboard",
@@ -24,205 +27,249 @@
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:38:27.649Z"
+    "timestamp": "2026-06-23T09:28:26.746Z"
   },
   "Transactions Analysis": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/business-intelligence/dashborad/1",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Transactions Analysis\""
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:38:34.883Z"
+    "timestamp": "2026-06-23T09:28:28.288Z"
   },
   "Transactions Details": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/business-intelligence/dashborad/2",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Transactions Details\""
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:38:42.193Z"
+    "timestamp": "2026-06-23T09:28:29.802Z"
   },
   "Fee-free transactions": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/business-intelligence/dashborad/3",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Fee-free transactions\""
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:38:49.501Z"
+    "timestamp": "2026-06-23T09:28:31.320Z"
   },
   "Entity Services Analysis": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/business-intelligence/dashborad/4",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Entity Services Analysis\""
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:38:56.804Z"
+    "timestamp": "2026-06-23T09:28:32.869Z"
   },
   "Merchant Transactions": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/business-intelligence/dashborad/5",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Merchant Transactions\""
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:39:04.367Z"
+    "timestamp": "2026-06-23T09:28:34.395Z"
   },
   "Transactions Map": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/business-intelligence/dashborad/6",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Transactions Map\""
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:39:11.731Z"
+    "timestamp": "2026-06-23T09:28:35.926Z"
   },
   "Tahseel Accounts": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/business-intelligence/dashborad/7",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Tahseel Accounts\""
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:39:18.995Z"
+    "timestamp": "2026-06-23T09:28:37.487Z"
   },
   "Tahseel Cards": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/business-intelligence/dashborad/8",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Tahseel Cards\""
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:39:26.256Z"
+    "timestamp": "2026-06-23T09:28:39.014Z"
   },
   "Credit Card Transactions Inquiry": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/help-desk/credit-card-inquiry",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Credit Card Transactions Inquiry\"",
+      "Search Criteria",
+      "Reference Number",
+      "Search Date",
+      "Application Number",
+      "Card Number"
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:39:33.553Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:40.257Z"
   },
   "Refund Transactions": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/refund/cancel-transaction",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Refund Transactions\"",
+      "Voucher Details"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:39:40.848Z"
+    "timestamp": "2026-06-23T09:28:41.635Z"
   },
   "Tickets Delivery": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/tickets/tickets-delivery",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Tickets Delivery\"",
+      "Receipt Number *"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:39:48.215Z"
+    "timestamp": "2026-06-23T09:28:42.939Z"
   },
   "Daily deposit for Business Service Centers": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/deposite-settlement/tasheel",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Daily deposit for Business Service Centers\"",
+      "Daily deposit for Business Service Centers",
+      "Group",
+      "Settlement Date"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:39:55.552Z"
+    "timestamp": "2026-06-23T09:28:44.232Z"
   },
   "Manage Safari Booking Dates": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/tickets/safari-booking-dates",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:40:03.017Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Manage Safari Booking Dates\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:45.581Z"
   },
   "Departments": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/hierarchy/department",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:40:10.478Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:46.850Z"
   },
   "Service Rules": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/hierarchy/service-rules",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:40:17.781Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:48.203Z"
   },
   "Workflows": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/workflowManag/workflow",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:40:25.085Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Workflows\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:49.806Z"
   },
   "Issue Workflow Management": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/workflowManag/issueworkflow",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:40:32.444Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Issue Workflow Management\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:51.421Z"
   },
-  "Refund Approval Workflow": {
+  "التحكم فى موافقات الإسترداد": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/workflowManag/refundworkflow",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:40:39.738Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:53.011Z"
   },
   "Transaction Payment Approval Workflow": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/workflowManag/transaction-payment-approval-workflow",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:40:47.116Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:54.598Z"
   },
-  "Manage Adjustment Registration Workflow": {
+  "Manage Adjustment Registeration Workflow": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/workflowManag/adjustment-registeration-workflow",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:40:54.474Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:56.199Z"
   },
   "Pre-Authorized Transaction Workflow": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/workflowManag/pre-authorized-transactions-workflow",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:41:01.867Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Pre-Authorized Transaction Workflow\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:57.818Z"
   },
-  "Tahseel Card Requests": {
+  "Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/tahseelcard",
-    "labels": [],
+    "labels": [
+      "Inquire Refund Requests"
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
+    "hasExportButton": true,
     "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:41:09.203Z"
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:28:59.153Z"
   },
   "New Deduct Request": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/load-and-deduct-balance/deduct-requests",
@@ -231,25 +278,25 @@
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:41:16.516Z"
+    "timestamp": "2026-06-23T09:29:01.021Z"
   },
   "View Deduct Pending Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/load-and-deduct-balance/pending-deduct-requests-list",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:41:23.892Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:02.839Z"
   },
   "View All Deduct Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/load-and-deduct-balance/all-deduct-requests-list",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:41:31.352Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:04.689Z"
   },
   "New Load Request": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/load-and-deduct-balance/load-requests",
@@ -258,376 +305,508 @@
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:41:38.686Z"
+    "timestamp": "2026-06-23T09:29:06.498Z"
   },
   "View Load Pending Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/load-and-deduct-balance/pending-load-requests-list",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:41:46.025Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:08.318Z"
   },
   "View All Load Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/load-and-deduct-balance/all-load-requests-list",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:41:53.402Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:10.111Z"
   },
   "Deposits Refund": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/deposits/depositRefund",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Deposits Refund\"",
+      "Deposit Refund Request",
+      "Ref.No *",
+      "ReceiptNo *"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:42:00.747Z"
+    "timestamp": "2026-06-23T09:29:11.623Z"
   },
   "Deposit Refund Requests Inquiry": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/deposits/deposit-requests",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Deposit Refund Requests Inquiry\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:42:08.189Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:13.353Z"
   },
   "Pending Deposit Refund Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/deposits/deposit-pending-requests",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Pending Deposit Refund Requests\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:42:15.484Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:14.935Z"
   },
   "Deposits Retain": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/deposits/depositRetain",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Deposits Retain\"",
+      "Deposit Retain Request",
+      "Ref.No *",
+      "ReceiptNo *",
+      "Available Amount0 AED",
+      "Available Amount"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:42:22.859Z"
+    "timestamp": "2026-06-23T09:29:16.515Z"
   },
   "Deposit Retain Requests Inquiry": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/deposits/retain-requests",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Deposit Retain Requests Inquiry\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:42:30.223Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:18.061Z"
   },
   "Pending Deposit Retain Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/deposits/retain-pending-requests",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Pending Deposit Retain Requests\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:42:37.668Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:19.626Z"
   },
   "Refunds": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/refund",
-    "labels": [],
+    "labels": [
+      "Refund Requests"
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
+    "hasExportButton": true,
     "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:42:45.035Z"
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:20.950Z"
   },
   "Stuck Refund Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/refund/bank-nonexisting-refundrequests",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Stuck Refund Requests\"",
+      "Stuck Refund Requests",
+      "Pending Refund Bill Requests",
+      "Pending Deposit Refund Requests"
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:42:52.457Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:22.330Z"
   },
   "Settings": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/feature",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
+    "hasExportButton": true,
     "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:42:59.838Z"
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:23.703Z"
   },
   "Security Scopes": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/scope",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:43:07.150Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Security Scopes\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:24.987Z"
   },
   "Users Roles": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/role",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:43:14.437Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Users Roles\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:26.252Z"
   },
   "Smart Receipt Details": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/smart-receipt/inquiry",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Smart Receipt Details\"",
+      "Search Criteria",
+      "Date (From)",
+      "Date (To)",
+      "Transaction No",
+      "Receipt Number",
+      "Reference Number",
+      "Bank Receipt Number",
+      "Bank Card SchemeSelect...",
+      "Transaction Payee Name",
+      "Department NameSelect...",
+      "Sub-DepartmentSelect...",
+      "With Revenue"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:43:21.754Z"
+    "timestamp": "2026-06-23T09:29:27.537Z"
   },
   "Mashreq Bank Merchants": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/bank-merchants/mashreq-bank-merchants",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:43:29.213Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:28.893Z"
   },
   "Inquire Topup Transaction": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/top-up/inquiry",
-    "labels": [],
+    "labels": [
+      "Inquire Topup Transaction",
+      "From Date",
+      "To Date",
+      "Transaction StatusAll",
+      "Account TypeChoose...",
+      "Account Number",
+      "Amount",
+      "Transaction Number",
+      "BankChoose..."
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:43:36.931Z"
+    "timestamp": "2026-06-23T09:29:30.469Z"
   },
   "Inquire Deduct Transaction": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/deduct/inquiry",
-    "labels": [],
+    "labels": [
+      "Inquire Deduct Transaction",
+      "From Date",
+      "To Date",
+      "Transaction StatusAll",
+      "DepartmentChoose...",
+      "Amount",
+      "Reference Number",
+      "Application Number",
+      "BankChoose..."
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:43:44.240Z"
+    "timestamp": "2026-06-23T09:29:32.057Z"
   },
   "MPOS Transactions": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/help-desk/mpos-inquiry",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"MPOS Transactions\"",
+      "Search Criteria",
+      "Department",
+      "Reference Number",
+      "Application Number"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:43:51.624Z"
+    "timestamp": "2026-06-23T09:29:33.667Z"
   },
   "Transactions Upgrade": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/transactions/transactions-eligible-for-upgrade",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Transactions Upgrade\"",
+      "Transactions Upgrade"
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
+    "hasExportButton": true,
     "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:43:59.018Z"
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:35.221Z"
   },
   "Transactions Sent By Payment Link": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/transactions/payment-link-transaction",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Transactions Sent By Payment Link\"",
+      "Search Criteria",
+      "Reference Number:",
+      "Date (From):",
+      "Date (To) :",
+      "Email:",
+      "Mobile:",
+      "Created By:Select...",
+      "Status:Created"
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
+    "hasExportButton": true,
     "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:44:06.722Z"
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:36.887Z"
   },
   "Tahseel Account Details": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/user-inquiry",
-    "labels": [],
+    "labels": [
+      "Search Criteria",
+      "Account TypeChoose...",
+      "Account KeyTypeChoose...",
+      "Account key *",
+      "Card holder name",
+      "Mobile No"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:44:14.681Z"
+    "timestamp": "2026-06-23T09:29:38.463Z"
   },
   "Government User": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/gov-users",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:44:22.350Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Government User\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:40.127Z"
   },
   "Smart User": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/smart-users",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:44:30.375Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Smart User\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:41.771Z"
   },
   "Operator User": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/operator-users",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:44:38.455Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Operator User\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:43.390Z"
   },
   "Company User": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/company-users",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:44:44.238Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Company User\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:44.993Z"
   },
   "Money Loader User": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/money-loader-users",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:44:52.122Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Money Loader User\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:46.629Z"
   },
   "Money Loader Users Groups": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/money-loader-users-groups",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:45:00.297Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Money Loader Users Groups\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:47.939Z"
   },
   "Money Loader Groups": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/money-loader-groups",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:45:07.554Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Money Loader Groups\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:49.511Z"
   },
   "Merchant Users": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/merchant-users/departments-list",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Merchant Users\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:45:14.824Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:51.111Z"
   },
   "Seller Users": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/seller-users",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:45:22.044Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Seller Users\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:52.792Z"
   },
   "Inquire Electronic Receipt": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/packaging-fund-management/voucher-inquire",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Inquire Electronic Receipt\"",
+      "Inquire status of electronic receipt",
+      "DepartmentChoose department",
+      "Reference number *",
+      "Receipt amount *",
+      "Receipt date *"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:45:29.320Z"
+    "timestamp": "2026-06-23T09:29:54.352Z"
   },
   "Topup Clients": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/topup-clients",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:45:36.565Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Topup Clients\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:55.942Z"
   },
   "Topup Clients Stations": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/topup-clients-stations",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Topup Clients Stations\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:45:43.886Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:57.240Z"
   },
   "Topup Clients Stations Locations": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/system-users/topup-stations-locations",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:45:51.161Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Topup Clients Stations Locations\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:29:58.816Z"
   },
   "IBAN Registration Request": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/iban-registeration/request-register-iban-details",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"IBAN Registration Request\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:45:59.267Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:00.388Z"
   },
   "IBAN Registration Pending Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/iban-registeration/iban-registeration-pending-requests",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"IBAN Registration Pending Requests\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:46:06.721Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:01.947Z"
   },
   "IBAN Registration Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/iban-registeration/iban-registeration-requests",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"IBAN Registration Requests\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:46:14.055Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:03.531Z"
   },
   "Adjustment Registration Request": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/adjustment-registeration/request-register-adjustment",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Adjustment Registration Request\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:46:21.478Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:05.103Z"
   },
   "Adjustment Registration Pending Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/adjustment-registeration/adjustment-registeration-pending-requests",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:46:28.886Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:06.691Z"
   },
   "Adjustment Registration Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/adjustment-registeration/adjustment-registeration-requests",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Adjustment Registration Requests\""
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:46:36.377Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:08.264Z"
   },
   "Cheques": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/cheques/cheques",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:46:43.732Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:09.881Z"
   },
   "Merge Cheques": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/cheques/merge",
@@ -636,52 +815,76 @@
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:46:50.977Z"
+    "timestamp": "2026-06-23T09:30:11.488Z"
   },
   "Cheques Transactions": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/cheques/transactions",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:46:58.299Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:13.049Z"
   },
   "Companies Accounts Management": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/corporate/companyprofile",
     "labels": [],
-    "hasAddNewButton": false,
+    "hasAddNewButton": true,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:47:05.607Z"
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:14.622Z"
   },
   "Individual Account": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/corporate/Addindividualaccount",
-    "labels": [],
+    "labels": [
+      "Emirate ID *",
+      "Passport No *",
+      "Full Name Ar *",
+      "Full Name En *",
+      "User Name *",
+      "NationalityChoose...",
+      "Sex *",
+      "Favourite Language *",
+      "Birthday *",
+      "Mobile No *",
+      "Email *",
+      "FaxNo",
+      "Emirate *",
+      "City",
+      "Area",
+      "Street",
+      "Building",
+      "Card Registration Location *"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:47:12.892Z"
+    "timestamp": "2026-06-23T09:30:16.256Z"
   },
   "Mashreq Bank Settlement": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/settlement/mashreq-bank",
-    "labels": [],
+    "labels": [
+      "Transaction exsist in Mashreq bank and not exsist in Tahseel",
+      "معاملات الدفع المزدوج ببطاقات الإئتمان"
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
+    "hasExportButton": true,
     "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:47:20.321Z"
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:17.888Z"
   },
   "Create Request": {
-    "url": "https://staging.tahseel.gov.ae/ManagePortal/transactioncancel/add",
-    "labels": [],
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/transaction-payment-request/add",
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Create Request\""
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:47:27.629Z"
+    "timestamp": "2026-06-23T09:30:49.377Z"
   },
   "My Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/transactioncancel/action",
@@ -690,195 +893,1892 @@
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:47:35.076Z"
+    "timestamp": "2026-06-23T09:30:25.043Z",
+    "errorMessage": "Module not found in side menu"
   },
   "Inquire": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/transactioncancel/inquire",
-    "labels": [],
+    "labels": [
+      "Inquire Deduct Transaction",
+      "From Date",
+      "To Date",
+      "Transaction StatusAll",
+      "DepartmentChoose...",
+      "Amount",
+      "Reference Number",
+      "Application Number",
+      "BankChoose..."
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:47:42.465Z"
+    "timestamp": "2026-06-23T09:30:30.525Z"
   },
   "Add Visit": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/Communications/add-visit",
-    "labels": [],
+    "labels": [
+      "Add Visit",
+      "DepartmentChoose department",
+      "Sub-DepartmentChoose Subdepartment",
+      "Location *",
+      "Visit Date *",
+      "Visit Start Time *",
+      "Visit End Time *",
+      "Employee Type *",
+      "Employee Name *",
+      "Mobile Number",
+      "Phone Number",
+      "Systems *",
+      "Devices And Networks *",
+      "User Notes *",
+      "Engineer notes and report *",
+      "System Final State *",
+      "Employee SignatureClear Signature",
+      "Engineer SignatureClear Signature"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:47:49.879Z"
+    "timestamp": "2026-06-23T09:30:32.134Z"
   },
   "Pending Issues": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/Communications/waiting-action",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:47:57.272Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:33.803Z"
   },
   "Inquire Issue": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/Communications/inquire-issues",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:48:04.596Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:35.386Z"
   },
   "Issue Categories": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/issue/issue-category-management",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:48:11.952Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:36.937Z"
   },
   "Issue Attachments": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/issue/issue-attachment-management",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:48:19.312Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:38.555Z"
   },
   "Exhibitions and events": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/exhibition/exhibitions",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:48:26.574Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:40.124Z"
   },
   "Publishing Houses": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/exhibition/publishing-house",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:48:34.114Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:41.713Z"
   },
-  "Device Delivery To Publishers": {
+  "Device Delivery To Plublishers": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/exhibition/device-delivery",
-    "labels": [],
+    "labels": [
+      "Device Delivery To Plublishers",
+      "Exhibition ShowExhibition Show",
+      "Publishing HouseChoose Publishing House",
+      "DeviceChoose...",
+      "Receiver Name Ar *",
+      "Receiver Name En *",
+      "Receiver ID",
+      "Receiver Passport Number",
+      "Email *",
+      "Mobile Number",
+      "Tablet serial number",
+      "Receiver SinatureClear Signature"
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:48:41.467Z"
+    "timestamp": "2026-06-23T09:30:43.298Z"
   },
   "Book Publisher Devices": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/exhibition/device-handover",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:48:49.033Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:44.941Z"
   },
   "Seller Types": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/sellers/types",
     "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:48:56.265Z"
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:46.489Z"
   },
   "Sellers": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/sellers/seller",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:49:03.564Z"
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Sellers\""
+    ],
+    "hasAddNewButton": true,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:30:47.805Z"
   },
-  "Transaction Payment Request Create": {
-    "url": "https://staging.tahseel.gov.ae/ManagePortal/transaction-payment-request/add",
-    "labels": [],
-    "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:49:10.834Z"
-  },
-  "Transaction Payment Request Pending": {
+  "Pending Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/transaction-payment-request/action",
     "labels": [],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:49:18.277Z"
+    "timestamp": "2026-06-23T09:30:54.921Z",
+    "errorMessage": "Module not found in side menu"
   },
-  "Transaction Payment Request Inquire": {
+  "Inquire Transaction Approval": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/transaction-payment-request/inquire",
     "labels": [],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:49:25.612Z"
+    "timestamp": "2026-06-23T09:30:59.928Z",
+    "errorMessage": "Module not found in side menu"
   },
   "Create Seller Refund Request": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/seller-deposite/create",
-    "labels": [],
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Create Seller Refund Request\""
+    ],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:49:32.923Z"
+    "timestamp": "2026-06-23T09:31:01.790Z"
   },
   "Seller Refund Requests": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/seller-deposite/action",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:49:40.342Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:31:07.732Z"
   },
-  "Inquire Seller Refund Request": {
+  "Inquire seller Refund Request": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/seller-deposite/inquire",
     "labels": [],
     "hasAddNewButton": false,
-    "hasExportButton": false,
-    "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:49:47.690Z"
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:31:09.310Z"
   },
   "Bank Devices": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/bank-devices/bank-devices",
-    "labels": [],
+    "labels": [
+      "Bank Devices"
+    ],
     "hasAddNewButton": false,
-    "hasExportButton": false,
+    "hasExportButton": true,
     "hasColumnChooserButton": false,
-    "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:49:55.170Z"
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:31:10.617Z"
   },
-  "Book Publisher Pending Transactions": {
+  "Pending Transactions": {
     "url": "https://staging.tahseel.gov.ae/ManagePortal/pre-auth-transaction/action",
     "labels": [],
     "hasAddNewButton": false,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:31:12.206Z"
+  },
+  "Inquire Transactions": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/pre-auth-transaction/inquire",
+    "labels": [
+      "[WARNING] Page heading mismatch for \"Inquire Transactions\""
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": true,
+    "hasColumnChooserButton": true,
+    "hasSearchInput": true,
+    "timestamp": "2026-06-23T09:31:13.778Z"
+  },
+  "Detailed Transactions Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/a83c556e-1ab9-490e-a010-50976bb96427",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "From Date",
+      "To Date",
+      "User",
+      "Service Type",
+      "Remote Payment",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:50:02.511Z"
+    "timestamp": "2026-06-23T09:31:15.349Z"
   },
-  "Book Publisher Inquire Transactions": {
-    "url": "https://staging.tahseel.gov.ae/ManagePortal/pre-auth-transaction/inquire",
+  "Summary Transactions Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/132a8205-691c-4c1d-92f5-5c507020940e",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Service Type",
+      "From Date",
+      "To Date",
+      "Payment Method",
+      "Remote Payment",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:16.933Z"
+  },
+  "Detailed SEDD Transactions Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/ff777e79-d90f-40c9-968d-e9790f73ce08",
+    "labels": [
+      "User",
+      "Payment Method",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:18.508Z"
+  },
+  "E-Voucher Report Transaction": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/51b66814-9d0b-4198-a129-b7cb38dd0978",
+    "labels": [
+      "Entity",
+      "Branch",
+      "From Date",
+      "To Date",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:20.094Z"
+  },
+  "Summary GITFees Report for smart Reciept": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/6f3f71e3-246e-48ed-853f-b5b6966a5267",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "From Date",
+      "To Date",
+      "Payment Method"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:21.678Z"
+  },
+  "Detailed Report of Smart Reciept Services Fees": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/8fe08b0a-51d6-4c15-8467-8f334372b504",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "From Date",
+      "To Date",
+      "Payment Method"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:23.250Z"
+  },
+  "Summary SEDD Transactions Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/855930f8-1ac7-43be-b39d-162610d1d61e",
+    "labels": [
+      "User",
+      "Payment Method",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:24.825Z"
+  },
+  "Municipality Fees Share Report on Real Estate Registeration Directorate Transactions": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/2bf33ade-d2fa-4e54-912d-a5342f678897",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:26.396Z"
+  },
+  "Detailed transactions report of SEED According to the Fees entity owner": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/f78bc512-b32c-4307-9f34-230ecf0b7328",
     "labels": [],
     "hasAddNewButton": false,
     "hasExportButton": false,
     "hasColumnChooserButton": false,
     "hasSearchInput": false,
-    "timestamp": "2026-06-23T07:50:09.984Z"
+    "timestamp": "2026-06-23T09:31:27.721Z",
+    "errorMessage": "Module not found in side menu"
+  },
+  "Aggregated transactions report of SEDD According to the Fees entity owner": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/51db49b0-c098-4808-8b29-bb868671abba",
+    "labels": [
+      "DepCode",
+      "Branch",
+      "From Date",
+      "To Date",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:28.743Z"
+  },
+  "Recoverd Wallet Transactions Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/6d669c1c-f1d8-425d-9b99-996a80ca3e74",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:30.289Z"
+  },
+  "Detailed report of canceled transactions": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/002eb575-6f35-4e2d-8a9b-49a0627cb229",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "From Date",
+      "To Date",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:31.872Z"
+  },
+  "Transaction Audit": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/d2c0be57-c424-4984-9d3e-b748bc280c3d",
+    "labels": [
+      "From Date",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:33.444Z"
+  },
+  "Detailed report of canceled transactions by revenue": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/f44c0484-b4c4-4713-a0b0-0b82cd2fc4d0",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "From Date",
+      "To Date",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:35.007Z"
+  },
+  "Esaad card application transaction report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/583acc34-2965-455e-8ca0-5dad98415fed",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Employer",
+      "ID Number"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:36.578Z"
+  },
+  "Cheque Payment Details Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/976a3d52-eb5d-4d49-8742-886f35c086f2",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Entity"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:38.147Z"
+  },
+  "Beah paid transaction detailed report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/8b8dcc23-7259-4e5c-a2c4-40a9620c7f69",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Study Type",
+      "Required Study"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:39.701Z"
+  },
+  "Detailed Refund Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/e2f8d881-dfcd-439a-82fb-fecda85f2fdf",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "From Date",
+      "To Date",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:41.253Z"
+  },
+  "Refund loaded balance report on Tahseel card": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/0c272c20-7316-4c6b-b2d0-07c493b88c9e",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Transaction Type",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:42.827Z"
+  },
+  "Evoucher Refund Detailed Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/9ff647c1-daf1-4374-a898-3a77a4a3f158",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Entity"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:44.387Z"
+  },
+  "Sharjah islamic bank refund report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/f19d354b-130e-472c-bb69-5fe8d718276f",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Refund transaction type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:45.909Z"
+  },
+  "Sharjah islamic bank refund report in period": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/b789c747-bfdd-4baa-a66f-507f1309a1f0",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Refund transaction type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:47.145Z"
+  },
+  "Automatic Transaction Refund Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/8ffdd544-e588-4ba0-9b21-174752d77f01",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "From Date",
+      "To Date",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:48.680Z"
+  },
+  "Summary Cheques Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/c99fdafe-94eb-4c79-a19b-30f12ef8d279",
+    "labels": [
+      "Entity",
+      "User",
+      "From Date",
+      "To Date",
+      "Branch"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:50.257Z"
+  },
+  "Detailed Cheques Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/1d09c6bb-d8e2-4f39-a1d2-2527fe554373",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "User Name",
+      "From Date",
+      "To Date",
+      "Check Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:51.830Z"
+  },
+  "Detailed Report of Transactions paid by Credit cards": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/617246e8-0006-4efb-b48e-c5fcb25fb18b",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "From Date",
+      "To Date",
+      "Payment Method",
+      "Branch",
+      "Bank Fees Tolerance Entity",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:53.394Z"
+  },
+  "Aggregated Transactions Report paid by Credit cards": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/fedfceac-2366-407e-881a-29fa1ec5365b",
+    "labels": [],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:54.730Z",
+    "errorMessage": "Module not found in side menu"
+  },
+  "E-Voucher Status Inquire Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/9681bc75-3c2a-49be-95c4-295671629468",
+    "labels": [
+      "Entity",
+      "Refrence Number",
+      "From Date",
+      "To Date",
+      "Voucher Number",
+      "Usage Status",
+      "Stop Status"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:55.747Z"
+  },
+  "Cheque and Voucher Transactions": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/46cc8ae5-b364-4b0d-826f-646dc8278110",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "From Date",
+      "To Date",
+      "Branch",
+      "User Name"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:57.320Z"
+  },
+  "Credit Card Summery By Merchant": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/008d2c86-ddcd-40c2-8e54-1036cc94c066",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Payment Method",
+      "Branch",
+      "From Date",
+      "To Date",
+      "Bank Fees Tolerance Entity",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:31:58.907Z"
+  },
+  "Payment methods detailed report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/8604150a-00b4-4189-8465-ee08a32d30ad",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "From Date",
+      "To Date",
+      "Payment Method",
+      "Branch",
+      "Bank Fees Tolerance Entity",
+      "Transaction Type",
+      "View Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:00.497Z"
+  },
+  "Payment method summary report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/ff8cf23d-e258-4c99-abdf-fafe9efd0732",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Payment Method",
+      "Branch",
+      "From Date",
+      "To Date",
+      "Bank Fees Tolerance Entity",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:02.101Z"
+  },
+  "Detailed Cheques Report - Revenues": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/45b2fc3a-1717-45bd-88f3-188de0db2e9d",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "User Name",
+      "From Date",
+      "To Date",
+      "Check Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:03.692Z"
+  },
+  "Payment Card Statistic Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/36c293e5-2afa-4e20-be10-a718bd20de2f",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:05.254Z"
+  },
+  "Detailed Tahseel Card Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/adf3c414-e56d-4e98-82e7-790dcac7a570",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:06.813Z"
+  },
+  "Transaction Done by TahseelCard": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/ae276954-24ac-4a88-a3ca-9b00897840a4",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Account No"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:08.351Z"
+  },
+  "Aggregated fees Report Tahseel Cards": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/886c659e-30eb-4956-b4d6-f1771a79a780",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:09.924Z"
+  },
+  "SFD Tahseel Card Detail Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/a0477266-26c2-498c-b4e1-d66d30256992",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:11.495Z"
+  },
+  "Tahseel Lost Cards Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/c0d4e042-e2be-479a-9f1a-c8fdf4ea726b",
+    "labels": [
+      "To Date",
+      "From Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:13.041Z"
+  },
+  "Tahseel Account Deduct & Load Reqeust": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/f6239423-7124-4080-9b03-b47feec33ec0",
+    "labels": [
+      "Request type",
+      "Status",
+      "AccountType",
+      "AccountKey",
+      "Date From",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:14.604Z"
+  },
+  "Voucher Reciept Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/49af9d44-219a-4ce4-a632-b62b8d940a09",
+    "labels": [
+      "Date From",
+      "To Date",
+      "Registration Loaction",
+      "User Name",
+      "Company Name",
+      "Reciept Number"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:16.191Z"
+  },
+  "Tahseel Account Intial Balance": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/093bcb10-3a9b-4761-95b6-85602e8fcccb",
+    "labels": [
+      "AccountType",
+      "View Type",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:17.800Z"
+  },
+  "SFD Detailed Wallets Transactions Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/c7427897-5abd-4743-9cab-9c4d1fa5039c",
+    "labels": [
+      "Wallet Name",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:19.376Z"
+  },
+  "Tahseel Card Transaction Details Reports": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/960694d7-7310-4cea-a9f1-63dfe2901a67",
+    "labels": [
+      "Entity",
+      "Account Number",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:20.942Z"
+  },
+  "Corporate Card Balance Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/feda2c09-d12c-4a01-b696-36cde5ca8f71",
+    "labels": [
+      "User",
+      "Company"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:22.484Z"
+  },
+  "E-Vocuher Loading Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/7b3cd636-866a-4721-9b5a-c93441c85e90",
+    "labels": [
+      "To Date",
+      "From Date",
+      "User Name",
+      "Entity"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:24.038Z"
+  },
+  "Aggregated Loading Report of Evouchers": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/a5082608-d1be-4960-9363-c69821aa1b43",
+    "labels": [],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:25.356Z",
+    "errorMessage": "Module not found in side menu"
+  },
+  "General Money Loading": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/f23b2250-8124-430b-a703-5845100a806f",
+    "labels": [
+      "User Name",
+      "Group",
+      "Top-up transaction type",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:26.375Z"
+  },
+  "Summery Loading Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/46f4addf-afe5-48a4-a4bc-8d486026840c",
+    "labels": [
+      "Group",
+      "User Name",
+      "From Date",
+      "To Date",
+      "Top-up transaction type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:27.945Z"
+  },
+  "Tahseel Account Load Details Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/86723e25-d979-4224-8acc-68e9b90a683d",
+    "labels": [
+      "Group",
+      "User Name",
+      "From Date",
+      "To Date",
+      "Top-up transaction type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:29.476Z"
+  },
+  "Voucher Load Details Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/130dfd7c-fe06-425f-8152-1da0e4d6225d",
+    "labels": [
+      "Group",
+      "User Name",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:31.017Z"
+  },
+  "Entities Deposits - Summary Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/f33a1214-cce9-4872-9f16-62037287b60a",
+    "labels": [
+      "Deposit Entity",
+      "Deposit Time",
+      "From Date",
+      "To Date",
+      "Deposit Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:32.545Z"
+  },
+  "Daily Users Loading Report For Tasheel Centers": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/fc7bfacb-c3b7-4383-bd6e-9cd253f018d2",
+    "labels": [],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:33.909Z",
+    "errorMessage": "Module not found in side menu"
+  },
+  "A detailed report for Loading using Al Thiqa Club employee card": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/80cacf55-4ccc-478a-bcd1-194e17c4e28c",
+    "labels": [
+      "اسم المستخدم",
+      "بطاقة الموظف",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:34.916Z"
+  },
+  "Report the total service charges for loading Transactions": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/f4bebe7a-28c3-494e-ad2a-d5bd090531b6",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Group",
+      "Dispaly period"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:36.474Z"
+  },
+  "Detailed Transactions report by revenue entity": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/6febbbae-d675-44e9-b5ca-418a09be5c72",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Service Type",
+      "Payment Method",
+      "User",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:38.034Z"
+  },
+  "Total Transactions report by revenue entity": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/350c32b5-7703-4a0c-b2ac-eda28a7011b5",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "User",
+      "Payment Method",
+      "Service Type",
+      "From Date",
+      "To Date",
+      "Dispaly period",
+      "Show Payment Method"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:53.014Z"
+  },
+  "Shared revenues between the Directorate Of Town Planning and Survey and Sharjah Municipality": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/d021f360-e2d9-4863-9ff3-bc231af2ecb7",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:41.216Z"
+  },
+  "Service List Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/d5cf6255-2e3d-4f67-b07a-e89a187183da",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Category",
+      "Service"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:42.788Z"
+  },
+  "Shared revenues between Sharjah Economic Development Department and Sharjah Commerce & Tourism Development Authority": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/3e0d0599-aebe-42db-a03f-aad0ff65c283",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:44.346Z"
+  },
+  "A report on joint revenues between the Prevention and Safety Authority and SAND": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/2922f019-ada2-4466-b230-2d9f0eea6ac7",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:45.932Z"
+  },
+  "Transaction Summary Report Based on Income (receivable)": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/7c9f7dcd-1163-4e89-91dd-02b841c24ed7",
+    "labels": [],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:47.258Z",
+    "errorMessage": "Module not found in side menu"
+  },
+  "Etisalat detailed transactions from Digital Sharjah": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/2c5fa3ee-5451-4087-908d-0656a3db5ef4",
+    "labels": [
+      "Service Type",
+      "Payment Method",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:48.264Z"
+  },
+  "تقرير المخالفات المرورية - إدارات ترخيص الآليات والسائقين": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/36c09f58-2280-4f46-b212-20142e62fe29",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:49.853Z"
+  },
+  "Transaction deposits detail Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/03ab3eab-c98d-44ec-81e1-2d35d11fa147",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Service Type",
+      "Payment Method",
+      "User",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:51.439Z"
+  },
+  "تقرير اجمالي الرسوم المشتركة بين بلدية مدينة الشارقة ومراكز الخدمة": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/3b8c2cde-6413-42de-ad4a-e0389ad4a1c2",
+    "labels": [
+      "Center",
+      "Branch",
+      "To Date",
+      "From Date",
+      "Dispaly period"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:53.042Z"
+  },
+  "enName": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/fa9e9a3b-7593-4245-85e0-0ada650f7821",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Dispaly period",
+      "Other Department"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:54.658Z"
+  },
+  "Transaction summary income report based on collecting entities": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/4601182b-7894-4f5d-8bda-7fef3582714d",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "User",
+      "Payment Method",
+      "Service Type",
+      "From Date",
+      "To Date",
+      "Dispaly period",
+      "Show Payment Method"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:56.270Z"
+  },
+  "Detailed Report of POS Transactions by Revenue Source": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/da6263af-4818-4b0c-93cd-eafcd446ba5e",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Service Type",
+      "User",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:57.875Z"
+  },
+  "Dependant services revenue summary reports": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/b541adc6-ef50-4019-aac2-32e748add600",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Service Type",
+      "Payment Method",
+      "User",
+      "From Date",
+      "To Date",
+      "Dispaly period",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:32:59.447Z"
+  },
+  "Dependant services revenue detailed reports": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/66877a90-23a3-4737-ab5a-44cca07fe69d",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Service Type",
+      "From Date",
+      "To Date",
+      "Payment Method",
+      "User",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:01.037Z"
+  },
+  "Bank transfers of Sharjah Islamic Bank": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/f5bb23f4-6350-477d-b444-12cd623dd9c9",
+    "labels": [
+      "Entity",
+      "Dispaly period",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:02.635Z"
+  },
+  "Mashreq Settle Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/52935a29-6a74-46f4-baae-bd5825aafe5e",
+    "labels": [
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:04.227Z"
+  },
+  "Mashreq bank settlement report in period": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/bd63cf1f-22fb-4ada-938f-ff9ac9abe06a",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Channel",
+      "Do Clearance"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:05.780Z"
+  },
+  "Bank transfers of Sharjah Islamic Bank General": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/bd57abb9-56e9-4559-9e1b-0654e91e454c",
+    "labels": [
+      "Entity",
+      "Dispaly period",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:07.333Z"
+  },
+  "Fedral Bank Transfer Detail Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/6caad5d0-ca76-4471-a72c-e34d0b6237d7",
+    "labels": [
+      "Entity",
+      "Filter Based On",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:08.896Z"
+  },
+  "Financial Services Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/39e081be-fbf6-4aef-932e-ae6a59415008",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Support Fees State",
+      "VAT State"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:10.464Z"
+  },
+  "Sharjah islamic bank settlement report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/513e8db8-feab-4d35-9fec-5e420a23d6ec",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Do Clearance"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:12.070Z"
+  },
+  "Sharjah islamic bank settlement report in period": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/01620815-ad1b-439a-8b28-498d7ab563f6",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Do Clearance"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:13.398Z"
+  },
+  "UAE central bank settlement report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/9cc6b719-265d-4abd-a668-839d2f9f21d4",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Do Clearance"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:14.964Z"
+  },
+  "UAE central bank settlement report in period": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/996869c3-66af-4ab1-a8dc-c12acb13aa71",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Do Clearance"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:16.283Z"
+  },
+  "Transaction Fees For All Payment Methods": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/97353334-399a-4613-9097-9cf5dc95c690",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Payment Method",
+      "Branch",
+      "From Date",
+      "To Date",
+      "Transaction Type",
+      "Dispaly period",
+      "Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:17.871Z"
+  },
+  "Collectors performance report for transactions completed from the direct payment": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/4f19f2f5-dded-43df-a9c7-6b12d6caae78",
+    "labels": [
+      "From",
+      "To",
+      "Entity",
+      "User",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:19.472Z"
+  },
+  "Intensive Settlement Details Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/453233ce-8f0a-4ef6-b145-c8d1c19c1dd0",
+    "labels": [
+      "Date",
+      "Do Clearance"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:21.089Z"
+  },
+  "تقـريـر التحويلات البنكية لرسوم المعاملات - المقبوضات": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/fda918b5-1fea-4c46-8dc8-77e5fd7243aa",
+    "labels": [
+      "Entity",
+      "Dispaly period",
+      "From Date",
+      "To Date",
+      "Transfer Mode",
+      "Status"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:22.678Z"
+  },
+  "Grant Card History Logs Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/1fd4b6c2-6ea3-4223-be7b-a6f4700e3c70",
+    "labels": [
+      "From",
+      "To",
+      "Employee",
+      "Government entity",
+      "Status",
+      "Workflow Status",
+      "Publishing House",
+      "Sheet Number"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:24.280Z"
+  },
+  "attendance report in period": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/847d57bd-30b6-4274-a416-653de00438ee",
+    "labels": [
+      "From",
+      "To",
+      "اسم الموظف"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:25.887Z"
+  },
+  "Login Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/30821f51-598a-4f48-911e-e624bb39a377",
+    "labels": [
+      "From Date",
+      "To Date",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:27.486Z"
+  },
+  "Transaction Details Tax Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/ebf56e0d-5648-4cd2-8ed3-f16b8c58d0a8",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "From Date",
+      "To Date",
+      "User",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:29.066Z"
+  },
+  "Transaction Summary Tax Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/366f4450-11cf-4b44-a5b2-66c472dbe3c1",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "From Date",
+      "To Date",
+      "User",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:30.670Z"
+  },
+  "Transaction Details Tax Report - Revenue": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/dd5492ae-e57d-4f2c-bf51-802ccb9df35a",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "From Date",
+      "To Date",
+      "User",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:32.260Z"
+  },
+  "Transaction Summary Tax Report - Revenue": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/9c2e914b-06d2-4e8f-bd5c-5da22fbe8a0c",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "From Date",
+      "To Date",
+      "User",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:33.847Z"
+  },
+  "Tax Invoice": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/02c677f8-7c17-4073-b7a9-a191416aaed4",
+    "labels": [
+      "Month",
+      "DeptID"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:35.429Z"
+  },
+  "Temporary permission report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/87d2575f-08f1-43ee-9dd7-aaa52e936b93",
+    "labels": [
+      "User",
+      "Pemission Status",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:37.019Z"
+  },
+  "Permanent permission report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/d2459787-dcc3-4b93-b909-cd59afefb457",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:38.618Z"
+  },
+  "Permanent permission Log report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/1d3b9315-5f9b-4950-bcb2-d1fce68ed561",
+    "labels": [
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:40.224Z"
+  },
+  "Direct Dept Summary Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/ed049e73-9ec3-4f7b-bd70-876c2e75e420",
+    "labels": [
+      "From Date",
+      "To Date",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:41.785Z"
+  },
+  "Direct Dept Detailed Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/fd9ab401-b01d-4514-b416-521d750fa06c",
+    "labels": [
+      "From Date",
+      "To Date",
+      "User"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:43.370Z"
+  },
+  "Deposits Balance Summary Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/023e5c39-5c8c-4847-9822-5ae8b58aee7e",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "User",
+      "Payment Method",
+      "To Date",
+      "Dispaly period",
+      "Show Payment Method"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:44.959Z"
+  },
+  "Deposits Details Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/d2edb386-9416-4c19-a39c-451f5d6414b2",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Service Type",
+      "Payment Method",
+      "User",
+      "To Date",
+      "Show deposit with zero value"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:46.562Z"
+  },
+  "Deposits Statment Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/d4412267-a124-4dc2-b0cb-45f9ead7a434",
+    "labels": [
+      "Entity",
+      "Refrence Number",
+      "Reciept Number"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:48.184Z"
+  },
+  "Detailed Deposit Retain Transactions": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/305938b7-8812-4dc5-8671-617f741c213c",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "User",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:49.764Z"
+  },
+  "Summary Deposit Retain Transactions": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/c9f6efd2-dea5-4c1f-ad30-3c621fd8df20",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "Payment Method",
+      "User",
+      "From Date",
+      "To Date",
+      "Dispaly period"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:51.361Z"
+  },
+  "Transaction deposits detail Report (receivable)": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/962e3249-71d7-4dc9-973d-da2005ae7745",
+    "labels": [
+      "Entity",
+      "Sub Department",
+      "Branch",
+      "User",
+      "Payment Method",
+      "Service Type",
+      "From Date",
+      "To Date",
+      "Dispaly period",
+      "Show Payment Method"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:54.623Z"
+  },
+  "Publishers Summary Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/d8cf9c14-d111-4fb5-a7b0-32052159f6c3",
+    "labels": [
+      "Publisher",
+      "Payment Method",
+      "From Date",
+      "To Date"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:56.242Z"
+  },
+  "Publishers Detail Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/bb87697d-cfd2-4cf2-b2d7-a0bf46e5b3b0",
+    "labels": [
+      "Publisher",
+      "Payment Method",
+      "From Date",
+      "To Date",
+      "Transaction Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:57.829Z"
+  },
+  "Detailed Report For Granted Cards Transactions in Book Fair": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/effa8f33-ffac-415e-9ba6-778b7eb2d2dc",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Employee",
+      "Government entity",
+      "Publishing House",
+      "Transaction Status"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:33:59.420Z"
+  },
+  "Safari Tickets Details Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/98397c90-14e2-46dc-9137-e047deac7d15",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Date Type",
+      "Service",
+      "Reference Number",
+      "Application Number",
+      "Receipt Number"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:34:00.994Z"
+  },
+  "Safari Tickets Summary Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/109117db-66c8-4383-b572-7f2814c49ef7",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Date Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:34:02.609Z"
+  },
+  "Safari Golden & Silver Tickets Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/6b8e57ce-6acd-416e-820e-c7f0e51ffa4a",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Category"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:34:04.195Z"
+  },
+  "Visits Report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/74fca578-dce2-44c6-9455-50a6ac16afb6",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Reference Number",
+      "Entity",
+      "SubDepartment",
+      "Employee Type",
+      "Employee",
+      "Engineer",
+      "Systems"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:34:05.794Z"
+  },
+  "Issue tracking detail report": {
+    "url": "https://staging.tahseel.gov.ae/ManagePortal/report-show/02c677f8-7c17-4073-b7a9-a191416aaed3",
+    "labels": [
+      "From Date",
+      "To Date",
+      "Entity",
+      "User",
+      "Study Type"
+    ],
+    "hasAddNewButton": false,
+    "hasExportButton": false,
+    "hasColumnChooserButton": false,
+    "hasSearchInput": false,
+    "timestamp": "2026-06-23T09:34:07.404Z"
   }
 }
