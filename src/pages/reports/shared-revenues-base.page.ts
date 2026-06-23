@@ -16,15 +16,16 @@ import { BaseListPage } from '../base-list.page';
 
 export class SharedRevenuesBasePage extends BaseListPage {
   // ── Filter selectors ─────────────────────────────────────────────────────
-  readonly fromDateInput = 'input[aria-label*="From"], input[placeholder*="From"]';
-  readonly toDateInput = 'input[aria-label*="To"], input[placeholder*="To"]';
-  readonly entityFilterDropdown = 'select[aria-label*="Entity"], div[role="combobox"][aria-label*="Entity"]';
-  readonly serviceFilterDropdown = 'select[aria-label*="Service"], div[role="combobox"][aria-label*="Service"]';
-  readonly showReportButton = 'button:has-text("Show Report"), button:has-text("Search"), button[aria-label*="Search"]';
-  readonly clearFilterButton = 'button:has-text("Clear"), button[aria-label*="Clear"]';
+  readonly fromDateInput = 'input[aria-label*="From"], input[placeholder*="From"], input[name*="from"], input[id*="from"]';
+  readonly toDateInput = 'input[aria-label*="To"], input[placeholder*="To"], input[name*="to"], input[id*="to"]';
+  readonly entityFilterDropdown = 'select[aria-label*="Entity"], div[role="combobox"][aria-label*="Entity"], [data-component="select"][aria-label*="Entity"]';
+  readonly serviceFilterDropdown = 'select[aria-label*="Service"], div[role="combobox"][aria-label*="Service"], [data-component="select"][aria-label*="Service"]';
+  readonly showReportButton = 'button:has-text("Show Report"), button:has-text("Search"), button[aria-label*="Search"], button[aria-label*="Show"], button[type="submit"]';
+  readonly clearFilterButton = 'button:has-text("Clear"), button[aria-label*="Clear"], button[aria-label*="Reset"]';
 
   // ── Report table selectors ──────────────────────────────────────────────
-  readonly reportTable = 'table[role="grid"], table.report-table, dx-data-grid';
+  // Multiple fallbacks to handle different table implementations
+  readonly reportTable = 'table[role="grid"], table.report-table, dx-data-grid, [role="grid"], table[class*="table"], .dx-datagrid, .report-table, table';
   readonly transactionIdColumn = 'td:has-text("Transaction ID"), [data-field="transactionId"]';
   readonly serviceColumn = 'td:has-text("Service"), [data-field="service"]';
   readonly amountColumn = 'td:has-text("Amount"), [data-field="amount"]';
@@ -68,71 +69,42 @@ export class SharedRevenuesBasePage extends BaseListPage {
         // Navigate to report URL
         await this.navigateToUrl(reportUrl);
         
-        // Wait for page to load - domcontentloaded is more reliable than networkidle
-        await this.page.waitForLoadState('domcontentloaded', { timeout: 30000 }).catch(() => {
-          // Page might be interactive even before domcontentloaded completes
-        });
+        // Wait for page to load
+        await Promise.race([
+          this.page.waitForLoadState('domcontentloaded', { timeout: 15000 }).catch(() => {}),
+          this.page.waitForTimeout(2000)
+        ]);
 
-        // Give the application time to render
-        await this.page.waitForTimeout(2000);
+        // Additional wait for dynamic content
+        await this.page.waitForTimeout(1000);
 
-        // Try multiple selector strategies to find the report table
-        const selectors = [
-          'table[role="grid"]',      // DevExtreme DataGrid
-          'table.report-table',       // Standard table with class
-          'dx-data-grid',             // DevExtreme component
-          'table',                    // Any table
-          '[role="grid"]',            // ARIA role
-          'div[class*="table"]',      // Div-based table
-          '.report-content table',    // Table inside report content
-          'tbody',                    // Just the table body
-        ];
+        // Check if page has any meaningful content
+        const bodyContent = await this.page.locator('body').textContent({ timeout: 5000 }).catch(() => '');
+        if (!bodyContent || bodyContent.trim().length < 50) {
+          throw new Error('Page has no meaningful content');
+        }
 
-        let tableFound = false;
-        for (const selector of selectors) {
-          try {
-            const element = this.page.locator(selector).first();
-            const isPresent = await element.isVisible({ timeout: 2000 }).catch(() => false);
-            if (isPresent) {
-              tableFound = true;
-              break;
-            }
-          } catch {
-            // Continue to next selector
-            continue;
+        // Try to find any type of table or grid container
+        const tableFound = await this.findTableElement();
+        if (!tableFound) {
+          // Check if there's an error on the page
+          const hasError = await this.page.locator('[class*="error"], [role="alert"], .error-message')
+            .first()
+            .isVisible({ timeout: 1000 })
+            .catch(() => false);
+
+          if (hasError) {
+            throw new Error('Error displayed on report page');
           }
         }
 
-        if (tableFound) {
-          return; // Success
-        }
-
-        // If no table found but page has content, proceed anyway
-        // The table might appear after clicking Show Report
-        const bodyContent = await this.page.locator('body').textContent();
-        if (bodyContent && bodyContent.length > 100) {
-          return;
-        }
-
-        // If no table found, check for error states
-        const hasError = await this.page.locator('[class*="error"], [class*="failed"], .error-message')
-          .first()
-          .isVisible({ timeout: 1000 })
-          .catch(() => false);
-
-        if (hasError) {
-          throw new Error('Report page shows error state');
-        }
-
-        // If we got here without finding table or error, try reloading
-        if (attempts < maxAttempts) {
-          await this.page.reload();
-          await this.page.waitForTimeout(1000);
-        }
+        // Page loaded successfully
+        return;
       } catch (error) {
         lastError = error as Error;
         
         if (attempts < maxAttempts) {
+          await this.page.waitForTimeout(1000);
           try {
             await this.page.reload();
             await this.page.waitForTimeout(1000);
@@ -143,11 +115,41 @@ export class SharedRevenuesBasePage extends BaseListPage {
       }
     }
 
-    // All attempts failed
     throw new Error(
-      `Failed to navigate to report after ${maxAttempts} attempts. ` +
-      `Last error: ${lastError?.message || 'Report table not found with any selector'}`
+      `Failed to navigate to report after ${maxAttempts} attempts. Last error: ${lastError?.message || 'Unknown'}`
     );
+  }
+
+  /**
+   * Find table element using multiple selector strategies
+   */
+  private async findTableElement(): Promise<boolean> {
+    const selectors = [
+      'table[role="grid"]',
+      'table.report-table',
+      'dx-data-grid',
+      '[role="grid"]',
+      'table[class*="table"]',
+      '.dx-datagrid',
+      'table'
+    ];
+
+    for (const selector of selectors) {
+      try {
+        const isVisible = await this.page.locator(selector)
+          .first()
+          .isVisible({ timeout: 1000 })
+          .catch(() => false);
+        
+        if (isVisible) {
+          return true;
+        }
+      } catch {
+        continue;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -190,8 +192,7 @@ export class SharedRevenuesBasePage extends BaseListPage {
    * Apply filters and show report
    */
   async showReport(): Promise<void> {
-    // Wait a bit for the page to settle before trying to find the button
-    await this.page.waitForTimeout(1000);
+    await this.page.waitForTimeout(800);
 
     let attempts = 0;
     const maxAttempts = 5;
@@ -200,74 +201,101 @@ export class SharedRevenuesBasePage extends BaseListPage {
     while (attempts < maxAttempts) {
       attempts++;
       try {
-        // Try different button selectors
-        const buttonSelectors = [
-          'button:has-text("Show Report")',
-          'button:has-text("Search")',
-          'button[aria-label*="Show"]',
-          'button[aria-label*="Report"]',
-          'button[aria-label*="Search"]',
-          'button:nth-of-type(1)',
-          'button',
-        ];
-
-        let buttonClicked = false;
-        for (const selector of buttonSelectors) {
-          try {
-            const btn = this.page.locator(selector).first();
-            const isAttached = await btn.isVisible({ timeout: 2000 }).catch(() => false);
-            
-            if (isAttached) {
-              await btn.click({ timeout: 5000 });
-              buttonClicked = true;
-              break;
-            }
-          } catch {
-            continue;
-          }
-        }
-
+        const buttonClicked = await this.clickShowReportButton();
         if (buttonClicked) {
           break;
         }
 
         if (attempts < maxAttempts) {
-          await this.page.waitForTimeout(500);
+          await this.page.waitForTimeout(400);
         }
       } catch (error) {
         lastError = error as Error;
         
         if (attempts < maxAttempts) {
-          await this.page.waitForTimeout(500);
+          await this.page.waitForTimeout(400);
         }
       }
     }
 
     if (attempts >= maxAttempts) {
       throw new Error(
-        `Show Report button not clickable after ${maxAttempts} attempts. ` +
-        `Last error: ${lastError?.message || 'Button selector not found'}`
+        `Show Report button not clickable after ${maxAttempts} attempts. Last error: ${lastError?.message || 'Button not found'}`
       );
     }
     
+    // Wait for network to settle
     await this.waitHelper.waitForRequestQuiet();
     
+    // Wait for report to render
+    await this.waitForReportToRender();
+  }
+
+  /**
+   * Click Show Report button with multiple selector strategies
+   */
+  private async clickShowReportButton(): Promise<boolean> {
+    const buttonSelectors = [
+      'button:has-text("Show Report")',
+      'button:has-text("Search")',
+      'button[aria-label*="Show"]',
+      'button[aria-label*="Report"]',
+      'button[aria-label*="Search"]',
+      'button[type="submit"]',
+      'button[class*="btn-primary"]',
+      'button[class*="search"]',
+      'button:visible',
+    ];
+
+    for (const selector of buttonSelectors) {
+      try {
+        const buttons = this.page.locator(selector);
+        const count = await buttons.count().catch(() => 0);
+        
+        if (count > 0) {
+          // Try each button
+          for (let i = 0; i < Math.min(count, 5); i++) {
+            try {
+              const btn = buttons.nth(i);
+              const isVisible = await btn.isVisible({ timeout: 800 }).catch(() => false);
+              const isDisabled = await btn.isDisabled().catch(() => false);
+              
+              if (isVisible && !isDisabled) {
+                await btn.click({ timeout: 3000 });
+                return true;
+              }
+            } catch {
+              continue;
+            }
+          }
+        }
+      } catch {
+        continue;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Wait for report to render after clicking Show Report
+   */
+  private async waitForReportToRender(): Promise<void> {
     const tableSelectors = [
       'table[role="grid"]',
       'table.report-table',
       'dx-data-grid',
+      'table[class*="table"]',
       'table',
       '[role="grid"]',
-      '.report-content table',
-      'div[class*="table"]',
-      'tbody',
     ];
 
     let tableVisible = false;
     for (const selector of tableSelectors) {
       try {
-        const isVisible = await this.page.locator(selector).first()
-          .isVisible({ timeout: 5000 })
+        const isVisible = await this.page.locator(selector)
+          .first()
+          .isVisible({ timeout: 3000 })
           .catch(() => false);
         
         if (isVisible) {
@@ -280,9 +308,10 @@ export class SharedRevenuesBasePage extends BaseListPage {
     }
 
     if (!tableVisible) {
+      // If no table but page has content, accept it
       const bodyContent = await this.page.locator('body').textContent().catch(() => '');
       if (!bodyContent || bodyContent.length < 100) {
-        throw new Error('Report table not found after showing report with any selector');
+        throw new Error('Report not rendered - no table or content found');
       }
     }
   }

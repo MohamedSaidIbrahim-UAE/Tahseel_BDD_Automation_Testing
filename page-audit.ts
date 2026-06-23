@@ -1,20 +1,19 @@
 /**
- * page-audit.ts – Upgraded with real sidebar DOM selectors from Metronic theme.
+ * page-audit.ts – Professional Enterprise Audit with Advanced Wait & Element Collection
  *
- * Flow:
- *  1. Parse Guides/sidemenue.log → unique (title, url) leaf pages.
- *  2. Launch browser, inject storageState (if exists) to skip login.
- *  3. Ensure English language (Arabic → click #kt-language-selector, choose "English").
- *  4. For each module:
+ * Features:
+ *  1. Enhanced waiting: Full DOM + Network idle + Custom readiness checks
+ *  2. Smart modal/dialog handling: Auto-detect and close blocking overlays
+ *  3. Comprehensive element collection: Interactive elements, table columns, buttons, labels
+ *  4. Parse Guides/sidemenue.log → unique (title, url) leaf pages.
+ *  5. Launch browser, inject storageState (if exists) to skip login.
+ *  6. Ensure English language (Arabic → click #kt-language-selector, choose "English").
+ *  7. For each module:
  *     a. Search it in the side menu using li.menu-search input.
- *     b. Intelligently locate and click the correct leaf link, handling:
- *        - Direct leaf with href.
- *        - Parent with same name (expand then click leaf).
- *        - Deeply nested parent (expand intermediate).
- *        - Not found → report error.
- *     c. Verify page heading matches module title (or contains it).
- *     d. Audit page elements: labels, Add New, Export, Column Chooser, Search input.
- *  5. Write results to page-audit-results.json.
+ *     b. Intelligently locate and click the correct leaf link.
+ *     c. Wait for full page load + handle blocking modals.
+ *     d. Collect all interactive elements, table info, buttons, labels.
+ *  8. Write results to page-audit-results.json.
  */
 
 import { chromium, Browser, Page, BrowserContext } from 'playwright';
@@ -32,7 +31,41 @@ interface PageAuditResult {
     hasSearchInput: boolean;
     timestamp: string;
     errorMessage?: string;
+    interactiveElements?: ElementInfo[];
+    tableInfo?: TableInfo;
+    actionButtons?: ButtonInfo[];
+    formFields?: FormFieldInfo[];
+    allButtonTexts?: string[];
   };
+}
+
+interface ElementInfo {
+  type: string;
+  selector: string;
+  text: string;
+  ariaLabel?: string;
+  placeholder?: string;
+}
+
+interface TableInfo {
+  hasTable: boolean;
+  columns: string[];
+  actionButtons: string[];
+  rowCount: number;
+}
+
+interface ButtonInfo {
+  text: string;
+  ariaLabel?: string | null;
+  type?: string | null;
+  class?: string | null;
+}
+
+interface FormFieldInfo {
+  label: string;
+  type: string;
+  placeholder?: string | null;
+  required?: boolean;
 }
 
 interface MenuLeaf {
@@ -101,11 +134,153 @@ async function ensureEnglish(page: Page): Promise<void> {
     await langBtn.click();
     const englishOption = page.locator(ENGLISH_OPTION_SELECTOR).first();
     await englishOption.click();
-    await page.waitForLoadState('domcontentloaded');
-    await page.waitForSelector(SIDEBAR, { timeout: 10000 });
+    await waitForPageReady(page);
   } else {
     console.log('   ✅ Language is already English');
   }
+}
+
+// ── Enhanced Page Ready Detection ─────────────────────────────────────────────
+/**
+ * Wait for full page readiness:
+ * - DOM content loaded
+ * - Network idle
+ * - Angular app settled
+ * - No pending overlays
+ */
+async function waitForPageReady(page: Page, timeout: number = 15000): Promise<void> {
+  const startTime = Date.now();
+  
+  try {
+    // 1. Wait for DOM content loaded
+    await page.waitForLoadState('domcontentloaded');
+    
+    // 2. Wait for network idle (no pending requests)
+    await page.waitForLoadState('networkidle').catch(() => {
+      // Network idle may timeout on complex apps, that's ok
+    });
+    
+    // 3. Wait for Angular app to settle (if present)
+    await page.evaluate(() => {
+      return new Promise<void>((resolve) => {
+        const checkAngular = () => {
+          const ng = (window as any).ng;
+          if (ng?.probe) {
+            try {
+              const appRef = ng.probe(document.documentElement).injector.get('ng.probe');
+              if (appRef) {
+                resolve();
+                return;
+              }
+            } catch { /* ignore */ }
+          }
+          // Fallback: check if document is interactive
+          if (document.readyState === 'complete') {
+            resolve();
+          } else {
+            setTimeout(checkAngular, 100);
+          }
+        };
+        checkAngular();
+      });
+    }).catch(() => {
+      // Angular not present or check failed, continue
+    });
+    
+    // 4. Wait for main content to be visible
+    await page.waitForSelector('main, [role="main"], .page-content, .kt-content', {
+      timeout: 5000,
+      state: 'visible'
+    }).catch(() => {
+      // Main content may have different selector, continue
+    });
+    
+    // 5. Brief settle time for animations
+    await page.waitForTimeout(300);
+    
+    const elapsed = Date.now() - startTime;
+    console.log(`      ⏱️  Page ready in ${elapsed}ms`);
+  } catch (error: any) {
+    console.warn(`   ⚠ Page ready check timeout: ${error.message}`);
+  }
+}
+
+// ── Modal/Dialog/Overlay Detection & Closure ──────────────────────────────────
+/**
+ * Smart modal detection: identifies and closes blocking overlays
+ * - Alert dialogs
+ * - Confirmation dialogs
+ * - Error/Warning toasts
+ * - "Return Back" modals
+ * - Any overlay blocking page interaction
+ */
+async function closeBlockingModals(page: Page): Promise<boolean> {
+  let closedAny = false;
+  
+  try {
+    // 1. Check for "Return Back" button (common in this app)
+    const returnBackBtn = page.locator('button:has-text("Return Back"), button:has-text("رجوع"), a:has-text("Return Back")').first();
+    if (await returnBackBtn.isVisible().catch(() => false)) {
+      console.log(`      ⚠️  Blocking modal detected – clicking "Return Back"`);
+      await returnBackBtn.click();
+      await page.waitForTimeout(500);
+      closedAny = true;
+    }
+
+    // 2. Look for dismissible alerts/toasts
+    const alerts = page.locator('[role="alert"], .alert, .toast, .ng-toast, .mat-snack-bar-container, [class*="alert"], [class*="toast"]');
+    const alertCount = await alerts.count();
+    if (alertCount > 0) {
+      console.log(`      ℹ️  Found ${alertCount} alert(s) – checking for close buttons`);
+      for (let i = 0; i < Math.min(alertCount, 5); i++) {
+        const alert = alerts.nth(i);
+        const closeBtn = alert.locator('button, [role="button"], .close, [aria-label*="close"]').first();
+        if (await closeBtn.isVisible().catch(() => false)) {
+          console.log(`      ✓ Closing alert ${i + 1}`);
+          await closeBtn.click();
+          await page.waitForTimeout(200);
+          closedAny = true;
+        }
+      }
+    }
+
+    // 3. Check for modal dialogs (Material, ng-bootstrap, etc.)
+    const modals = page.locator('.mat-dialog-container, .modal, .ngx-modal, [role="dialog"], .modal-backdrop, .overlay');
+    const modalCount = await modals.count();
+    if (modalCount > 0) {
+      console.log(`      ℹ️  Found ${modalCount} modal(s) – looking for close buttons`);
+      for (let i = 0; i < Math.min(modalCount, 3); i++) {
+        const modal = modals.nth(i);
+        // Try common close button patterns
+        const closeBtn = modal.locator('button[aria-label*="close"], button.close, .mat-dialog-close, button:has-text("Close"), button:has-text("Cancel")').first();
+        if (await closeBtn.isVisible().catch(() => false)) {
+          console.log(`      ✓ Closing modal ${i + 1}`);
+          await closeBtn.click();
+          await page.waitForTimeout(300);
+          closedAny = true;
+        }
+      }
+    }
+
+    // 4. Check for overlay/backdrop elements
+    const overlays = page.locator('.modal-backdrop, .overlay-backdrop, .cdk-overlay-backdrop, [class*="backdrop"]');
+    const overlayCount = await overlays.count();
+    if (overlayCount > 0) {
+      console.log(`      ℹ️  Found ${overlayCount} overlay backdrop(s)`);
+      closedAny = true;
+    }
+
+    // 5. Try ESC key as last resort for modal dismissal
+    if (closedAny) {
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(200);
+    }
+
+  } catch (error: any) {
+    console.warn(`   ⚠ Modal detection error: ${error.message}`);
+  }
+
+  return closedAny;
 }
 
 // ── Side‑menu smart navigation ───────────────────────────────────────────────
@@ -140,7 +315,8 @@ async function navigateToModule(page: Page, moduleTitle: string): Promise<boolea
       if (await link.isVisible().catch(() => false)) {
         try {
           await link.click();
-          await page.waitForLoadState('domcontentloaded');
+          await waitForPageReady(page);
+          await closeBlockingModals(page);
           return true;
         } catch (error: any) {
           console.warn(`   ⚠ Failed to click direct link: ${error.message}`);
@@ -170,7 +346,8 @@ async function navigateToModule(page: Page, moduleTitle: string): Promise<boolea
           const leaf = leafLinks.last();
           if (await leaf.isVisible().catch(() => false)) {
             await leaf.click();
-            await page.waitForLoadState('domcontentloaded');
+            await waitForPageReady(page);
+            await closeBlockingModals(page);
             return true;
           }
         }
@@ -207,7 +384,8 @@ async function navigateToModule(page: Page, moduleTitle: string): Promise<boolea
       const link = retryLinks.first();
       if (await link.isVisible().catch(() => false)) {
         await link.click();
-        await page.waitForLoadState('domcontentloaded');
+        await waitForPageReady(page);
+        await closeBlockingModals(page);
         return true;
       }
     }
@@ -227,6 +405,159 @@ async function verifyPageTitle(page: Page, expectedTitle: string): Promise<boole
     if (text && text.toLowerCase().includes(expectedTitle.toLowerCase())) return true;
   } catch { /* ignore */ }
   return false;
+}
+
+// ── Comprehensive Element Collection ──────────────────────────────────────────
+/**
+ * Collect all interactive elements, form fields, table info, and button labels
+ */
+async function collectPageElements(page: Page): Promise<{
+  interactiveElements: ElementInfo[];
+  tableInfo: TableInfo;
+  actionButtons: ButtonInfo[];
+  formFields: FormFieldInfo[];
+  allButtonTexts: string[];
+}> {
+  const results = {
+    interactiveElements: [] as ElementInfo[],
+    tableInfo: { hasTable: false, columns: [], actionButtons: [], rowCount: 0 } as TableInfo,
+    actionButtons: [] as ButtonInfo[],
+    formFields: [] as FormFieldInfo[],
+    allButtonTexts: [] as string[],
+  };
+
+  try {
+    // 1. Collect all interactive elements (inputs, dropdowns, checkboxes, radio buttons)
+    const inputs = page.locator('input, select, textarea, [contenteditable="true"]');
+    const inputCount = await inputs.count();
+    for (let i = 0; i < inputCount; i++) {
+      const input = inputs.nth(i);
+      if (await input.isVisible().catch(() => false)) {
+        const type = (await input.getAttribute('type')) || 'text';
+        const placeholder = await input.getAttribute('placeholder');
+        const ariaLabel = await input.getAttribute('aria-label');
+        const value = await input.inputValue().catch(() => '');
+        
+        if (placeholder || ariaLabel || value) {
+          results.interactiveElements.push({
+            type: `input[${type}]`,
+            selector: await input.evaluate(el => {
+              if ((el as any).id) return `#${(el as any).id}`;
+              if ((el as any).name) return `input[name="${(el as any).name}"]`;
+              return (el as any).className;
+            }),
+            text: placeholder || ariaLabel || value || '',
+            placeholder: placeholder || undefined,
+            ariaLabel: ariaLabel || undefined,
+          });
+        }
+      }
+    }
+
+    // 2. Collect all buttons and their texts
+    const buttons = page.locator('button, a[role="button"], input[type="button"], input[type="submit"]');
+    const buttonCount = await buttons.count();
+    const seenTexts = new Set<string>();
+    
+    for (let i = 0; i < buttonCount; i++) {
+      const btn = buttons.nth(i);
+      if (await btn.isVisible().catch(() => false)) {
+        const text = (await btn.textContent())?.trim() || '';
+        const ariaLabel = await btn.getAttribute('aria-label');
+        const type = await btn.getAttribute('type');
+        const className = await btn.getAttribute('class');
+        
+        const displayText = text || ariaLabel || type || 'Button';
+        if (displayText && !seenTexts.has(displayText)) {
+          results.actionButtons.push({
+            text: displayText,
+            ariaLabel: ariaLabel || undefined,
+            type: type || undefined,
+            class: className || undefined,
+          });
+          results.allButtonTexts.push(displayText);
+          seenTexts.add(displayText);
+        }
+      }
+    }
+
+    // 3. Collect form field labels and their associated inputs
+    const labels = page.locator('label, .form-label, .label-text, [class*="label"]');
+    const labelCount = await labels.count();
+    const seenLabels = new Set<string>();
+    
+    for (let i = 0; i < labelCount; i++) {
+      const label = labels.nth(i);
+      if (await label.isVisible().catch(() => false)) {
+        const text = (await label.textContent())?.trim() || '';
+        if (text && !seenLabels.has(text) && text.length < 100) {
+          // Try to find associated input
+          const forAttr = await label.getAttribute('for');
+          let inputType = 'unknown';
+          
+          if (forAttr) {
+            const associated = page.locator(`#${forAttr}`);
+            inputType = (await associated.getAttribute('type')) || 'text';
+          }
+          
+          results.formFields.push({
+            label: text,
+            type: inputType,
+            required: text.includes('*') || text.includes('(Required)'),
+          });
+          seenLabels.add(text);
+        }
+      }
+    }
+
+    // 4. Collect table information
+    const tables = page.locator('table, [role="grid"], dx-data-grid, .data-table, [class*="table"]');
+    const tableCount = await tables.count();
+    
+    if (tableCount > 0) {
+      results.tableInfo.hasTable = true;
+      const mainTable = tables.first();
+      
+      // Get column headers
+      const headers = mainTable.locator('th, [role="columnheader"]');
+      const headerCount = await headers.count();
+      for (let i = 0; i < headerCount; i++) {
+        const header = headers.nth(i);
+        const text = (await header.textContent())?.trim() || '';
+        if (text && text.length < 50) {
+          results.tableInfo.columns.push(text);
+        }
+      }
+
+      // Get table action buttons
+      const tableButtons = mainTable.locator('button, a[role="button"], [role="button"]');
+      const tableBtnCount = await tableButtons.count();
+      const seenTableActions = new Set<string>();
+      
+      for (let i = 0; i < tableBtnCount; i++) {
+        const btn = tableButtons.nth(i);
+        if (await btn.isVisible().catch(() => false)) {
+          const text = (await btn.textContent())?.trim() || '';
+          const ariaLabel = await btn.getAttribute('aria-label');
+          const action = text || ariaLabel || 'Action';
+          
+          if (action && !seenTableActions.has(action)) {
+            results.tableInfo.actionButtons.push(action);
+            seenTableActions.add(action);
+          }
+        }
+      }
+
+      // Get row count
+      const rows = mainTable.locator('tbody tr, [role="row"]');
+      results.tableInfo.rowCount = await rows.count();
+    }
+
+  } catch (error: any) {
+    console.warn(`   ⚠ Error during element collection: ${error.message}`);
+  }
+
+  return results;
 }
 
 // ── Audit a single page ──────────────────────────────────────────────────────
@@ -266,6 +597,15 @@ async function auditPage(page: Page, module: MenuLeaf): Promise<PageAuditResult[
     if (!(await verifyPageTitle(page, module.title))) {
       result.labels.unshift(`[WARNING] Page heading mismatch for "${module.title}"`);
     }
+
+    // Collect comprehensive element information
+    const elementInfo = await collectPageElements(page);
+    result.interactiveElements = elementInfo.interactiveElements;
+    result.tableInfo = elementInfo.tableInfo;
+    result.actionButtons = elementInfo.actionButtons;
+    result.formFields = elementInfo.formFields;
+    result.allButtonTexts = elementInfo.allButtonTexts;
+
   } catch (error: any) {
     result.errorMessage = error.message || 'Unknown error';
   }

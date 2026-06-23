@@ -64,6 +64,20 @@ Given('the sharing rule is updated on {string} to {string}', async function (
   this.addLog(`Rule change date stored: ${date}`);
 });
 
+Given('the following transactions are posted for the month of June:', async function (
+  this: World,
+  dataTable: any
+) {
+  const data = dataTable.hashes();
+  this.addLog(`Setting up transactions for June:`);
+  data.forEach((row: any) => {
+    this.addLog(`  - Entity: ${row.Entity}, Count: ${row.Count}, Amount: ${row['Total Amount']} AED`);
+  });
+  // Store for later verification
+  (this as any).juneTransactions = data;
+  this.addLog(`Transaction data set for June verification`);
+});
+
 Given('the user is a center manager for {string}', async function (this: World, centerName: string) {
   this.addLog(`User role: Center Manager for ${centerName}`);
   (this as any).centerName = centerName;
@@ -94,6 +108,28 @@ When('the user runs the shared revenues report for {string}', async function (
   await reportPage.showReport();
 
   this.addLog('✅ Shared revenues report executed');
+});
+
+When('the user runs the "Total Transactions report by revenue entity" for June {int}', async function (
+  this: World,
+  year: number
+) {
+  if (!reportPage) {
+    throw new Error('Report page not initialized');
+  }
+
+  this.addLog(`Running Total Transactions report for June ${year}`);
+  await reportPage.navigateToDTPSSharjahReport();
+
+  // Set date filters for June of the given year
+  const fromDate = `${year}-06-01`;
+  const toDate = `${year}-06-30`;
+
+  await reportPage.setFromDate(fromDate);
+  await reportPage.setToDate(toDate);
+  await reportPage.showReport();
+
+  this.addLog(`✅ Total Transactions report executed for June ${year}`);
 });
 
 When('the user applies a new sharing rule mid-period', async function (this: World) {
@@ -282,5 +318,6 @@ Then('the user cannot access shared revenue details', async function (this: Worl
   }
 });
 
-// Note: Export steps "the report can be exported to PDF/Excel" are defined in
-// detailed-transactions-revenue-entity.steps.ts and are reused across all revenue reports
+// Export steps are inherited from BaseListPage and defined in detailed-transactions-revenue-entity.steps.ts
+// Steps "the report can be exported to Excel" and "the report can be exported to PDF" are reused across all revenue reports
+// Step "the report displays {string}" is defined in detailed-transactions-revenue-entity.steps.ts
