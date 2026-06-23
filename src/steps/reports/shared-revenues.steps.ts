@@ -281,3 +281,6 @@ Then('the user cannot access shared revenue details', async function (this: Worl
     this.addLog('✅ Access denied as expected');
   }
 });
+
+// Note: Export steps "the report can be exported to PDF/Excel" are defined in
+// detailed-transactions-revenue-entity.steps.ts and are reused across all revenue reports

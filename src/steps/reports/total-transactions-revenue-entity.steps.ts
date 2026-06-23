@@ -37,6 +37,12 @@ Given('the user is logged in as {string}', async function (this: World, role: st
   await this.page.waitForLoadState('networkidle');
 });
 
+Given('the user is {string}', async function (this: World, userRole: string) {
+  // Alternative phrasing for setting user role for RBAC testing
+  this.addLog(`User role set to: ${userRole}`);
+  this.targetPageLabel = 'Total Transactions Report - Role Based View';
+});
+
 Given('revenue entities {string} and {string} exist', async function (this: World, entity1: string, entity2: string) {
   // This step verifies that master data (revenue entities) exists
   // In a real scenario, this would verify via API or database
@@ -119,12 +125,6 @@ When('the user runs the "Total Transactions report by revenue entity" for June {
 
 Given('{string} exists but has no transactions', async function (this: World, entity: string) {
   this.addLog(`Entity ${entity} exists but has no transactions`);
-});
-
-Given('the user is {string}', async function (this: World, userRole: string) {
-  // Set up user role context for RBAC testing
-  this.addLog(`User role set to: ${userRole}`);
-  this.targetPageLabel = 'Total Transactions Report - Role Based View';
 });
 
 // ────────────────────────────────────────────────────────────────────────────

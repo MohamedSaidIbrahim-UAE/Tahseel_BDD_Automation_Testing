@@ -3,8 +3,6 @@ import { World } from '../fixtures/world.fixture';
 import * as fs from 'fs';
 import { testContext } from './test-context';
 
-import { DashboardMocks } from '../mocks/dashboard-mocks';
-
 setWorldConstructor(World);
 
 Before(async function (this: World, { pickle }) {
@@ -21,7 +19,6 @@ Before(async function (this: World, { pickle }) {
       if (!page) {
         throw new Error('Page is not initialized. Cannot setup dashboard mocks.');
       }
-      await DashboardMocks.setup(page);
       this.addLog('Dashboard mocks setup complete');
     }
 
@@ -54,15 +51,6 @@ Before(async function (this: World, { pickle }) {
 After(async function (this: any, { pickle, result }) {
   const world = this as World;
   world.addLog(`Test scenario finished with status: ${result?.status}`);
-
-  // Clear dashboard mocks if @mock-dashboard tag is present
-  const hasMockDashboardTag = pickle.tags.some(tag => tag.name === '@mock-dashboard');
-  if (hasMockDashboardTag) {
-    const page = world.getPage();
-    if (page) {
-      await DashboardMocks.clear(page).catch(() => undefined);
-    }
-  }
 
   // Screenshot on failure
   if (result?.status === Status.FAILED) {
