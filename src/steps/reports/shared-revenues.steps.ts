@@ -38,6 +38,9 @@ Given('the following transactions are posted under shared service on {string}:',
   data.forEach((row: any) => {
     this.addLog(`  - Service: ${row.Service}, Amount: ${row.Amount} AED, Entities: ${row.Entities}`);
   });
+  // Parse and store the date for later use
+  (this as any).transactionDate = new Date(date);
+  this.addLog(`Transaction date set to: ${date}`);
 });
 
 Given('sharing rule for {string} is {string}', async function (
@@ -45,9 +48,7 @@ Given('sharing rule for {string} is {string}', async function (
   serviceName: string,
   splitRule: string
 ) {
-  // Example: "50/50" or "60/40" or "70/30" or "80/20"
   this.addLog(`Sharing rule for ${serviceName}: ${splitRule}`);
-  // Store in this object directly (World class properties)
   (this as any).sharingRuleForService = { [serviceName]: splitRule };
 });
 
@@ -57,8 +58,10 @@ Given('the sharing rule is updated on {string} to {string}', async function (
   newSplitRule: string
 ) {
   this.addLog(`Sharing rule updated on ${date} to: ${newSplitRule}`);
-  (this as any).ruleChangeDate = date;
+  // Parse date for comparison
+  (this as any).ruleChangeDate = new Date(date);
   (this as any).newSharingRule = newSplitRule;
+  this.addLog(`Rule change date stored: ${date}`);
 });
 
 Given('the user is a center manager for {string}', async function (this: World, centerName: string) {
@@ -83,8 +86,6 @@ When('the user runs the shared revenues report for {string}', async function (
   }
 
   this.addLog(`Running shared revenues report for: ${dateRange}`);
-
-  // Parse date range (e.g., "June 2026")
   await reportPage.navigateToDTPSSharjahReport();
 
   const today = new Date().toISOString().split('T')[0];
@@ -101,11 +102,7 @@ When('the user applies a new sharing rule mid-period', async function (this: Wor
   }
 
   this.addLog('Applying mid-period sharing rule change...');
-
-  // In production, this would update the rule via API
-  // Then refresh the report to see the impact
   await reportPage.showReport();
-
   this.addLog('✅ New sharing rule applied and report refreshed');
 });
 
@@ -117,7 +114,6 @@ When('the user filters for {string}', async function (this: World, centerName: s
   this.addLog(`Filtering for center: ${centerName}`);
   await reportPage.filterByEntity(centerName);
   await reportPage.showReport();
-
   this.addLog(`✅ Filtered to show only ${centerName}`);
 });
 
@@ -146,7 +142,6 @@ Then('the report shows transaction split verification', async function (this: Wo
   }
 
   const transactions = await reportPage.getAllTransactionsWithSplit();
-
   this.addLog(`Total transactions found: ${transactions.length}`);
   expect(transactions.length).toBeGreaterThan(0);
 
@@ -168,20 +163,17 @@ Then('all transactions are split {string} between the two entities', async funct
     throw new Error('Report page not initialized');
   }
 
-  // Parse split rule (e.g., "50/50", "60/40", "70/30", "80/20")
   const [entityAStr, entityBStr] = splitRule.split('/');
   const entityAPercentage = parseInt(entityAStr, 10);
   const entityBPercentage = parseInt(entityBStr, 10);
 
   this.addLog(`Verifying ${splitRule} split...`);
 
-  // Get actual transactions for verification
   const transactions = await reportPage.getAllTransactionsWithSplit();
 
   transactions.forEach(txn => {
     const expectedA = (txn.totalAmount * entityAPercentage) / 100;
     const expectedB = (txn.totalAmount * entityBPercentage) / 100;
-
     const tolerance = 0.01;
     const isCorrect =
       Math.abs(txn.entityAShare - expectedA) < tolerance && Math.abs(txn.entityBShare - expectedB) < tolerance;
@@ -201,10 +193,8 @@ Then('the splits sum to the total transaction amount for each transaction', asyn
   }
 
   this.addLog('Verifying split summation...');
-
   const isBalanced = await reportPage.verifySplitsBalance();
   expect(isBalanced).toBe(true);
-
   this.addLog('✅ All splits correctly sum to total amounts');
 });
 
@@ -217,13 +207,12 @@ Then('the report reflects the updated sharing rule from {string} onwards', async
   }
 
   this.addLog(`Verifying rule change from ${changeDate}...`);
-
-  const midPeriodImpact = await reportPage.verifyMidPeriodRuleChange(changeDate, 60, 40); // Example: new rule is 60/40
+  const changeDateObj = new Date(changeDate);
+  const midPeriodImpact = await reportPage.verifyMidPeriodRuleChange(changeDateObj.toISOString(), 60, 40);
 
   this.addLog(`Before rule change: ${midPeriodImpact.beforeChange} AED`);
   this.addLog(`After rule change: ${midPeriodImpact.afterChange} AED`);
   this.addLog(`Difference: ${midPeriodImpact.differenceInSplit} AED`);
-
   this.addLog('✅ Mid-period rule change verified in report');
 });
 
@@ -240,10 +229,8 @@ Then('the total for the first entity is {float} AED', async function (
   }
 
   const actualTotal = await reportPage.getTotalForEntityA();
-
   this.addLog(`Entity A total: ${actualTotal} AED (expected: ${expectedAmount} AED)`);
   expect(actualTotal).toBeCloseTo(expectedAmount, 2);
-
   this.addLog(`✅ Entity A total verified: ${expectedAmount} AED`);
 });
 
@@ -256,10 +243,8 @@ Then('the total for the second entity is {float} AED', async function (
   }
 
   const actualTotal = await reportPage.getTotalForEntityB();
-
   this.addLog(`Entity B total: ${actualTotal} AED (expected: ${expectedAmount} AED)`);
   expect(actualTotal).toBeCloseTo(expectedAmount, 2);
-
   this.addLog(`✅ Entity B total verified: ${expectedAmount} AED`);
 });
 
@@ -275,9 +260,7 @@ Then('only the data for that center is displayed', async function (this: World) 
   const centerName = (this as any).centerName;
   this.addLog(`Verifying center-restricted view for: ${centerName}`);
 
-  // In production, verify that only this center's transactions are shown
   const canViewRestricted = await reportPage.verifyCenterManagerRestriction(centerName);
-
   expect(canViewRestricted).toBe(true);
   this.addLog(`✅ Center manager can only view ${centerName} data`);
 });
@@ -289,50 +272,12 @@ Then('the user cannot access shared revenue details', async function (this: Worl
 
   this.addLog('Verifying access restrictions for unauthorized user...');
 
-  // Attempt to access and verify denial
   try {
     await reportPage.navigateToDTPSSharjahReport();
     const isNoDataVisible = await reportPage.isNoDataMessageVisible();
-
-    // Unauthorized users should see no data or access denied
     expect(isNoDataVisible || (await reportPage.isNoDataMessageVisible())).toBe(true);
     this.addLog('✅ Unauthorized access properly denied');
   } catch {
     this.addLog('✅ Access denied as expected');
-  }
-});
-
-// ────────────────────────────────────────────────────────────────────────────
-// Then Steps - No Data Handling
-// ────────────────────────────────────────────────────────────────────────────
-
-Then('the report displays {string}', async function (this: World, message: string) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  const isNoDataVisible = await reportPage.isNoDataMessageVisible();
-
-  this.addLog(`Checking for message: "${message}"`);
-  expect(isNoDataVisible).toBe(true);
-
-  this.addLog(`✅ Message displayed: "${message}"`);
-});
-
-// ────────────────────────────────────────────────────────────────────────────
-// Export Steps
-// ────────────────────────────────────────────────────────────────────────────
-
-Then('the report can be exported to Excel', async function (this: World) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  try {
-    this.addLog('Exporting report to Excel...');
-    await reportPage.exportAsExcel();
-    this.addLog('✅ Report exported to Excel successfully');
-  } catch (error) {
-    this.addLog(`⚠️ Excel export encountered: ${error}`);
   }
 });

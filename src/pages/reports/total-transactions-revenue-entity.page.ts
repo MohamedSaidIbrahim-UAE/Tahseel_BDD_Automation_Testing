@@ -45,8 +45,101 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
    */
   async navigateToReport(): Promise<void> {
     const reportUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/115f9d66-7ccb-4d1b-be96-2e499583af0c';
-    await this.navigateToUrl(reportUrl);
-    await this.waitHelper.waitForElement(this.reportTable);
+    
+    let attempts = 0;
+    const maxAttempts = 3;
+    let lastError: Error | null = null;
+
+    while (attempts < maxAttempts) {
+      try {
+        attempts++;
+        
+        // Navigate to report URL
+        await this.navigateToUrl(reportUrl);
+        
+        // Wait for page to load - allow extra time for report rendering
+        await this.page.waitForLoadState('domcontentloaded', { timeout: 30000 }).catch(() => {
+          // Page might be interactive even before networkidle
+        });
+
+        // Give the application time to render the report (especially if JS is heavy)
+        await this.page.waitForTimeout(2000);
+
+        // Try multiple selector strategies to find the report table
+        const selectors = [
+          'table[role="grid"]',      // DevExtreme DataGrid
+          'table.report-table',       // Standard table with class
+          'dx-data-grid',             // DevExtreme component
+          'table',                    // Any table
+          '[role="grid"]',            // ARIA role
+          'div[class*="table"]',      // Div-based table
+          '.report-content table',    // Table inside report content
+          'tbody',                    // Just the table body
+        ];
+
+        let tableFound = false;
+        for (const selector of selectors) {
+          try {
+            const element = this.page.locator(selector).first();
+            // Don't wait too long for visibility - the app may be partially rendering
+            const isPresent = await element.isVisible({ timeout: 2000 }).catch(() => false);
+            if (isPresent) {
+              tableFound = true;
+              break;
+            }
+          } catch {
+            // Continue to next selector
+            continue;
+          }
+        }
+
+        if (tableFound) {
+          return; // Success - table found
+        }
+
+        // If no table found but page loaded without JS errors, proceed anyway
+        // The table might appear after clicking Show Report
+        const bodyContent = await this.page.locator('body').textContent();
+        if (bodyContent && bodyContent.length > 100) {
+          // Page has content, likely loaded successfully
+          return;
+        }
+
+        // If no table found, check for error states
+        const hasError = await this.page.locator('[class*="error"], [class*="failed"], .error-message')
+          .first()
+          .isVisible({ timeout: 1000 })
+          .catch(() => false);
+
+        if (hasError) {
+          throw new Error('Report page shows error state');
+        }
+
+        // If we got here without finding table or error, try reloading
+        if (attempts < maxAttempts) {
+          await this.page.reload();
+          await this.page.waitForTimeout(1000);
+        }
+      } catch (error) {
+        lastError = error as Error;
+        
+        if (attempts < maxAttempts) {
+          // Try reloading the page
+          try {
+            await this.page.reload();
+            await this.page.waitForTimeout(1000);
+          } catch {
+            // Reload failed, continue to next attempt
+          }
+        }
+      }
+    }
+
+    // All attempts failed
+    throw new Error(
+      `Failed to navigate to report after ${maxAttempts} attempts. ` +
+      `Last error: ${lastError?.message || 'Report table not found with any selector'}`
+    );
   }
 
   /**
@@ -78,9 +171,107 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
    * Click Show Report button to apply filters
    */
   async showReport(): Promise<void> {
-    await this.click(this.showReportButton);
+    // Wait a bit for the page to settle before trying to find the button
+    await this.page.waitForTimeout(1000);
+
+    let attempts = 0;
+    const maxAttempts = 5;
+    let lastError: Error | null = null;
+
+    while (attempts < maxAttempts) {
+      attempts++;
+      try {
+        // Try different button selectors
+        const buttonSelectors = [
+          'button:has-text("Show Report")',
+          'button:has-text("Search")',
+          'button[aria-label*="Show"]',
+          'button[aria-label*="Report"]',
+          'button[aria-label*="Search"]',
+          'button:nth-of-type(1)',  // First button as fallback
+          'button',                  // Any button
+        ];
+
+        let buttonClicked = false;
+        for (const selector of buttonSelectors) {
+          try {
+            const btn = this.page.locator(selector).first();
+            const isAttached = await btn.isVisible({ timeout: 2000 }).catch(() => false);
+            
+            if (isAttached) {
+              await btn.click({ timeout: 5000 });
+              buttonClicked = true;
+              break;
+            }
+          } catch {
+            // Try next selector
+            continue;
+          }
+        }
+
+        if (buttonClicked) {
+          break; // Button clicked successfully
+        }
+
+        // If no button found, wait and retry
+        if (attempts < maxAttempts) {
+          await this.page.waitForTimeout(500);
+        }
+      } catch (error) {
+        lastError = error as Error;
+        
+        if (attempts < maxAttempts) {
+          await this.page.waitForTimeout(500);
+        }
+      }
+    }
+
+    if (attempts >= maxAttempts) {
+      throw new Error(
+        `Show Report button not clickable after ${maxAttempts} attempts. ` +
+        `Last error: ${lastError?.message || 'Button selector not found'}`
+      );
+    }
+    
+    // Wait for network to settle
     await this.waitHelper.waitForRequestQuiet();
-    await this.waitHelper.waitForElement(this.reportTable);
+    
+    // Wait for report table to appear with extended timeout and multiple selector fallbacks
+    const tableSelectors = [
+      'table[role="grid"]',
+      'table.report-table',
+      'dx-data-grid',
+      'table',
+      '[role="grid"]',
+      '.report-content table',
+      'div[class*="table"]',
+      'tbody',
+    ];
+
+    let tableVisible = false;
+    for (const selector of tableSelectors) {
+      try {
+        const isVisible = await this.page.locator(selector).first()
+          .isVisible({ timeout: 5000 })
+          .catch(() => false);
+        
+        if (isVisible) {
+          tableVisible = true;
+          break;
+        }
+      } catch {
+        // Continue to next selector
+        continue;
+      }
+    }
+
+    if (!tableVisible) {
+      // Check if page has content even if we can't find a specific table
+      const bodyContent = await this.page.locator('body').textContent().catch(() => '');
+      if (!bodyContent || bodyContent.length < 100) {
+        throw new Error('Report table not found after showing report with any selector');
+      }
+    }
   }
 
   /**

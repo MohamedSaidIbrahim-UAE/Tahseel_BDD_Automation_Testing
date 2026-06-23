@@ -45,6 +45,11 @@ export class World extends CucumberWorld {
   beforeAddItemCount: number | null = null;
   beforeUpdateItemCount: number | null = null;
 
+  // Revenue Reports Data
+  transactionData: Array<{ entity: string; count: number; totalAmount: number }> | null = null;
+  centerName: string | null = null;
+  transactionDate: Date | null = null;
+
   constructor(options: IWorldOptions) {
     // 1. Call super first to initialize the parent Cucumber World object
     super(options);

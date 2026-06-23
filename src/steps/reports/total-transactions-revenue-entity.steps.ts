@@ -45,18 +45,102 @@ Given('revenue entities {string} and {string} exist', async function (this: Worl
   this.targetPageLabel = 'Total Transactions Report by Revenue Entity';
 });
 
-Given('the following transactions are posted for the month of {string}:', async function (this: World, month: string, dataTable: any) {
+Given('the following transactions are posted for the month of June:', async function (this: World, dataTable: any) {
   // This step sets up test data
   // Data is provided as a table with Entity, Count, Total Amount columns
   const data = dataTable.hashes();
   
-  this.addLog(`Setting up transactions for ${month}:`);
-  data.forEach((row: any) => {
-    this.addLog(`  - ${row.Entity}: ${row.Count} transactions, ${row['Total Amount']} AED`);
-  });
+  // Store transaction data in world context for later verification
+  this.transactionData = data.map((row: any) => ({
+    entity: row.Entity,
+    count: parseInt(row.Count, 10),
+    totalAmount: parseFloat(row['Total Amount'])
+  }));
+  
+  this.addLog(`Setting up transactions for June:`);
+  if (this.transactionData) {
+    this.transactionData.forEach((tx: any) => {
+      this.addLog(`  - ${tx.entity}: ${tx.count} transactions, ${tx.totalAmount} AED`);
+    });
+  }
   
   // In production, this would call an API to create test data
   // For BDD, we assume the test data exists in the test environment
+});
+
+Given('the following transactions are posted for the month of {string}:', async function (this: World, month: string, dataTable: any) {
+  // This step sets up test data for any month
+  // Data is provided as a table with Entity, Count, Total Amount columns
+  const data = dataTable.hashes();
+  
+  // Store transaction data in world context for later verification
+  this.transactionData = data.map((row: any) => ({
+    entity: row.Entity,
+    count: parseInt(row.Count, 10),
+    totalAmount: parseFloat(row['Total Amount'])
+  }));
+  
+  this.addLog(`Setting up transactions for ${month}:`);
+  if (this.transactionData) {
+    this.transactionData.forEach((tx: any) => {
+      this.addLog(`  - ${tx.entity}: ${tx.count} transactions, ${tx.totalAmount} AED`);
+    });
+  }
+  
+  // In production, this would call an API to create test data
+  // For BDD, we assume the test data exists in the test environment
+});
+
+When('the user runs the {string} for June {int}', async function (this: World, reportName: string, year: number) {
+  if (!reportPage) {
+    throw new Error('Report page not initialized');
+  }
+
+  this.addLog(`Running report: ${reportName} for June ${year}`);
+
+  // Navigate to the report
+  await reportPage.navigateToReport();
+  this.addLog(`Navigated to report: ${reportName}`);
+
+  // Set date filters for June of the given year
+  const fromDate = `${year}-06-01`;
+  const toDate = `${year}-06-30`;
+
+  await reportPage.setFromDate(fromDate);
+  this.addLog(`Set from date to: ${fromDate}`);
+  
+  await reportPage.setToDate(toDate);
+  this.addLog(`Set to date to: ${toDate}`);
+
+  // Click Show Report
+  await reportPage.showReport();
+  this.addLog(`Report generated for June ${year}`);
+});
+
+When('the user runs the "Total Transactions report by revenue entity" for June {int}', async function (this: World, year: number) {
+  if (!reportPage) {
+    throw new Error('Report page not initialized');
+  }
+
+  this.addLog(`Running Total Transactions report for June ${year}`);
+
+  // Navigate to the report
+  await reportPage.navigateToReport();
+  this.addLog(`Navigated to Total Transactions report`);
+
+  // Set date filters for June of the given year
+  const fromDate = `${year}-06-01`;
+  const toDate = `${year}-06-30`;
+
+  await reportPage.setFromDate(fromDate);
+  this.addLog(`Set from date to: ${fromDate}`);
+  
+  await reportPage.setToDate(toDate);
+  this.addLog(`Set to date to: ${toDate}`);
+
+  // Click Show Report
+  await reportPage.showReport();
+  this.addLog(`Report generated for June ${year}`);
 });
 
 Given('{string} exists but has no transactions', async function (this: World, entity: string) {
