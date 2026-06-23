@@ -13,7 +13,19 @@ import { resolveActivePage } from './active-page-resolver';
 // src/steps/common-ui.steps.ts
 import { DxDropdownHelper } from '../support/components/dx-dropdown.helper';
 import { DxDateBoxHelper } from '../support/components/dx-datebox.helper';
+import { ButtonHelper } from '../support/components/button.helper';
 
+
+When('I click the {string} button', async function (this: World, buttonText: string) {
+  const activePage = resolveActivePage(this, 'rawPage');
+  // 1. Initialize the button helper onto the active page thread context
+  const actionButton = new ButtonHelper(activePage);
+
+  // 2. Dispatch the safe interaction call routine
+  await actionButton.clickButtonByText(buttonText);
+
+  this.addLog(`Successfully clicked the primary action button: "${buttonText}"`);
+});
 
 When(
   'I configure the {string} datepicker field to {string} and time {string}',
