@@ -60,6 +60,7 @@
     "test:multi": "cross-env  TEST_ENV=local BROWSER=chromium cucumber-js Features/Company-Profiles.feature Features/Truck-List.feature Features/Truck-Permit.feature --tags \"not @skip\" --profile chromium --parallel 1",
     "test:Parameters": "cross-env  TEST_ENV=local BROWSER=chromium cucumber-js Features/System-Parameters.feature --tags \"not @skip\" --profile chromium --parallel 1",
     "test:parallel": "cross-env BROWSER=chromium cucumber-js --tags \"not @skip\" --parallel 4 Features/**/*.feature",
+    "test:ALL-revenue": "cross-env TEST_ENV=stage BROWSER=chromium cucumber-js --profile chromium --format progress-bar Features/Reports/4.Revenue_Reports/*.feature",
     "test:revenue:total-transactions": "cross-env TEST_ENV=stage BROWSER=chromium cucumber-js --profile chromium --tags \"@revenue and @automated\" --format progress-bar Features/Reports/4.Revenue_Reports/Total_Transactions_Report_by_Revenue_Entity.feature",
     "test:revenue:detailed-transactions": "cross-env TEST_ENV=stage BROWSER=chromium cucumber-js --profile chromium --tags \"@revenue and @automated\" --format progress-bar Features/Reports/4.Revenue_Reports/Detailed_Transactions_Report_by_Revenue_Entity.feature",
     "test:revenue:shared-dtps": "cross-env TEST_ENV=stage BROWSER=chromium cucumber-js --profile chromium --tags \"@revenue and @split and @automated\" --format progress-bar Features/Reports/4.Revenue_Reports/Shared_Revenues_Report_DTPS_and_Sharjah_Municipality.feature",
