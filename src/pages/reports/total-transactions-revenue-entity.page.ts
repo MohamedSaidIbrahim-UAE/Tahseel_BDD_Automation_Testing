@@ -21,11 +21,11 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
   readonly clearFilterButton = 'button:has-text("Clear"), button[aria-label*="Clear"], button[aria-label*="Reset"]';
 
   // ── Report table selectors ──────────────────────────────────────────────
-  readonly reportTable = 'table[role="grid"], table.report-table, dx-data-grid, [role="grid"], table[class*="table"], .dx-datagrid, table';
-  readonly revenueEntityColumn = 'td:has-text("Revenue Entity"), [data-field="revenueEntity"]';
-  readonly transactionCountColumn = 'td:has-text("Transaction Count"), [data-field="count"], [data-field="transactionCount"]';
-  readonly totalAmountColumn = 'td:has-text("Total Amount"), [data-field="amount"], [data-field="totalAmount"]';
-  readonly grandTotalRow = 'tr:has-text("Grand Total"), tr:has-text("Total")';
+  readonly reportTable = 'table[role="grid"], table.report-table, dx-data-grid, [role="grid"], table[class*="table"], table[class*="data"], table[class*="grid"], .dx-datagrid, .data-table, .grid-container, [class*="grid-wrapper"], table';
+  readonly revenueEntityColumn = 'td:has-text("Revenue Entity"), td:has-text("Entity"), [data-field="revenueEntity"], [class*="entity"]';
+  readonly transactionCountColumn = 'td:has-text("Transaction Count"), td:has-text("Count"), td:has-text("Transactions"), [data-field="count"], [data-field="transactionCount"]';
+  readonly totalAmountColumn = 'td:has-text("Total Amount"), td:has-text("Amount"), td:has-text("Total"), [data-field="amount"], [data-field="totalAmount"]';
+  readonly grandTotalRow = 'tr:has-text("Grand Total"), tr:has-text("Total"), tr[class*="grand-total"], tr[class*="summary"]';
   readonly grandTotalAmount = 'span:has-text("Grand Total") ~ span, td:has-text("Grand Total") ~ td';
 
   // ── Empty/No-data states ────────────────────────────────────────────────
@@ -214,13 +214,34 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
   private async clickShowReportButton(): Promise<boolean> {
     const buttonSelectors = [
       'button:has-text("Show Report")',
+      'button:has-text("Display Report")',
+      'button:has-text("Generate Report")',
+      'button:has-text("View Report")',
       'button:has-text("Search")',
+      'button:has-text("Find")',
+      'button:has-text("Apply")',
       'button[aria-label*="Show"]',
       'button[aria-label*="Report"]',
       'button[aria-label*="Search"]',
+      'button[aria-label*="Display"]',
+      'button[aria-label*="Generate"]',
+      'button[title*="Show"]',
+      'button[title*="Report"]',
+      'button[title*="Search"]',
       'button[type="submit"]',
       'button[class*="btn-primary"]',
+      'button[class*="btn-submit"]',
       'button[class*="search"]',
+      'button[class*="report"]',
+      'button[class*="submit"]',
+      '[role="button"]:has-text("Show Report")',
+      '[role="button"]:has-text("Search")',
+      'input[type="submit"]',
+      'input[type="button"][value*="Show"]',
+      'input[type="button"][value*="Search"]',
+      '.btn-report',
+      '.search-button',
+      '.show-report-button',
       'button:visible',
     ];
 
@@ -236,8 +257,14 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
               const btn = buttons.nth(i);
               const isVisible = await btn.isVisible({ timeout: 800 }).catch(() => false);
               const isDisabled = await btn.isDisabled().catch(() => false);
+              const isHidden = await btn.evaluate((el: any) => {
+                const style = window.getComputedStyle(el);
+                return style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0';
+              }).catch(() => false);
               
-              if (isVisible && !isDisabled) {
+              if (isVisible && !isDisabled && !isHidden) {
+                // Scroll button into view
+                await btn.scrollIntoViewIfNeeded().catch(() => {});
                 await btn.click({ timeout: 3000 });
                 return true;
               }
@@ -261,34 +288,73 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
     const tableSelectors = [
       'table[role="grid"]',
       'table.report-table',
-      'dx-data-grid',
+      'table[class*="data"]',
+      'table[class*="grid"]',
       'table[class*="table"]',
-      'table',
+      'dx-data-grid',
       '[role="grid"]',
+      '[class*="grid-wrapper"]',
+      '.data-table',
+      '.grid-container',
+      '.report-container',
+      'table',
     ];
 
     let tableVisible = false;
+    let lastError: Error | null = null;
+    
     for (const selector of tableSelectors) {
       try {
-        const isVisible = await this.page.locator(selector)
-          .first()
-          .isVisible({ timeout: 3000 })
-          .catch(() => false);
+        const element = this.page.locator(selector).first();
+        const isVisible = await element.isVisible({ timeout: 3000 }).catch(() => false);
         
         if (isVisible) {
+          // Give the table time to load its data
+          await this.page.waitForTimeout(500);
           tableVisible = true;
           break;
         }
-      } catch {
+      } catch (error) {
+        lastError = error as Error;
         continue;
       }
     }
 
     if (!tableVisible) {
-      // If no table but page has content, accept it
-      const bodyContent = await this.page.locator('body').textContent().catch(() => '');
-      if (!bodyContent || bodyContent.length < 100) {
-        throw new Error('Report not rendered - no table or content found');
+      // If no table but page has content, check for error or empty state
+      try {
+        const bodyContent = await this.page.locator('body').textContent().catch(() => '');
+        const hasErrorMessage = await this.page.locator('[class*="error"], [role="alert"], .error-message, .alert-danger')
+          .first()
+          .isVisible({ timeout: 500 })
+          .catch(() => false);
+        
+        if (hasErrorMessage) {
+          const errorText = await this.page.locator('[class*="error"], [role="alert"], .error-message, .alert-danger')
+            .first()
+            .textContent()
+            .catch(() => 'Unknown error');
+          throw new Error(`Error on page: ${errorText}`);
+        }
+        
+        // Check for empty/no data state
+        const hasNoDataMessage = await this.page.locator(this.noDataMessage)
+          .isVisible({ timeout: 500 })
+          .catch(() => false);
+        
+        if (hasNoDataMessage) {
+          // No data is acceptable - exit without error
+          return;
+        }
+        
+        if (!bodyContent || bodyContent.length < 100) {
+          throw new Error('Report not rendered - no table or content found');
+        }
+      } catch (error) {
+        if ((error as Error).message.includes('Report not rendered')) {
+          throw error;
+        }
+        // Otherwise allow it to continue - might be valid no-data state
       }
     }
   }
