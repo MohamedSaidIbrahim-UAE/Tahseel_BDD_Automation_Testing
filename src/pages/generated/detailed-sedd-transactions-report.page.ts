@@ -41,7 +41,7 @@ export class DetailedSeddTransactionsReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/ff777e79-d90f-40c9-968d-e9790f73ce08';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     userField: '[aria-label="User"], label:has-text("User") ~ input',

@@ -41,7 +41,7 @@ export class TicketsDelivery extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/tickets/tickets-delivery';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     receipt_number_Field: '[aria-label="Receipt Number *"], label:has-text("Receipt Number *") ~ input',

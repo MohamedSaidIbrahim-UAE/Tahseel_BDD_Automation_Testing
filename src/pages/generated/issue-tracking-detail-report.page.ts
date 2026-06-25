@@ -41,7 +41,7 @@ export class IssueTrackingDetailReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/02c677f8-7c17-4073-b7a9-a191416aaed3';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

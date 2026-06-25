@@ -41,7 +41,7 @@ export class SfdDetailedWalletsTransactionsReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/c7427897-5abd-4743-9cab-9c4d1fa5039c';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     wallet_nameField: '[aria-label="Wallet Name"], label:has-text("Wallet Name") ~ input',

@@ -41,7 +41,7 @@ export class VoucherLoadDetailsReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/130dfd7c-fe06-425f-8152-1da0e4d6225d';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     groupField: '[aria-label="Group"], label:has-text("Group") ~ input',

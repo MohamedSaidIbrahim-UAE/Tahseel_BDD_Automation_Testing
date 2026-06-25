@@ -41,7 +41,7 @@ export class TransactionFeesForAllPaymentMethods extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/97353334-399a-4613-9097-9cf5dc95c690';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     entityField: '[aria-label="Entity"], label:has-text("Entity") ~ input',

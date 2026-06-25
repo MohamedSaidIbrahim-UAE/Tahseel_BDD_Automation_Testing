@@ -41,7 +41,7 @@ export class AddVisit extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/Communications/add-visit';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     add_visitField: '[aria-label="Add Visit"], label:has-text("Add Visit") ~ input',

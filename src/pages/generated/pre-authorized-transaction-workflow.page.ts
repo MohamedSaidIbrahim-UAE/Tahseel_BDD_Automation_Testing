@@ -41,7 +41,7 @@ export class PreAuthorizedTransactionWorkflow extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/workflowManag/pre-authorized-transactions-workflow';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     dark_modeField: '[aria-label="Dark Mode"], label:has-text("Dark Mode") ~ input',

@@ -41,7 +41,7 @@ export class DetailedReportOfCanceledTransactions extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/002eb575-6f35-4e2d-8a9b-49a0627cb229';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     entityField: '[aria-label="Entity"], label:has-text("Entity") ~ input',

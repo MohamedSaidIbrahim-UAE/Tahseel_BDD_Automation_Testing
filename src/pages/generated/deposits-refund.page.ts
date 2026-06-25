@@ -41,7 +41,7 @@ export class DepositsRefund extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/deposits/depositRefund';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     deposit_refund_requestField: '[aria-label="Deposit Refund Request"], label:has-text("Deposit Refund Request") ~ input',

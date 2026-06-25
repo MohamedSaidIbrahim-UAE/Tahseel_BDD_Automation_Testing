@@ -41,7 +41,7 @@ export class TransactionSummaryReportBasedOnIncomereceivable extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/7c9f7dcd-1163-4e89-91dd-02b841c24ed7';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Action buttons
     saveButton: 'button:has-text("Save"), [aria-label*="Save"]',

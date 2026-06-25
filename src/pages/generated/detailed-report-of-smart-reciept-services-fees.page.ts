@@ -41,7 +41,7 @@ export class DetailedReportOfSmartRecieptServicesFees extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/8fe08b0a-51d6-4c15-8467-8f334372b504';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     entityField: '[aria-label="Entity"], label:has-text("Entity") ~ input',

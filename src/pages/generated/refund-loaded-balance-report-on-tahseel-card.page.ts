@@ -41,7 +41,7 @@ export class RefundLoadedBalanceReportOnTahseelCard extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/0c272c20-7316-4c6b-b2d0-07c493b88c9e';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

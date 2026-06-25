@@ -41,7 +41,7 @@ export class DepositsRetain extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/deposits/depositRetain';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     deposit_retain_requestField: '[aria-label="Deposit Retain Request"], label:has-text("Deposit Retain Request") ~ input',

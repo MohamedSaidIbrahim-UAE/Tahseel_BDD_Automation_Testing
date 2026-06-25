@@ -41,7 +41,7 @@ export class TahseelAccountLoadDetailsReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/86723e25-d979-4224-8acc-68e9b90a683d';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     groupField: '[aria-label="Group"], label:has-text("Group") ~ input',

@@ -41,7 +41,7 @@ export class SafariGoldenSilverTicketsReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/6b8e57ce-6acd-416e-820e-c7f0e51ffa4a';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

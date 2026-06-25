@@ -41,7 +41,7 @@ export class IndividualAccount extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/corporate/Addindividualaccount';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     emirate_id_Field: '[aria-label="Emirate ID *"], label:has-text("Emirate ID *") ~ input',

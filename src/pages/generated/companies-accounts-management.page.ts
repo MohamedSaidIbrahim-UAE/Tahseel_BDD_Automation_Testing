@@ -41,7 +41,7 @@ export class CompaniesAccountsManagement extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/corporate/companyprofile';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     dark_modeField: '[aria-label="Dark Mode"], label:has-text("Dark Mode") ~ input',

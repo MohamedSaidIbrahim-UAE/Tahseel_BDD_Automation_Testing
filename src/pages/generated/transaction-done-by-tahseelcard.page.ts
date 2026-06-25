@@ -41,7 +41,7 @@ export class TransactionDoneByTahseelcard extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/ae276954-24ac-4a88-a3ca-9b00897840a4';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

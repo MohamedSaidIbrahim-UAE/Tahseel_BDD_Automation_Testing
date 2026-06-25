@@ -41,7 +41,7 @@ export class UaeCentralBankSettlementReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/9cc6b719-265d-4abd-a668-839d2f9f21d4';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

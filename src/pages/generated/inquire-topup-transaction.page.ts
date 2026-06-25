@@ -41,7 +41,7 @@ export class InquireTopupTransaction extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/top-up/inquiry';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     inquire_topup_transactionField: '[aria-label="Inquire Topup Transaction"], label:has-text("Inquire Topup Transaction") ~ input',

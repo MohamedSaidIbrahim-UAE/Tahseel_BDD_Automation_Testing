@@ -41,7 +41,7 @@ export class EntitiesDepositsSummaryReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/f33a1214-cce9-4872-9f16-62037287b60a';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     deposit_entityField: '[aria-label="Deposit Entity"], label:has-text("Deposit Entity") ~ input',

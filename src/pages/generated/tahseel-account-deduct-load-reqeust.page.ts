@@ -41,7 +41,7 @@ export class TahseelAccountDeductLoadReqeust extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/f6239423-7124-4080-9b03-b47feec33ec0';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     request_typeField: '[aria-label="Request type"], label:has-text("Request type") ~ input',

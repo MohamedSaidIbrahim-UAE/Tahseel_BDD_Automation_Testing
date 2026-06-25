@@ -41,7 +41,7 @@ export class StuckRefundRequests extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/refund/bank-nonexisting-refundrequests';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     stuck_refund_requestsField: '[aria-label="Stuck Refund Requests"], label:has-text("Stuck Refund Requests") ~ input',

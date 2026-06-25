@@ -41,7 +41,7 @@ export class DailyUsersLoadingReportForTasheelCenters extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/fc7bfacb-c3b7-4383-bd6e-9cd253f018d2';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Action buttons
     saveButton: 'button:has-text("Save"), [aria-label*="Save"]',

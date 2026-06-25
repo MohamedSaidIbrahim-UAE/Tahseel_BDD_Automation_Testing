@@ -41,7 +41,7 @@ export class DailyDepositForBusinessServiceCenters extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/deposite-settlement/tasheel';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     daily_deposit_for_business_service_centersField: '[aria-label="Daily deposit for Business Service Centers"], label:has-text("Daily deposit for Business Service Centers") ~ input',

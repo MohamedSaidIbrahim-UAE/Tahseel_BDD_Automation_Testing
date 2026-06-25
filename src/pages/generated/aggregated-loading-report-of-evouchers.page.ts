@@ -41,7 +41,7 @@ export class AggregatedLoadingReportOfEvouchers extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/a5082608-d1be-4960-9363-c69821aa1b43';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Action buttons
     saveButton: 'button:has-text("Save"), [aria-label*="Save"]',

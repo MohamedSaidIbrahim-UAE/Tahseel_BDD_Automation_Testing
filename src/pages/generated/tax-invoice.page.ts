@@ -41,7 +41,7 @@ export class TaxInvoice extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/02c677f8-7c17-4073-b7a9-a191416aaed4';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     monthField: '[aria-label="Month"], label:has-text("Month") ~ input',

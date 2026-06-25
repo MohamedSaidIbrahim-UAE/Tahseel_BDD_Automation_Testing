@@ -41,7 +41,7 @@ export class DetailedReportForGrantedCardsTransactionsInBookFair extends BasePag
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/effa8f33-ffac-415e-9ba6-778b7eb2d2dc';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

@@ -41,7 +41,7 @@ export class AggregatedTransactionsReportPaidByCreditCards extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/fedfceac-2366-407e-881a-29fa1ec5365b';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Action buttons
     saveButton: 'button:has-text("Save"), [aria-label*="Save"]',

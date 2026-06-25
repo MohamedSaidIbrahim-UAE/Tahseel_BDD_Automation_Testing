@@ -41,7 +41,7 @@ export class TemporaryPermissionReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/87d2575f-08f1-43ee-9dd7-aaa52e936b93';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     userField: '[aria-label="User"], label:has-text("User") ~ input',

@@ -41,7 +41,7 @@ export class TahseelLostCardsReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/c0d4e042-e2be-479a-9f1a-c8fdf4ea726b';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     to_dateField: '[aria-label="To Date"], label:has-text("To Date") ~ input',

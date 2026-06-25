@@ -41,7 +41,7 @@ export class ChequesTransactions extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/cheques/transactions';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     dark_modeField: '[aria-label="Dark Mode"], label:has-text("Dark Mode") ~ input',

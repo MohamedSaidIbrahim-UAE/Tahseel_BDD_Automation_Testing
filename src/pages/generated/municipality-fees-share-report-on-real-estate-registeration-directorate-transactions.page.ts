@@ -41,7 +41,7 @@ export class MunicipalityFeesShareReportOnRealEstateRegisterationDirectorateTran
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/2bf33ade-d2fa-4e54-912d-a5342f678897';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

@@ -41,7 +41,7 @@ export class BankTransfersOfSharjahIslamicBankGeneral extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/bd57abb9-56e9-4559-9e1b-0654e91e454c';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     entityField: '[aria-label="Entity"], label:has-text("Entity") ~ input',

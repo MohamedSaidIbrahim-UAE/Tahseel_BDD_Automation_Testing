@@ -41,7 +41,7 @@ export class DetailedTransactionsReportOfSeedAccordingToTheFeesEntityOwner exten
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/f78bc512-b32c-4307-9f34-230ecf0b7328';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Action buttons
     saveButton: 'button:has-text("Save"), [aria-label*="Save"]',

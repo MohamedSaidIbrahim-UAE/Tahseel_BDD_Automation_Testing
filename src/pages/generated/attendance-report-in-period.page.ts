@@ -41,7 +41,7 @@ export class AttendanceReportInPeriod extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/847d57bd-30b6-4274-a416-653de00438ee';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     fromField: '[aria-label="From"], label:has-text("From") ~ input',

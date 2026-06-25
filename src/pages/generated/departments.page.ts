@@ -41,7 +41,7 @@ export class Departments extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/hierarchy/department';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     dark_modeField: '[aria-label="Dark Mode"], label:has-text("Dark Mode") ~ input',

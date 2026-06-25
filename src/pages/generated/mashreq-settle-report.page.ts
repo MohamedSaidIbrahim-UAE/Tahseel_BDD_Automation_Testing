@@ -41,7 +41,7 @@ export class MashreqSettleReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/52935a29-6a74-46f4-baae-bd5825aafe5e';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     to_dateField: '[aria-label="To Date"], label:has-text("To Date") ~ input',

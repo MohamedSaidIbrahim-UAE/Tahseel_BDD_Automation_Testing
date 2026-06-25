@@ -41,7 +41,7 @@ export class Requests extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/tahseelcard';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     inquire_refund_requestsField: '[aria-label="Inquire Refund Requests"], label:has-text("Inquire Refund Requests") ~ input',

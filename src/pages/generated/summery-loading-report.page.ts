@@ -41,7 +41,7 @@ export class SummeryLoadingReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/46f4addf-afe5-48a4-a4bc-8d486026840c';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     groupField: '[aria-label="Group"], label:has-text("Group") ~ input',

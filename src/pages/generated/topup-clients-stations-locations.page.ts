@@ -41,7 +41,7 @@ export class TopupClientsStationsLocations extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/system-users/topup-stations-locations';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     dark_modeField: '[aria-label="Dark Mode"], label:has-text("Dark Mode") ~ input',

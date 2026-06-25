@@ -41,7 +41,7 @@ export class InquireElectronicReceipt extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/packaging-fund-management/voucher-inquire';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     inquire_status_of_electronic_receiptField: '[aria-label="Inquire status of electronic receipt"], label:has-text("Inquire status of electronic receipt") ~ input',

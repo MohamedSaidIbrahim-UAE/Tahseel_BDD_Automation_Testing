@@ -41,7 +41,7 @@ export class Refunds extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/refund';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     refund_requestsField: '[aria-label="Refund Requests"], label:has-text("Refund Requests") ~ input',

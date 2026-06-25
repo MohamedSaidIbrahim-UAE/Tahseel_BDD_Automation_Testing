@@ -41,7 +41,7 @@ export class ReportTheTotalServiceChargesForLoadingTransactions extends BasePage
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/f4bebe7a-28c3-494e-ad2a-d5bd090531b6';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

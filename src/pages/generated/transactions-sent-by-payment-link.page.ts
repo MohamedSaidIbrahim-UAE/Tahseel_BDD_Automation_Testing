@@ -41,7 +41,7 @@ export class TransactionsSentByPaymentLink extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/transactions/payment-link-transaction';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     search_criteriaField: '[aria-label="Search Criteria"], label:has-text("Search Criteria") ~ input',

@@ -41,7 +41,7 @@ export class ADetailedReportForLoadingUsingAlThiqaClubEmployeeCard extends BaseP
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/80cacf55-4ccc-478a-bcd1-194e17c4e28c';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     _Field: '[aria-label="اسم المستخدم"], label:has-text("اسم المستخدم") ~ input',

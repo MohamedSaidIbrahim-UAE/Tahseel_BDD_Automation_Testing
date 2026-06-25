@@ -41,7 +41,7 @@ export class SharjahIslamicBankRefundReportInPeriod extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/b789c747-bfdd-4baa-a66f-507f1309a1f0';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

@@ -41,7 +41,7 @@ export class BankDevices extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/bank-devices/bank-devices';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     bank_devicesField: '[aria-label="Bank Devices"], label:has-text("Bank Devices") ~ input',

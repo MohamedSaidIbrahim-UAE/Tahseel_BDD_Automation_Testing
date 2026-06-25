@@ -41,7 +41,7 @@ export class CollectorsPerformanceReportForTransactionsCompletedFromTheDirectPay
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/4f19f2f5-dded-43df-a9c7-6b12d6caae78';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     fromField: '[aria-label="From"], label:has-text("From") ~ input',

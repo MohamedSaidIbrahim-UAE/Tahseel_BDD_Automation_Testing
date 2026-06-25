@@ -41,7 +41,7 @@ export class MashreqBankSettlement extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/settlement/mashreq-bank';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     transaction_exsist_in_mashreq_bank_and_not_exsist_in_tahseelField: '[aria-label="Transaction exsist in Mashreq bank and not exsist in Tahseel"], label:has-text("Transaction exsist in Mashreq bank and not exsist in Tahseel") ~ input',

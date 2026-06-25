@@ -41,7 +41,7 @@ export class EtisalatDetailedTransactionsFromDigitalSharjah extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/2c5fa3ee-5451-4087-908d-0656a3db5ef4';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     service_typeField: '[aria-label="Service Type"], label:has-text("Service Type") ~ input',

@@ -41,7 +41,7 @@ export class DetailedReportOfPosTransactionsByRevenueSource extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/da6263af-4818-4b0c-93cd-eafcd446ba5e';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     entityField: '[aria-label="Entity"], label:has-text("Entity") ~ input',

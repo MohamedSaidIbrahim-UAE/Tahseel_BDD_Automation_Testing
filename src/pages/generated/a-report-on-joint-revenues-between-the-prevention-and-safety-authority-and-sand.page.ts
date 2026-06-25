@@ -41,7 +41,7 @@ export class AReportOnJointRevenuesBetweenThePreventionAndSafetyAuthorityAndSand
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/2922f019-ada2-4466-b230-2d9f0eea6ac7';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

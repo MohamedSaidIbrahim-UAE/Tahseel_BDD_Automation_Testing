@@ -41,7 +41,7 @@ export class RefundTransactions extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/refund/cancel-transaction';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     voucher_detailsField: '[aria-label="Voucher Details"], label:has-text("Voucher Details") ~ input',

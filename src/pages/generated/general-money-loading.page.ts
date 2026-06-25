@@ -41,7 +41,7 @@ export class GeneralMoneyLoading extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/f23b2250-8124-430b-a703-5845100a806f';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     user_nameField: '[aria-label="User Name"], label:has-text("User Name") ~ input',

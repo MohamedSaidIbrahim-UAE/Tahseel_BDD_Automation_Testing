@@ -41,7 +41,7 @@ export class AggregatedTransactionsReportOfSeddAccordingToTheFeesEntityOwner ext
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/51db49b0-c098-4808-8b29-bb868671abba';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     depcodeField: '[aria-label="DepCode"], label:has-text("DepCode") ~ input',

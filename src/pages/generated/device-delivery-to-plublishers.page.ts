@@ -41,7 +41,7 @@ export class DeviceDeliveryToPlublishers extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/exhibition/device-delivery';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     device_delivery_to_plublishersField: '[aria-label="Device Delivery To Plublishers"], label:has-text("Device Delivery To Plublishers") ~ input',

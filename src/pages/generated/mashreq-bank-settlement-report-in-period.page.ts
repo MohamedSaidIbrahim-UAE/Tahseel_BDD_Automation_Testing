@@ -41,7 +41,7 @@ export class MashreqBankSettlementReportInPeriod extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/bd63cf1f-22fb-4ada-938f-ff9ac9abe06a';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

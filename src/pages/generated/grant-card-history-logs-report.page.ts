@@ -41,7 +41,7 @@ export class GrantCardHistoryLogsReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/1fd4b6c2-6ea3-4223-be7b-a6f4700e3c70';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     fromField: '[aria-label="From"], label:has-text("From") ~ input',

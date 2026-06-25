@@ -41,7 +41,7 @@ export class VoucherRecieptReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/49af9d44-219a-4ce4-a632-b62b8d940a09';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     date_fromField: '[aria-label="Date From"], label:has-text("Date From") ~ input',

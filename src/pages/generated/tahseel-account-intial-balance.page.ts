@@ -41,7 +41,7 @@ export class TahseelAccountIntialBalance extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/093bcb10-3a9b-4761-95b6-85602e8fcccb';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     accounttypeField: '[aria-label="AccountType"], label:has-text("AccountType") ~ input',

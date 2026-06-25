@@ -41,7 +41,7 @@ export class PublishersDetailReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/bb87697d-cfd2-4cf2-b2d7-a0bf46e5b3b0';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     publisherField: '[aria-label="Publisher"], label:has-text("Publisher") ~ input',

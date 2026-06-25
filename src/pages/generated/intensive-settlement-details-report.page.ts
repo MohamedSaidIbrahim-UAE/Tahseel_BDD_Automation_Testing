@@ -41,7 +41,7 @@ export class IntensiveSettlementDetailsReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/453233ce-8f0a-4ef6-b145-c8d1c19c1dd0';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     dateField: '[aria-label="Date"], label:has-text("Date") ~ input',

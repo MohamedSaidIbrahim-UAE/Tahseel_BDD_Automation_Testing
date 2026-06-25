@@ -41,7 +41,7 @@ export class CorporateCardBalanceReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/feda2c09-d12c-4a01-b696-36cde5ca8f71';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     userField: '[aria-label="User"], label:has-text("User") ~ input',

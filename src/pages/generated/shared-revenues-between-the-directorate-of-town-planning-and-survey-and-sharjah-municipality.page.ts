@@ -41,7 +41,7 @@ export class SharedRevenuesBetweenTheDirectorateOfTownPlanningAndSurveyAndSharja
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/d021f360-e2d9-4863-9ff3-bc231af2ecb7';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',

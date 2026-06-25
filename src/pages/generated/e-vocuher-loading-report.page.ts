@@ -41,7 +41,7 @@ export class EVocuherLoadingReport extends BasePage {
    */
   readonly moduleUrl = 'https://staging.tahseel.gov.ae/ManagePortal/report-show/7b3cd636-866a-4721-9b5a-c93441c85e90';
 
-  readonly selectors = {
+  readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
     to_dateField: '[aria-label="To Date"], label:has-text("To Date") ~ input',
