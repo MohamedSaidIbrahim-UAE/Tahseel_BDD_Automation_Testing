@@ -1,4 +1,4 @@
-# Feature: Transaction Done By TahseelCard - From Date
+Feature: Transaction Done By TahseelCard - From Date
   
   As a user
   I want to interact with the Transaction Done By TahseelCard module

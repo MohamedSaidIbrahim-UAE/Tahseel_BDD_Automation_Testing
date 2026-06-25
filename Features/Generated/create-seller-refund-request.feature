@@ -1,4 +1,4 @@
-# Feature: Create Seller Refund Request - Page heading mismatch for "Create Seller Refund Request"
+Feature: Create Seller Refund Request - Page heading mismatch for "Create Seller Refund Request"
   
   As a user
   I want to interact with the Create Seller Refund Request module

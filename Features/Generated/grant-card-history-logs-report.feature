@@ -1,4 +1,4 @@
-# Feature: Grant Card History Logs Report - From
+Feature: Grant Card History Logs Report - From
   
   As a user
   I want to interact with the Grant Card History Logs Report module

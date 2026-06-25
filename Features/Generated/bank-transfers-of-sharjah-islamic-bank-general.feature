@@ -1,4 +1,4 @@
-# Feature: Bank Transfers Of Sharjah Islamic Bank General - Entity
+Feature: Bank Transfers Of Sharjah Islamic Bank General - Entity
   
   As a user
   I want to interact with the Bank Transfers Of Sharjah Islamic Bank General module

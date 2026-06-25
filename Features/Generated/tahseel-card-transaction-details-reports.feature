@@ -1,4 +1,4 @@
-# Feature: Tahseel Card Transaction Details Reports - Entity
+Feature: Tahseel Card Transaction Details Reports - Entity
   
   As a user
   I want to interact with the Tahseel Card Transaction Details Reports module

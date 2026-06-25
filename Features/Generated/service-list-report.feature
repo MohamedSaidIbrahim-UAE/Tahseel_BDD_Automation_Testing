@@ -1,4 +1,4 @@
-# Feature: Service List Report - Entity
+Feature: Service List Report - Entity
   
   As a user
   I want to interact with the Service List Report module

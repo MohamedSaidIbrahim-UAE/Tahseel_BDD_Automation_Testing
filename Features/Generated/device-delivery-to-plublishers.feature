@@ -1,4 +1,4 @@
-# Feature: Device Delivery To Plublishers - Device Delivery To Plublishers
+Feature: Device Delivery To Plublishers - Device Delivery To Plublishers
   
   As a user
   I want to interact with the Device Delivery To Plublishers module

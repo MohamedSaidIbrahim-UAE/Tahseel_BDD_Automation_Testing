@@ -1,4 +1,4 @@
-# Feature: Safari Golden & Silver Tickets Report - From Date
+Feature: Safari Golden & Silver Tickets Report - From Date
   
   As a user
   I want to interact with the Safari Golden & Silver Tickets Report module

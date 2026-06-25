@@ -1,4 +1,4 @@
-# Feature: My Requests - Page heading mismatch for "My Requests"
+Feature: My Requests - Page heading mismatch for "My Requests"
   
   As a user
   I want to interact with the My Requests module

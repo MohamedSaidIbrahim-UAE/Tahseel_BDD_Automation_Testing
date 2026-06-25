@@ -1,4 +1,4 @@
-# Feature: Automatic Transaction Refund Report - Entity
+Feature: Automatic Transaction Refund Report - Entity
   
   As a user
   I want to interact with the Automatic Transaction Refund Report module

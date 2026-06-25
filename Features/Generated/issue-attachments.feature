@@ -1,4 +1,4 @@
-# Feature: Issue Attachments - Module management and operations
+Feature: Issue Attachments - Module management and operations
   
   As a user
   I want to interact with the Issue Attachments module

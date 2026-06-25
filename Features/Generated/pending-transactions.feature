@@ -1,4 +1,4 @@
-# Feature: Pending Transactions - Module management and operations
+Feature: Pending Transactions - Module management and operations
   
   As a user
   I want to interact with the Pending Transactions module

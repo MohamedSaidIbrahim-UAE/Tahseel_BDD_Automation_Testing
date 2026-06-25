@@ -1,4 +1,4 @@
-# Feature: Municipality Fees Share Report On Real Estate Registeration Directorate Transactions - From Date
+Feature: Municipality Fees Share Report On Real Estate Registeration Directorate Transactions - From Date
   
   As a user
   I want to interact with the Municipality Fees Share Report On Real Estate Registeration Directorate Transactions module

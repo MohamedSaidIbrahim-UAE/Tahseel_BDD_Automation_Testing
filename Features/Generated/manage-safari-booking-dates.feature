@@ -1,4 +1,4 @@
-# Feature: Manage Safari Booking Dates - Page heading mismatch for "Manage Safari Booking Dates"
+Feature: Manage Safari Booking Dates - Page heading mismatch for "Manage Safari Booking Dates"
   
   As a user
   I want to interact with the Manage Safari Booking Dates module

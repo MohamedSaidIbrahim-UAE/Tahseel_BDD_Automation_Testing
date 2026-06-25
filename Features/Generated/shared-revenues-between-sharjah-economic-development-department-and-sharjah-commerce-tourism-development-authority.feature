@@ -1,4 +1,4 @@
-# Feature: Shared Revenues Between Sharjah Economic Development Department And Sharjah Commerce & Tourism Development Authority - From Date
+Feature: Shared Revenues Between Sharjah Economic Development Department And Sharjah Commerce & Tourism Development Authority - From Date
   
   As a user
   I want to interact with the Shared Revenues Between Sharjah Economic Development Department And Sharjah Commerce & Tourism Development Authority module

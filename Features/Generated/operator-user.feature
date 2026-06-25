@@ -1,4 +1,4 @@
-# Feature: Operator User - Page heading mismatch for "Operator User"
+Feature: Operator User - Page heading mismatch for "Operator User"
   
   As a user
   I want to interact with the Operator User module

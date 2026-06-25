@@ -1,4 +1,4 @@
-# Feature: Transaction Fees For All Payment Methods - Entity
+Feature: Transaction Fees For All Payment Methods - Entity
   
   As a user
   I want to interact with the Transaction Fees For All Payment Methods module

@@ -1,4 +1,4 @@
-# Feature: Deposit Refund Requests Inquiry - Page heading mismatch for "Deposit Refund Requests Inquiry"
+Feature: Deposit Refund Requests Inquiry - Page heading mismatch for "Deposit Refund Requests Inquiry"
   
   As a user
   I want to interact with the Deposit Refund Requests Inquiry module

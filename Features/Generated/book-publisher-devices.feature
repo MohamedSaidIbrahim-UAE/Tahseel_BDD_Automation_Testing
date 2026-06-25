@@ -1,4 +1,4 @@
-# Feature: Book Publisher Devices - Module management and operations
+Feature: Book Publisher Devices - Module management and operations
   
   As a user
   I want to interact with the Book Publisher Devices module

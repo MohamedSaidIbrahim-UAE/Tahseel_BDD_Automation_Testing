@@ -1,4 +1,4 @@
-# Feature: Tax Invoice - Month
+Feature: Tax Invoice - Month
   
   As a user
   I want to interact with the Tax Invoice module

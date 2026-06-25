@@ -1,4 +1,4 @@
-# Feature: Transaction Deposits Detail Report (receivable) - Entity
+Feature: Transaction Deposits Detail Report (receivable) - Entity
   
   As a user
   I want to interact with the Transaction Deposits Detail Report (receivable) module

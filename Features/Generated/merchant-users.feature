@@ -1,4 +1,4 @@
-# Feature: Merchant Users - Page heading mismatch for "Merchant Users"
+Feature: Merchant Users - Page heading mismatch for "Merchant Users"
   
   As a user
   I want to interact with the Merchant Users module

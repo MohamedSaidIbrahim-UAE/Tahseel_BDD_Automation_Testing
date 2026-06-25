@@ -1,4 +1,4 @@
-# Feature: IBAN Registration Request - Page heading mismatch for "IBAN Registration Request"
+Feature: IBAN Registration Request - Page heading mismatch for "IBAN Registration Request"
   
   As a user
   I want to interact with the IBAN Registration Request module

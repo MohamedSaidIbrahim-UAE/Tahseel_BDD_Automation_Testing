@@ -1,4 +1,4 @@
-# Feature: Pending Requests - Module management and operations
+Feature: Pending Requests - Module management and operations
   
   As a user
   I want to interact with the Pending Requests module

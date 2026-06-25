@@ -1,4 +1,4 @@
-# Feature: Settings - Module management and operations
+Feature: Settings - Module management and operations
   
   As a user
   I want to interact with the Settings module

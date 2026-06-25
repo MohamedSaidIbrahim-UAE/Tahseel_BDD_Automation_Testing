@@ -1,4 +1,4 @@
-# Feature: Issue Workflow Management - Page heading mismatch for "Issue Workflow Management"
+Feature: Issue Workflow Management - Page heading mismatch for "Issue Workflow Management"
   
   As a user
   I want to interact with the Issue Workflow Management module

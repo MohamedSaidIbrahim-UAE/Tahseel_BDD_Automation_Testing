@@ -1,4 +1,4 @@
-# Feature: Seller Types - Module management and operations
+Feature: Seller Types - Module management and operations
   
   As a user
   I want to interact with the Seller Types module

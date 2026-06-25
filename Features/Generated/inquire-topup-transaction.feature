@@ -1,4 +1,4 @@
-# Feature: Inquire Topup Transaction - Inquire Topup Transaction
+Feature: Inquire Topup Transaction - Inquire Topup Transaction
   
   As a user
   I want to interact with the Inquire Topup Transaction module

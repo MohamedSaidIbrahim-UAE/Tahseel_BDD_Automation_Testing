@@ -1,4 +1,4 @@
-# Feature: Detailed Refund Report - Entity
+Feature: Detailed Refund Report - Entity
   
   As a user
   I want to interact with the Detailed Refund Report module

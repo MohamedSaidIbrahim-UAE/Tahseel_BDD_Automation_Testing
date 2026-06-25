@@ -1,4 +1,4 @@
-# Feature: Inquire Transaction Approval - Page heading mismatch for "Inquire Transaction Approval"
+Feature: Inquire Transaction Approval - Page heading mismatch for "Inquire Transaction Approval"
   
   As a user
   I want to interact with the Inquire Transaction Approval module

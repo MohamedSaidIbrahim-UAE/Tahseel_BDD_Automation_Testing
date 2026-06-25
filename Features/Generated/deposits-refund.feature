@@ -1,4 +1,4 @@
-# Feature: Deposits Refund - Deposit Refund Request
+Feature: Deposits Refund - Deposit Refund Request
   
   As a user
   I want to interact with the Deposits Refund module

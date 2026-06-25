@@ -1,4 +1,4 @@
-# Feature: Mashreq Bank Settlement Report In Period - From Date
+Feature: Mashreq Bank Settlement Report In Period - From Date
   
   As a user
   I want to interact with the Mashreq Bank Settlement Report In Period module

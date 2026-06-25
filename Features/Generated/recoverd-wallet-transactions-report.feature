@@ -1,4 +1,4 @@
-# Feature: Recoverd Wallet Transactions Report - From Date
+Feature: Recoverd Wallet Transactions Report - From Date
   
   As a user
   I want to interact with the Recoverd Wallet Transactions Report module

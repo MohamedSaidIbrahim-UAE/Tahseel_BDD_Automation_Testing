@@ -1,4 +1,4 @@
-# Feature: Pending Issues - Module management and operations
+Feature: Pending Issues - Module management and operations
   
   As a user
   I want to interact with the Pending Issues module

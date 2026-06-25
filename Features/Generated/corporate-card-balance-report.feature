@@ -1,4 +1,4 @@
-# Feature: Corporate Card Balance Report - User
+Feature: Corporate Card Balance Report - User
   
   As a user
   I want to interact with the Corporate Card Balance Report module

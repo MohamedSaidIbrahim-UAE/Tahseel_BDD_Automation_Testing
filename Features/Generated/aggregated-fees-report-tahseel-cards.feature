@@ -1,4 +1,4 @@
-# Feature: Aggregated Fees Report Tahseel Cards - From Date
+Feature: Aggregated Fees Report Tahseel Cards - From Date
   
   As a user
   I want to interact with the Aggregated Fees Report Tahseel Cards module

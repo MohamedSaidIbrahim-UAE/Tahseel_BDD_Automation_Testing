@@ -1,4 +1,4 @@
-# Feature: Temporary Permission Report - User
+Feature: Temporary Permission Report - User
   
   As a user
   I want to interact with the Temporary Permission Report module

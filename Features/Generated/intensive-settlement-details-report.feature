@@ -1,4 +1,4 @@
-# Feature: Intensive Settlement Details Report - Date
+Feature: Intensive Settlement Details Report - Date
   
   As a user
   I want to interact with the Intensive Settlement Details Report module

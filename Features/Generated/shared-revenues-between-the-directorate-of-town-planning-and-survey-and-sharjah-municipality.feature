@@ -1,4 +1,4 @@
-# Feature: Shared Revenues Between The Directorate Of Town Planning And Survey And Sharjah Municipality - From Date
+Feature: Shared Revenues Between The Directorate Of Town Planning And Survey And Sharjah Municipality - From Date
   
   As a user
   I want to interact with the Shared Revenues Between The Directorate Of Town Planning And Survey And Sharjah Municipality module

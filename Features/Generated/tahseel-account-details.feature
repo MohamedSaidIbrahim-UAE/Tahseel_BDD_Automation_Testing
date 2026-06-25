@@ -1,4 +1,4 @@
-# Feature: Tahseel Account Details - Search Criteria
+Feature: Tahseel Account Details - Search Criteria
   
   As a user
   I want to interact with the Tahseel Account Details module

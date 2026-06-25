@@ -1,4 +1,4 @@
-# Feature: Aggregated Transactions Report Of SEDD According To The Fees Entity Owner - DepCode
+Feature: Aggregated Transactions Report Of SEDD According To The Fees Entity Owner - DepCode
   
   As a user
   I want to interact with the Aggregated Transactions Report Of SEDD According To The Fees Entity Owner module

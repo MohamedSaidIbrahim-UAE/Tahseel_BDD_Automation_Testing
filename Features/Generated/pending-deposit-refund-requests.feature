@@ -1,4 +1,4 @@
-# Feature: Pending Deposit Refund Requests - Page heading mismatch for "Pending Deposit Refund Requests"
+Feature: Pending Deposit Refund Requests - Page heading mismatch for "Pending Deposit Refund Requests"
   
   As a user
   I want to interact with the Pending Deposit Refund Requests module

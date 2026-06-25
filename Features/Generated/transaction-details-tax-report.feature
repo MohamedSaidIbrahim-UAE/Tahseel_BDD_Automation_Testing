@@ -1,4 +1,4 @@
-# Feature: Transaction Details Tax Report - Entity
+Feature: Transaction Details Tax Report - Entity
   
   As a user
   I want to interact with the Transaction Details Tax Report module

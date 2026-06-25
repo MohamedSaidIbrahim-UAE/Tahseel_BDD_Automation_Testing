@@ -1,4 +1,4 @@
-# Feature: Transactions Sent By Payment Link - Search Criteria
+Feature: Transactions Sent By Payment Link - Search Criteria
   
   As a user
   I want to interact with the Transactions Sent By Payment Link module

@@ -1,4 +1,4 @@
-# Feature: Tahseel Accounts - Page heading mismatch for "Tahseel Accounts"
+Feature: Tahseel Accounts - Page heading mismatch for "Tahseel Accounts"
   
   As a user
   I want to interact with the Tahseel Accounts module

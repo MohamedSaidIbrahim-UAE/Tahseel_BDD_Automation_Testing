@@ -1,4 +1,4 @@
-# Feature: Credit Card Transactions Inquiry - Search Criteria
+Feature: Credit Card Transactions Inquiry - Search Criteria
   
   As a user
   I want to interact with the Credit Card Transactions Inquiry module

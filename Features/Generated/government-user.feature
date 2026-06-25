@@ -1,4 +1,4 @@
-# Feature: Government User - Page heading mismatch for "Government User"
+Feature: Government User - Page heading mismatch for "Government User"
   
   As a user
   I want to interact with the Government User module

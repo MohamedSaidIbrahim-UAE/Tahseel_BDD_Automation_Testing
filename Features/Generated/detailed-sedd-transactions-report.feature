@@ -1,4 +1,4 @@
-# Feature: Detailed SEDD Transactions Report - User
+Feature: Detailed SEDD Transactions Report - User
   
   As a user
   I want to interact with the Detailed SEDD Transactions Report module

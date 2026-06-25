@@ -1,4 +1,4 @@
-# Feature: Bank Devices - Bank Devices
+Feature: Bank Devices - Bank Devices
   
   As a user
   I want to interact with the Bank Devices module

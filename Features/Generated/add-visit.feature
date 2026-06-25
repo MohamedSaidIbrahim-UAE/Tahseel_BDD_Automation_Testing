@@ -1,4 +1,4 @@
-# Feature: Add Visit - Add Visit
+Feature: Add Visit - Add Visit
   
   As a user
   I want to interact with the Add Visit module

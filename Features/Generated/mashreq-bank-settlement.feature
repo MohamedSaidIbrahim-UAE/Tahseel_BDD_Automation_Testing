@@ -1,4 +1,4 @@
-# Feature: Mashreq Bank Settlement - Transaction exsist in Mashreq bank and not exsist in Tahseel
+Feature: Mashreq Bank Settlement - Transaction exsist in Mashreq bank and not exsist in Tahseel
   
   As a user
   I want to interact with the Mashreq Bank Settlement module

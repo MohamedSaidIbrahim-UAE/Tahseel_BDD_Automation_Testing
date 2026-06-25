@@ -1,4 +1,4 @@
-# Feature: Attendance Report In Period - From
+Feature: Attendance Report In Period - From
   
   As a user
   I want to interact with the Attendance Report In Period module

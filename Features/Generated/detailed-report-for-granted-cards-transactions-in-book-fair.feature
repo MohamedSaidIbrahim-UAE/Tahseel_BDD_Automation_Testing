@@ -1,4 +1,4 @@
-# Feature: Detailed Report For Granted Cards Transactions In Book Fair - From Date
+Feature: Detailed Report For Granted Cards Transactions In Book Fair - From Date
   
   As a user
   I want to interact with the Detailed Report For Granted Cards Transactions In Book Fair module

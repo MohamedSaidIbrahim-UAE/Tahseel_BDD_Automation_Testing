@@ -1,4 +1,4 @@
-# Feature: Money Loader User - Page heading mismatch for "Money Loader User"
+Feature: Money Loader User - Page heading mismatch for "Money Loader User"
   
   As a user
   I want to interact with the Money Loader User module

@@ -1,4 +1,4 @@
-# Feature: Detailed Tahseel Card Report - From Date
+Feature: Detailed Tahseel Card Report - From Date
   
   As a user
   I want to interact with the Detailed Tahseel Card Report module

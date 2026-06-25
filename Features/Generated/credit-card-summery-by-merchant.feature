@@ -1,4 +1,4 @@
-# Feature: Credit Card Summery By Merchant - Entity
+Feature: Credit Card Summery By Merchant - Entity
   
   As a user
   I want to interact with the Credit Card Summery By Merchant module

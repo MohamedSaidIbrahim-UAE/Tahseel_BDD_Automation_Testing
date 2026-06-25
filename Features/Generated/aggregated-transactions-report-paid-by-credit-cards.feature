@@ -1,4 +1,4 @@
-# Feature: Aggregated Transactions Report Paid By Credit Cards - Module management and operations
+Feature: Aggregated Transactions Report Paid By Credit Cards - Module management and operations
   
   As a user
   I want to interact with the Aggregated Transactions Report Paid By Credit Cards module

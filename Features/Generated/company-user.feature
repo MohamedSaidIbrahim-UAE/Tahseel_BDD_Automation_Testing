@@ -1,4 +1,4 @@
-# Feature: Company User - Page heading mismatch for "Company User"
+Feature: Company User - Page heading mismatch for "Company User"
   
   As a user
   I want to interact with the Company User module

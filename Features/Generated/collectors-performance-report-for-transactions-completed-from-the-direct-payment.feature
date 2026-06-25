@@ -1,4 +1,4 @@
-# Feature: Collectors Performance Report For Transactions Completed From The Direct Payment - From
+Feature: Collectors Performance Report For Transactions Completed From The Direct Payment - From
   
   As a user
   I want to interact with the Collectors Performance Report For Transactions Completed From The Direct Payment module

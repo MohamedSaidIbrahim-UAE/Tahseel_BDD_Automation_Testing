@@ -1,4 +1,4 @@
-# Feature: Transactions Upgrade - Transactions Upgrade
+Feature: Transactions Upgrade - Transactions Upgrade
   
   As a user
   I want to interact with the Transactions Upgrade module

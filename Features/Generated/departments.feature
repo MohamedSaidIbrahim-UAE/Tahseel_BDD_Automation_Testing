@@ -1,4 +1,4 @@
-# Feature: Departments - Module management and operations
+Feature: Departments - Module management and operations
   
   As a user
   I want to interact with the Departments module

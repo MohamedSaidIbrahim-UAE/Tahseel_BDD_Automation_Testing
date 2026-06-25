@@ -1,4 +1,4 @@
-# Feature: SFD Detailed Wallets Transactions Report - Wallet Name
+Feature: SFD Detailed Wallets Transactions Report - Wallet Name
   
   As a user
   I want to interact with the SFD Detailed Wallets Transactions Report module

@@ -1,4 +1,4 @@
-# Feature: Detailed Transactions Report Of SEED According To The Fees Entity Owner - Module management and operations
+Feature: Detailed Transactions Report Of SEED According To The Fees Entity Owner - Module management and operations
   
   As a user
   I want to interact with the Detailed Transactions Report Of SEED According To The Fees Entity Owner module

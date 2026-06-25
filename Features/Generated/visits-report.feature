@@ -1,4 +1,4 @@
-# Feature: Visits Report - From Date
+Feature: Visits Report - From Date
   
   As a user
   I want to interact with the Visits Report module

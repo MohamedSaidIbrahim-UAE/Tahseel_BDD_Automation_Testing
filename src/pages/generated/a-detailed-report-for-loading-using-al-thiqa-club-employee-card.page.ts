@@ -44,8 +44,8 @@ export class ADetailedReportForLoadingUsingAlThiqaClubEmployeeCard extends BaseL
   readonly selectors: Record<string, string> = {
     mainContainer: '[data-module], main, [role="main"]',
     // Form fields
-    _Field: '[aria-label="اسم المستخدم"], label:has-text("اسم المستخدم") ~ input',
-    _Field: '[aria-label="بطاقة الموظف"], label:has-text("بطاقة الموظف") ~ input',
+    usernameField: '[aria-label="اسم المستخدم"], label:has-text("اسم المستخدم") ~ input',
+    employee_cardField: '[aria-label="بطاقة الموظف"], label:has-text("بطاقة الموظف") ~ input',
     from_dateField: '[aria-label="From Date"], label:has-text("From Date") ~ input',
     to_dateField: '[aria-label="To Date"], label:has-text("To Date") ~ input',
     dark_modeField: '[aria-label="Dark Mode"], label:has-text("Dark Mode") ~ input',

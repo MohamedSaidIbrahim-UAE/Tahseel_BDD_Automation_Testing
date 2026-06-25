@@ -1,4 +1,4 @@
-# Feature: Detailed Report Of Smart Reciept Services Fees - Entity
+Feature: Detailed Report Of Smart Reciept Services Fees - Entity
   
   As a user
   I want to interact with the Detailed Report Of Smart Reciept Services Fees module

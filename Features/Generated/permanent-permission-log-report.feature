@@ -1,4 +1,4 @@
-# Feature: Permanent Permission Log Report - From Date
+Feature: Permanent Permission Log Report - From Date
   
   As a user
   I want to interact with the Permanent Permission Log Report module

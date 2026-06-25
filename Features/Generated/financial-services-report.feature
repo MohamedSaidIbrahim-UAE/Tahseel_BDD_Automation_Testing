@@ -1,4 +1,4 @@
-# Feature: Financial Services Report - Entity
+Feature: Financial Services Report - Entity
   
   As a user
   I want to interact with the Financial Services Report module

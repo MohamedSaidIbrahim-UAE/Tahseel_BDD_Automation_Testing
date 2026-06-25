@@ -1,4 +1,4 @@
-# Feature: Publishers Detail Report - Publisher
+Feature: Publishers Detail Report - Publisher
   
   As a user
   I want to interact with the Publishers Detail Report module

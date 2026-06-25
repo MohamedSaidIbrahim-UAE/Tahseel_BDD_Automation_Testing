@@ -1,4 +1,4 @@
-# Feature: Tahseel Account Intial Balance - AccountType
+Feature: Tahseel Account Intial Balance - AccountType
   
   As a user
   I want to interact with the Tahseel Account Intial Balance module

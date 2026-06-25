@@ -1,4 +1,4 @@
-# Feature: Mashreq Bank Merchants - Module management and operations
+Feature: Mashreq Bank Merchants - Module management and operations
   
   As a user
   I want to interact with the Mashreq Bank Merchants module

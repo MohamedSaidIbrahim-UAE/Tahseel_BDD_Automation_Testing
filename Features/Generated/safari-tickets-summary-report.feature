@@ -1,4 +1,4 @@
-# Feature: Safari Tickets Summary Report - From Date
+Feature: Safari Tickets Summary Report - From Date
   
   As a user
   I want to interact with the Safari Tickets Summary Report module

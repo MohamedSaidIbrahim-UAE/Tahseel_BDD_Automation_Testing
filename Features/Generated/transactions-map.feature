@@ -1,4 +1,4 @@
-# Feature: Transactions Map - Page heading mismatch for "Transactions Map"
+Feature: Transactions Map - Page heading mismatch for "Transactions Map"
   
   As a user
   I want to interact with the Transactions Map module

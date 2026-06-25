@@ -1,4 +1,4 @@
-# Feature: Transaction Summary Tax Report Revenue - Entity
+Feature: Transaction Summary Tax Report Revenue - Entity
   
   As a user
   I want to interact with the Transaction Summary Tax Report Revenue module

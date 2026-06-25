@@ -1,4 +1,4 @@
-# Feature: Voucher Reciept Report - Date From
+Feature: Voucher Reciept Report - Date From
   
   As a user
   I want to interact with the Voucher Reciept Report module

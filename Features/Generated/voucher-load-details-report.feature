@@ -1,4 +1,4 @@
-# Feature: Voucher Load Details Report - Group
+Feature: Voucher Load Details Report - Group
   
   As a user
   I want to interact with the Voucher Load Details Report module

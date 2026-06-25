@@ -1,4 +1,4 @@
-# Feature: Stuck Refund Requests - Stuck Refund Requests
+Feature: Stuck Refund Requests - Stuck Refund Requests
   
   As a user
   I want to interact with the Stuck Refund Requests module

@@ -1,4 +1,4 @@
-# Feature: Deposit Retain Requests Inquiry - Page heading mismatch for "Deposit Retain Requests Inquiry"
+Feature: Deposit Retain Requests Inquiry - Page heading mismatch for "Deposit Retain Requests Inquiry"
   
   As a user
   I want to interact with the Deposit Retain Requests Inquiry module

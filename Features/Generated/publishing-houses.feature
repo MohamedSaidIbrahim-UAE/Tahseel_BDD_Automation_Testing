@@ -1,4 +1,4 @@
-# Feature: Publishing Houses - Module management and operations
+Feature: Publishing Houses - Module management and operations
   
   As a user
   I want to interact with the Publishing Houses module

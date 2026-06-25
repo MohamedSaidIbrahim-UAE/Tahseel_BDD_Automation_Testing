@@ -1,4 +1,4 @@
-# Feature: General Money Loading - User Name
+Feature: General Money Loading - User Name
   
   As a user
   I want to interact with the General Money Loading module

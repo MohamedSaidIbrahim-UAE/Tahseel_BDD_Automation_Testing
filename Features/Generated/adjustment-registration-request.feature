@@ -1,4 +1,4 @@
-# Feature: Adjustment Registration Request - Page heading mismatch for "Adjustment Registration Request"
+Feature: Adjustment Registration Request - Page heading mismatch for "Adjustment Registration Request"
   
   As a user
   I want to interact with the Adjustment Registration Request module

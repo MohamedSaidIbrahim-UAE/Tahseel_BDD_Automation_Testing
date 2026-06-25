@@ -1,4 +1,4 @@
-# Feature: Topup Clients Stations - Page heading mismatch for "Topup Clients Stations"
+Feature: Topup Clients Stations - Page heading mismatch for "Topup Clients Stations"
   
   As a user
   I want to interact with the Topup Clients Stations module

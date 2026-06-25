@@ -1,4 +1,4 @@
-# Feature: Entity Services Analysis - Page heading mismatch for "Entity Services Analysis"
+Feature: Entity Services Analysis - Page heading mismatch for "Entity Services Analysis"
   
   As a user
   I want to interact with the Entity Services Analysis module

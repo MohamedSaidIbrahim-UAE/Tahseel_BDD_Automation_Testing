@@ -1,4 +1,4 @@
-# Feature: Issue Tracking Detail Report - From Date
+Feature: Issue Tracking Detail Report - From Date
   
   As a user
   I want to interact with the Issue Tracking Detail Report module

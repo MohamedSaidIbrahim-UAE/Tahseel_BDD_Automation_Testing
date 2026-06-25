@@ -1,4 +1,4 @@
-# Feature: Fedral Bank Transfer Detail Report - Entity
+Feature: Fedral Bank Transfer Detail Report - Entity
   
   As a user
   I want to interact with the Fedral Bank Transfer Detail Report module

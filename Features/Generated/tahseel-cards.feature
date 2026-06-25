@@ -1,4 +1,4 @@
-# Feature: Tahseel Cards - Page heading mismatch for "Tahseel Cards"
+Feature: Tahseel Cards - Page heading mismatch for "Tahseel Cards"
   
   As a user
   I want to interact with the Tahseel Cards module

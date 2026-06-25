@@ -1,4 +1,4 @@
-# Feature: Detailed Cheques Report Revenues - Entity
+Feature: Detailed Cheques Report Revenues - Entity
   
   As a user
   I want to interact with the Detailed Cheques Report Revenues module

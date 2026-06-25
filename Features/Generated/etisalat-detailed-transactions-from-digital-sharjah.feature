@@ -1,4 +1,4 @@
-# Feature: Etisalat Detailed Transactions From Digital Sharjah - Service Type
+Feature: Etisalat Detailed Transactions From Digital Sharjah - Service Type
   
   As a user
   I want to interact with the Etisalat Detailed Transactions From Digital Sharjah module

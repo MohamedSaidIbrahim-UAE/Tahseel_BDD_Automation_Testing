@@ -1,4 +1,4 @@
-# Feature: Daily Deposit For Business Service Centers - Daily deposit for Business Service Centers
+Feature: Daily Deposit For Business Service Centers - Daily deposit for Business Service Centers
   
   As a user
   I want to interact with the Daily Deposit For Business Service Centers module

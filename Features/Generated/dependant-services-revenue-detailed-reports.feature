@@ -1,4 +1,4 @@
-# Feature: Dependant Services Revenue Detailed Reports - Entity
+Feature: Dependant Services Revenue Detailed Reports - Entity
   
   As a user
   I want to interact with the Dependant Services Revenue Detailed Reports module

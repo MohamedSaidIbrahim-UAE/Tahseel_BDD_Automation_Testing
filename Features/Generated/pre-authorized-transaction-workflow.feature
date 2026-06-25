@@ -1,4 +1,4 @@
-# Feature: Pre Authorized Transaction Workflow - Page heading mismatch for "Pre-Authorized Transaction Workflow"
+Feature: Pre Authorized Transaction Workflow - Page heading mismatch for "Pre-Authorized Transaction Workflow"
   
   As a user
   I want to interact with the Pre Authorized Transaction Workflow module

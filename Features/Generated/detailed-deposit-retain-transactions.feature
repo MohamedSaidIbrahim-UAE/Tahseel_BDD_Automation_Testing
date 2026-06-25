@@ -1,4 +1,4 @@
-# Feature: Detailed Deposit Retain Transactions - Entity
+Feature: Detailed Deposit Retain Transactions - Entity
   
   As a user
   I want to interact with the Detailed Deposit Retain Transactions module

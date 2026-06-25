@@ -1,4 +1,4 @@
-# Feature: UAE Central Bank Settlement Report - From Date
+Feature: UAE Central Bank Settlement Report - From Date
   
   As a user
   I want to interact with the UAE Central Bank Settlement Report module

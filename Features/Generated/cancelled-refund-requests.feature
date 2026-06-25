@@ -1,4 +1,4 @@
-# Feature: Cancelled Refund Requests - Inquire Refund Requests
+Feature: Cancelled Refund Requests - Inquire Refund Requests
   
   As a user
   I want to interact with the Cancelled Refund Requests module

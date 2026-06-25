@@ -1,4 +1,4 @@
-# Feature: Payment Methods Detailed Report - Entity
+Feature: Payment Methods Detailed Report - Entity
   
   As a user
   I want to interact with the Payment Methods Detailed Report module

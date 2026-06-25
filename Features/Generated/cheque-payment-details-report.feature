@@ -1,4 +1,4 @@
-# Feature: Cheque Payment Details Report - From Date
+Feature: Cheque Payment Details Report - From Date
   
   As a user
   I want to interact with the Cheque Payment Details Report module

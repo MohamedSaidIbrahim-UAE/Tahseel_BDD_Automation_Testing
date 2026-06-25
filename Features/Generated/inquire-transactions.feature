@@ -1,4 +1,4 @@
-# Feature: Inquire Transactions - Page heading mismatch for "Inquire Transactions"
+Feature: Inquire Transactions - Page heading mismatch for "Inquire Transactions"
   
   As a user
   I want to interact with the Inquire Transactions module

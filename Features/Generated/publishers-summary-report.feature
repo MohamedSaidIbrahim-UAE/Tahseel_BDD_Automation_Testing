@@ -1,4 +1,4 @@
-# Feature: Publishers Summary Report - Publisher
+Feature: Publishers Summary Report - Publisher
   
   As a user
   I want to interact with the Publishers Summary Report module

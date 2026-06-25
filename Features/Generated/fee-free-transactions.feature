@@ -1,4 +1,4 @@
-# Feature: Fee Free Transactions - Page heading mismatch for "Fee-free transactions"
+Feature: Fee Free Transactions - Page heading mismatch for "Fee-free transactions"
   
   As a user
   I want to interact with the Fee Free Transactions module

@@ -1,4 +1,4 @@
-# Feature: E Voucher Report Transaction - Entity
+Feature: E Voucher Report Transaction - Entity
   
   As a user
   I want to interact with the E Voucher Report Transaction module

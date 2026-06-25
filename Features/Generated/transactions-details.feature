@@ -1,4 +1,4 @@
-# Feature: Transactions Details - Page heading mismatch for "Transactions Details"
+Feature: Transactions Details - Page heading mismatch for "Transactions Details"
   
   As a user
   I want to interact with the Transactions Details module

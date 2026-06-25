@@ -1,4 +1,4 @@
-# Feature: Security Scopes - Page heading mismatch for "Security Scopes"
+Feature: Security Scopes - Page heading mismatch for "Security Scopes"
   
   As a user
   I want to interact with the Security Scopes module

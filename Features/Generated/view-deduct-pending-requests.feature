@@ -1,4 +1,4 @@
-# Feature: View Deduct Pending Requests - Module management and operations
+Feature: View Deduct Pending Requests - Module management and operations
   
   As a user
   I want to interact with the View Deduct Pending Requests module

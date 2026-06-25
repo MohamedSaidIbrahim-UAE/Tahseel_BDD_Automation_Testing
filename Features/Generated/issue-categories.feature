@@ -1,4 +1,4 @@
-# Feature: Issue Categories - Module management and operations
+Feature: Issue Categories - Module management and operations
   
   As a user
   I want to interact with the Issue Categories module

@@ -1,4 +1,4 @@
-# Feature: Summary SEDD Transactions Report - User
+Feature: Summary SEDD Transactions Report - User
   
   As a user
   I want to interact with the Summary SEDD Transactions Report module

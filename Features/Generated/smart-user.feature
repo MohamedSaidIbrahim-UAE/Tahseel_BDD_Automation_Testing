@@ -1,4 +1,4 @@
-# Feature: Smart User - Page heading mismatch for "Smart User"
+Feature: Smart User - Page heading mismatch for "Smart User"
   
   As a user
   I want to interact with the Smart User module

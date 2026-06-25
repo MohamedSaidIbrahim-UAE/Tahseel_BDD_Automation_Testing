@@ -1,4 +1,4 @@
-# Feature: Transaction Summary Income Report Based On Collecting Entities - Entity
+Feature: Transaction Summary Income Report Based On Collecting Entities - Entity
   
   As a user
   I want to interact with the Transaction Summary Income Report Based On Collecting Entities module

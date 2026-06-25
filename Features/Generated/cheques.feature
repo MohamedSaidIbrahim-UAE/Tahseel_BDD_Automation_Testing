@@ -1,4 +1,4 @@
-# Feature: Cheques - Module management and operations
+Feature: Cheques - Module management and operations
   
   As a user
   I want to interact with the Cheques module

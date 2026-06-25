@@ -1,4 +1,4 @@
-# Feature: Detailed Transactions Report By Revenue Entity - Entity
+Feature: Detailed Transactions Report By Revenue Entity - Entity
   
   As a user
   I want to interact with the Detailed Transactions Report By Revenue Entity module

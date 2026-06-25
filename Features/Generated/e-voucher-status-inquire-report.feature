@@ -1,4 +1,4 @@
-# Feature: E Voucher Status Inquire Report - Entity
+Feature: E Voucher Status Inquire Report - Entity
   
   As a user
   I want to interact with the E Voucher Status Inquire Report module

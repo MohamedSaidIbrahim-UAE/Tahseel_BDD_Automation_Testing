@@ -1,4 +1,4 @@
-# Feature: Detailed Transactions Report - Entity
+Feature: Detailed Transactions Report - Entity
   
   As a user
   I want to interact with the Detailed Transactions Report module

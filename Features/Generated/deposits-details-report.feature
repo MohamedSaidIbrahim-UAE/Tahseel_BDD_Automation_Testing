@@ -1,4 +1,4 @@
-# Feature: Deposits Details Report - Entity
+Feature: Deposits Details Report - Entity
   
   As a user
   I want to interact with the Deposits Details Report module

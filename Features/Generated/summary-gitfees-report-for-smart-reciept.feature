@@ -1,4 +1,4 @@
-# Feature: Summary GITFees Report For Smart Reciept - Entity
+Feature: Summary GITFees Report For Smart Reciept - Entity
   
   As a user
   I want to interact with the Summary GITFees Report For Smart Reciept module

@@ -1,4 +1,4 @@
-# Feature: Detailed Report Of Transactions Paid By Credit Cards - Entity
+Feature: Detailed Report Of Transactions Paid By Credit Cards - Entity
   
   As a user
   I want to interact with the Detailed Report Of Transactions Paid By Credit Cards module

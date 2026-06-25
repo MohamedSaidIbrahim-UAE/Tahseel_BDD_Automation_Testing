@@ -1,4 +1,4 @@
-# Feature: Summary Deposit Retain Transactions - Entity
+Feature: Summary Deposit Retain Transactions - Entity
   
   As a user
   I want to interact with the Summary Deposit Retain Transactions module

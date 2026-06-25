@@ -1,4 +1,4 @@
-# Feature: Deposits Retain - Deposit Retain Request
+Feature: Deposits Retain - Deposit Retain Request
   
   As a user
   I want to interact with the Deposits Retain module

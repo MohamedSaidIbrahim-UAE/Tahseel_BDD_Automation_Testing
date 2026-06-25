@@ -1,4 +1,4 @@
-# Feature: MPOS Transactions - Search Criteria
+Feature: MPOS Transactions - Search Criteria
   
   As a user
   I want to interact with the MPOS Transactions module

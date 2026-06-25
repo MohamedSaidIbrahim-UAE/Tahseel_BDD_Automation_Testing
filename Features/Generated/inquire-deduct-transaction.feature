@@ -1,4 +1,4 @@
-# Feature: Inquire Deduct Transaction - Inquire Deduct Transaction
+Feature: Inquire Deduct Transaction - Inquire Deduct Transaction
   
   As a user
   I want to interact with the Inquire Deduct Transaction module

@@ -1,4 +1,4 @@
-# Feature: Sharjah Islamic Bank Settlement Report In Period - From Date
+Feature: Sharjah Islamic Bank Settlement Report In Period - From Date
   
   As a user
   I want to interact with the Sharjah Islamic Bank Settlement Report In Period module

@@ -1,4 +1,4 @@
-# Feature: Beah Paid Transaction Detailed Report - From Date
+Feature: Beah Paid Transaction Detailed Report - From Date
   
   As a user
   I want to interact with the Beah Paid Transaction Detailed Report module
@@ -15,6 +15,7 @@
     Then the module page should load
     And the page title should display "Beah Paid Transaction Detailed Report"
     And all main elements should be visible
+    
   Scenario: View data in table
     Given the module page is loaded
     When the user views the data table

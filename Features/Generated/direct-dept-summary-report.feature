@@ -1,4 +1,4 @@
-# Feature: Direct Dept Summary Report - From Date
+Feature: Direct Dept Summary Report - From Date
   
   As a user
   I want to interact with the Direct Dept Summary Report module

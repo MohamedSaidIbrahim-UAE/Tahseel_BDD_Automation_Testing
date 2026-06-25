@@ -1,4 +1,4 @@
-# Feature: Tahseel Account Deduct & Load Reqeust - Request type
+Feature: Tahseel Account Deduct & Load Reqeust - Request type
   
   As a user
   I want to interact with the Tahseel Account Deduct & Load Reqeust module

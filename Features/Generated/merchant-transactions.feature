@@ -1,4 +1,4 @@
-# Feature: Merchant Transactions - Page heading mismatch for "Merchant Transactions"
+Feature: Merchant Transactions - Page heading mismatch for "Merchant Transactions"
   
   As a user
   I want to interact with the Merchant Transactions module

@@ -1,4 +1,4 @@
-# Feature: Summery Loading Report - Group
+Feature: Summery Loading Report - Group
   
   As a user
   I want to interact with the Summery Loading Report module

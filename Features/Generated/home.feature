@@ -1,4 +1,4 @@
-# Feature: Home - Module management and operations
+Feature: Home - Module management and operations
   
   As a user
   I want to interact with the Home module

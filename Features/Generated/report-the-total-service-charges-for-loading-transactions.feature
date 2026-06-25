@@ -1,4 +1,4 @@
-# Feature: Report The Total Service Charges For Loading Transactions - From Date
+Feature: Report The Total Service Charges For Loading Transactions - From Date
   
   As a user
   I want to interact with the Report The Total Service Charges For Loading Transactions module

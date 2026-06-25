@@ -1,4 +1,4 @@
-# Feature: Summary Transactions Report - Entity
+Feature: Summary Transactions Report - Entity
   
   As a user
   I want to interact with the Summary Transactions Report module

@@ -1,4 +1,4 @@
-# Feature: Summary Cheques Report - Entity
+Feature: Summary Cheques Report - Entity
   
   As a user
   I want to interact with the Summary Cheques Report module

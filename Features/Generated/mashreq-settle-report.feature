@@ -1,4 +1,4 @@
-# Feature: Mashreq Settle Report - To Date
+Feature: Mashreq Settle Report - To Date
   
   As a user
   I want to interact with the Mashreq Settle Report module

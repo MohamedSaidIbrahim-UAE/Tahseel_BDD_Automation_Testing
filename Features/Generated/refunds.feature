@@ -1,4 +1,4 @@
-# Feature: Refunds - Refund Requests
+Feature: Refunds - Refund Requests
   
   As a user
   I want to interact with the Refunds module

@@ -1,4 +1,4 @@
-# Feature: A Report On Joint Revenues Between The Prevention And Safety Authority And SAND - From Date
+Feature: A Report On Joint Revenues Between The Prevention And Safety Authority And SAND - From Date
   
   As a user
   I want to interact with the A Report On Joint Revenues Between The Prevention And Safety Authority And SAND module

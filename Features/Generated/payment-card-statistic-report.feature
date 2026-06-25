@@ -1,4 +1,4 @@
-# Feature: Payment Card Statistic Report - From Date
+Feature: Payment Card Statistic Report - From Date
   
   As a user
   I want to interact with the Payment Card Statistic Report module

@@ -1,4 +1,4 @@
-# Feature: Inquire - Inquire Deduct Transaction
+Feature: Inquire - Inquire Deduct Transaction
   
   As a user
   I want to interact with the Inquire module

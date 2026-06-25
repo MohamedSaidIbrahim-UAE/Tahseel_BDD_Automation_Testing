@@ -1,4 +1,4 @@
-# Feature: Exhibitions And Events - Module management and operations
+Feature: Exhibitions And Events - Module management and operations
   
   As a user
   I want to interact with the Exhibitions And Events module

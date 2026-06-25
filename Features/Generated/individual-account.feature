@@ -1,4 +1,4 @@
-# Feature: Individual Account - Emirate ID *
+Feature: Individual Account - Emirate ID *
   
   As a user
   I want to interact with the Individual Account module

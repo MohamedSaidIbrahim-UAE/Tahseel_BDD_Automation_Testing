@@ -1,4 +1,4 @@
-# Feature: Detailed Report Of Canceled Transactions By Revenue - Entity
+Feature: Detailed Report Of Canceled Transactions By Revenue - Entity
   
   As a user
   I want to interact with the Detailed Report Of Canceled Transactions By Revenue module

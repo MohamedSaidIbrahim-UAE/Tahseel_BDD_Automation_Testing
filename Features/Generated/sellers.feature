@@ -1,4 +1,4 @@
-# Feature: Sellers - Page heading mismatch for "Sellers"
+Feature: Sellers - Page heading mismatch for "Sellers"
   
   As a user
   I want to interact with the Sellers module

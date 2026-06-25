@@ -1,4 +1,4 @@
-# Feature: Cheque And Voucher Transactions - Entity
+Feature: Cheque And Voucher Transactions - Entity
   
   As a user
   I want to interact with the Cheque And Voucher Transactions module

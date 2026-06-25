@@ -1,4 +1,4 @@
-# Feature: Inquire Issue - Module management and operations
+Feature: Inquire Issue - Module management and operations
   
   As a user
   I want to interact with the Inquire Issue module

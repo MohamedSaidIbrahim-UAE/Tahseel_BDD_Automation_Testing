@@ -1,4 +1,4 @@
-# Feature: Tickets Delivery - Receipt Number *
+Feature: Tickets Delivery - Receipt Number *
   
   As a user
   I want to interact with the Tickets Delivery module

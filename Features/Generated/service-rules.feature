@@ -1,4 +1,4 @@
-# Feature: Service Rules - Module management and operations
+Feature: Service Rules - Module management and operations
   
   As a user
   I want to interact with the Service Rules module

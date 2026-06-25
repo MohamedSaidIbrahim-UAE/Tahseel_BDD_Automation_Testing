@@ -1,4 +1,4 @@
-# Feature: Money Loader Groups - Page heading mismatch for "Money Loader Groups"
+Feature: Money Loader Groups - Page heading mismatch for "Money Loader Groups"
   
   As a user
   I want to interact with the Money Loader Groups module

@@ -1,4 +1,4 @@
-# Feature: Deposits Balance Summary Report - Entity
+Feature: Deposits Balance Summary Report - Entity
   
   As a user
   I want to interact with the Deposits Balance Summary Report module

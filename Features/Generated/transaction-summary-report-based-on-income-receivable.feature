@@ -1,4 +1,4 @@
-# Feature: Transaction Summary Report Based On Income (receivable) - Module management and operations
+Feature: Transaction Summary Report Based On Income (receivable) - Module management and operations
   
   As a user
   I want to interact with the Transaction Summary Report Based On Income (receivable) module

@@ -1,4 +1,4 @@
-# Feature: Detailed Report Of POS Transactions By Revenue Source - Entity
+Feature: Detailed Report Of POS Transactions By Revenue Source - Entity
   
   As a user
   I want to interact with the Detailed Report Of POS Transactions By Revenue Source module

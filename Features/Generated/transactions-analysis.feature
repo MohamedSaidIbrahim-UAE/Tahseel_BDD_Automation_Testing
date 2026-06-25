@@ -1,4 +1,4 @@
-# Feature: Transactions Analysis - Page heading mismatch for "Transactions Analysis"
+Feature: Transactions Analysis - Page heading mismatch for "Transactions Analysis"
   
   As a user
   I want to interact with the Transactions Analysis module

@@ -1,4 +1,4 @@
-# Feature: Smart Receipt Details - Search Criteria
+Feature: Smart Receipt Details - Search Criteria
   
   As a user
   I want to interact with the Smart Receipt Details module

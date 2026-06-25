@@ -1,4 +1,4 @@
-# Feature: Pending Deposit Retain Requests - Page heading mismatch for "Pending Deposit Retain Requests"
+Feature: Pending Deposit Retain Requests - Page heading mismatch for "Pending Deposit Retain Requests"
   
   As a user
   I want to interact with the Pending Deposit Retain Requests module

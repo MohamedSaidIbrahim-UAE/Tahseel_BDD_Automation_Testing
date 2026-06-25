@@ -1,4 +1,4 @@
-# Feature: Manage Adjustment Registeration Workflow - Module management and operations
+Feature: Manage Adjustment Registeration Workflow - Module management and operations
   
   As a user
   I want to interact with the Manage Adjustment Registeration Workflow module

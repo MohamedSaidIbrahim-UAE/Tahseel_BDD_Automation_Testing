@@ -1,4 +1,4 @@
-# Feature: Inquire Electronic Receipt - Inquire status of electronic receipt
+Feature: Inquire Electronic Receipt - Inquire status of electronic receipt
   
   As a user
   I want to interact with the Inquire Electronic Receipt module
