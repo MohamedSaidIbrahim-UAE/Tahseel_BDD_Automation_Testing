@@ -12,7 +12,7 @@
  */
 
 import { Page } from '@playwright/test';
-import { BasePage } from '../base.page';
+import { BaseFormPage } from '../base-form.page';
 import { ElementInteractions } from '../../utils/element-interactions';
 import { AssertionHelpers } from '../../utils/assertion-helpers';
 import { WaitAndRetry } from '../../utils/wait-and-retry';
@@ -30,7 +30,7 @@ import { SelectorHelpers } from '../../utils/selector-helpers';
  * await page.verifyPageLoaded();
  * ```
  */
-export class InquireTopupTransaction extends BasePage {
+export class InquireTopupTransaction extends BaseFormPage {
   /**
    * Module name for identification
    */
@@ -86,7 +86,7 @@ export class InquireTopupTransaction extends BasePage {
   async fillField(fieldName: string, value: string): Promise<void> {
     const selector = this.selectors[`${fieldName}Field`] as string;
     if (selector) {
-      await this.fill(selector, value);
+      await super.fillField(selector, value);
     }
   }
 
@@ -94,7 +94,7 @@ export class InquireTopupTransaction extends BasePage {
    * Submit form
    */
   async submitForm(): Promise<void> {
-    await this.clickSave();
+    await super.submitForm(this.selectors.submitButton);
   }
 
   /**

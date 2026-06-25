@@ -12,11 +12,7 @@
  */
 
 import { Page } from '@playwright/test';
-import { BasePage } from '../base.page';
-import { ElementInteractions } from '../../utils/element-interactions';
-import { AssertionHelpers } from '../../utils/assertion-helpers';
-import { WaitAndRetry } from '../../utils/wait-and-retry';
-import { SelectorHelpers } from '../../utils/selector-helpers';
+import { BaseFormPage } from '../base-form.page';
 
 /**
  * DailyDepositForBusinessServiceCenters
@@ -30,7 +26,7 @@ import { SelectorHelpers } from '../../utils/selector-helpers';
  * await page.verifyPageLoaded();
  * ```
  */
-export class DailyDepositForBusinessServiceCenters extends BasePage {
+export class DailyDepositForBusinessServiceCenters extends BaseFormPage {
   /**
    * Module name for identification
    */
@@ -88,9 +84,9 @@ export class DailyDepositForBusinessServiceCenters extends BasePage {
    * Fill form field
    */
   async fillField(fieldName: string, value: string): Promise<void> {
-    const selector = this.selectors[`${fieldName}Field`] as string;
+    const selector = this.selectors[`${fieldName}Field`];
     if (selector) {
-      await this.fill(selector, value);
+      await super.fillField(selector, value);
     }
   }
 
@@ -98,7 +94,7 @@ export class DailyDepositForBusinessServiceCenters extends BasePage {
    * Submit form
    */
   async submitForm(): Promise<void> {
-    await this.clickSave();
+    await super.submitForm(this.selectors.submitButton);
   }
 
   /**
@@ -130,7 +126,7 @@ export class DailyDepositForBusinessServiceCenters extends BasePage {
    */
   async searchTable(term: string): Promise<void> {
     if (this.selectors.searchInput) {
-      await this.fill(this.selectors.searchInput as string, term);
+      await super.fillField(this.selectors.searchInput, term);
       await this.page.waitForTimeout(500);
     }
   }

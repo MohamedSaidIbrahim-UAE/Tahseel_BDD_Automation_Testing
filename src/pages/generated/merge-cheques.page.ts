@@ -12,7 +12,7 @@
  */
 
 import { Page } from '@playwright/test';
-import { BasePage } from '../base.page';
+import { BaseListPage } from '../base-list.page';
 import { ElementInteractions } from '../../utils/element-interactions';
 import { AssertionHelpers } from '../../utils/assertion-helpers';
 import { WaitAndRetry } from '../../utils/wait-and-retry';
@@ -30,7 +30,7 @@ import { SelectorHelpers } from '../../utils/selector-helpers';
  * await page.verifyPageLoaded();
  * ```
  */
-export class MergeCheques extends BasePage {
+export class MergeCheques extends BaseListPage {
   /**
    * Module name for identification
    */
@@ -87,7 +87,7 @@ export class MergeCheques extends BasePage {
   async fillField(fieldName: string, value: string): Promise<void> {
     const selector = this.selectors[`${fieldName}Field`] as string;
     if (selector) {
-      await this.fill(selector, value);
+      await super.fillFilterInput(selector, value);
     }
   }
 
@@ -95,7 +95,7 @@ export class MergeCheques extends BasePage {
    * Submit form
    */
   async submitForm(): Promise<void> {
-    await this.clickSave();
+    await super.clickActionSearch();
   }
 
   /**
@@ -127,7 +127,7 @@ export class MergeCheques extends BasePage {
    */
   async searchTable(term: string): Promise<void> {
     if (this.selectors.searchInput) {
-      await this.fill(this.selectors.searchInput as string, term);
+      await super.fillGridSearchImpl(term);
       await this.page.waitForTimeout(500);
     }
   }

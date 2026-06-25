@@ -12,11 +12,7 @@
  */
 
 import { Page } from '@playwright/test';
-import { BasePage } from '../base.page';
-import { ElementInteractions } from '../../utils/element-interactions';
-import { AssertionHelpers } from '../../utils/assertion-helpers';
-import { WaitAndRetry } from '../../utils/wait-and-retry';
-import { SelectorHelpers } from '../../utils/selector-helpers';
+import { BaseListPage } from '../base-list.page';
 
 /**
  * InquireTransactions
@@ -30,7 +26,7 @@ import { SelectorHelpers } from '../../utils/selector-helpers';
  * await page.verifyPageLoaded();
  * ```
  */
-export class InquireTransactions extends BasePage {
+export class InquireTransactions extends BaseListPage {
   /**
    * Module name for identification
    */
@@ -88,9 +84,9 @@ export class InquireTransactions extends BasePage {
    * Fill form field
    */
   async fillField(fieldName: string, value: string): Promise<void> {
-    const selector = this.selectors[`${fieldName}Field`] as string;
+    const selector = this.selectors[`${fieldName}Field`];
     if (selector) {
-      await this.fill(selector, value);
+      await this.fillFilterInput(selector, value);
     }
   }
 
@@ -98,7 +94,7 @@ export class InquireTransactions extends BasePage {
    * Submit form
    */
   async submitForm(): Promise<void> {
-    await this.clickSave();
+    await this.clickActionSearch();
   }
 
   /**
@@ -119,10 +115,7 @@ export class InquireTransactions extends BasePage {
    * Verify table contains data
    */
   async verifyTableHasData(): Promise<void> {
-    const count = await this.getTableRowCount();
-    if (count === 0) {
-      throw new Error('Table has no data rows');
-    }
+    await this.verifyTableHasRecords();
   }
 
   /**
@@ -130,8 +123,7 @@ export class InquireTransactions extends BasePage {
    */
   async searchTable(term: string): Promise<void> {
     if (this.selectors.searchInput) {
-      await this.fill(this.selectors.searchInput as string, term);
-      await this.page.waitForTimeout(500);
+      await this.fillGridSearchImpl(term);
     }
   }
 
@@ -139,8 +131,7 @@ export class InquireTransactions extends BasePage {
    * Export data
    */
   async exportData(format: string = 'Excel'): Promise<void> {
-    await this.clickExport();
-    // Select export format (implementation depends on UI)
+    await this.clickExportAndSelectFormat(format);
   }
 
   /**

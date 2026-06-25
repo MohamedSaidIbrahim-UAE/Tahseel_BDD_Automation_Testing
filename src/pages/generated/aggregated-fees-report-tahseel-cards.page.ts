@@ -12,11 +12,7 @@
  */
 
 import { Page } from '@playwright/test';
-import { BasePage } from '../base.page';
-import { ElementInteractions } from '../../utils/element-interactions';
-import { AssertionHelpers } from '../../utils/assertion-helpers';
-import { WaitAndRetry } from '../../utils/wait-and-retry';
-import { SelectorHelpers } from '../../utils/selector-helpers';
+import { BaseListPage } from '../base-list.page';
 
 /**
  * AggregatedFeesReportTahseelCards
@@ -30,7 +26,7 @@ import { SelectorHelpers } from '../../utils/selector-helpers';
  * await page.verifyPageLoaded();
  * ```
  */
-export class AggregatedFeesReportTahseelCards extends BasePage {
+export class AggregatedFeesReportTahseelCards extends BaseListPage {
   /**
    * Module name for identification
    */
@@ -87,9 +83,9 @@ export class AggregatedFeesReportTahseelCards extends BasePage {
    * Fill form field
    */
   async fillField(fieldName: string, value: string): Promise<void> {
-    const selector = this.selectors[`${fieldName}Field`] as string;
+    const selector = this.selectors[`${fieldName}Field`];
     if (selector) {
-      await this.fill(selector, value);
+      await super.fillFilterInput(selector, value);
     }
   }
 
@@ -97,7 +93,7 @@ export class AggregatedFeesReportTahseelCards extends BasePage {
    * Submit form
    */
   async submitForm(): Promise<void> {
-    await this.clickSave();
+    await super.clickActionSearch();
   }
 
   /**
@@ -118,10 +114,7 @@ export class AggregatedFeesReportTahseelCards extends BasePage {
    * Verify table contains data
    */
   async verifyTableHasData(): Promise<void> {
-    const count = await this.getTableRowCount();
-    if (count === 0) {
-      throw new Error('Table has no data rows');
-    }
+    await super.verifyTableHasRecords();
   }
 
   /**
@@ -129,8 +122,7 @@ export class AggregatedFeesReportTahseelCards extends BasePage {
    */
   async searchTable(term: string): Promise<void> {
     if (this.selectors.searchInput) {
-      await this.fill(this.selectors.searchInput as string, term);
-      await this.page.waitForTimeout(500);
+      await super.fillGridSearchImpl(term);
     }
   }
 

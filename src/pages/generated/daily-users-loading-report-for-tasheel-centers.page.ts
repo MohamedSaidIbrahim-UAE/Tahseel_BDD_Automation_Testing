@@ -12,7 +12,7 @@
  */
 
 import { Page } from '@playwright/test';
-import { BasePage } from '../base.page';
+import { BaseFormPage } from '../base-form.page';
 import { ElementInteractions } from '../../utils/element-interactions';
 import { AssertionHelpers } from '../../utils/assertion-helpers';
 import { WaitAndRetry } from '../../utils/wait-and-retry';
@@ -30,7 +30,7 @@ import { SelectorHelpers } from '../../utils/selector-helpers';
  * await page.verifyPageLoaded();
  * ```
  */
-export class DailyUsersLoadingReportForTasheelCenters extends BasePage {
+export class DailyUsersLoadingReportForTasheelCenters extends BaseFormPage {
   /**
    * Module name for identification
    */

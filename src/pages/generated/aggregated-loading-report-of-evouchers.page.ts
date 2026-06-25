@@ -12,11 +12,7 @@
  */
 
 import { Page } from '@playwright/test';
-import { BasePage } from '../base.page';
-import { ElementInteractions } from '../../utils/element-interactions';
-import { AssertionHelpers } from '../../utils/assertion-helpers';
-import { WaitAndRetry } from '../../utils/wait-and-retry';
-import { SelectorHelpers } from '../../utils/selector-helpers';
+import { BaseListPage } from '../base-list.page';
 
 /**
  * AggregatedLoadingReportOfEvouchers
@@ -30,7 +26,7 @@ import { SelectorHelpers } from '../../utils/selector-helpers';
  * await page.verifyPageLoaded();
  * ```
  */
-export class AggregatedLoadingReportOfEvouchers extends BasePage {
+export class AggregatedLoadingReportOfEvouchers extends BaseListPage {
   /**
    * Module name for identification
    */
