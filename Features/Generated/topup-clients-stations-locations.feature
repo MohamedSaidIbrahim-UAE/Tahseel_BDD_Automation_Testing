@@ -1,37 +1,37 @@
 Feature: Topup Clients Stations Locations - Page heading mismatch for "Topup Clients Stations Locations"
-  
   As a user
   I want to interact with the Topup Clients Stations Locations module
   So that I can manage and track page heading mismatch for "topup clients stations locations"
 
-
   Background:
     Given the user is authenticated
     And the user navigates to the "Topup Clients Stations Locations" module
-
   # POSITIVE SCENARIOS
+
   Scenario: Load module page successfully
     When the user opens the module
     Then the module page should load
     And the page title should display "Topup Clients Stations Locations"
     And all main elements should be visible
+
   Scenario: View data in table
     Given the module page is loaded
     When the user views the data table
     Then the table should display the following columns: Arabic Name, English Name, Active
     And the table should contain at least one row
+
   Scenario: Search for data
     Given the module page is loaded
     When the user searches for "test data"
     Then the search results should display
     And the results should contain the search term
+
   Scenario: Export data to file
     Given the module page is loaded
     When the user clicks the export button
     And the user selects "Excel" format
     Then the file should be downloaded
     And the file should contain valid data
-
   # NEGATIVE SCENARIOS
 
   Scenario: Display validation error for invalid input
@@ -51,7 +51,6 @@ Feature: Topup Clients Stations Locations - Page heading mismatch for "Topup Cli
     When the user attempts to create a duplicate entry
     Then an appropriate error message should be displayed
     And the duplicate entry should not be created
-
   # EDGE CASES
 
   Scenario: Handle boundary values correctly

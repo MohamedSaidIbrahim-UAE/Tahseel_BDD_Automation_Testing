@@ -1,21 +1,18 @@
 Feature: Inquire - Inquire Deduct Transaction
-  
   As a user
   I want to interact with the Inquire module
   So that I can manage and track inquire deduct transaction
 
-
   Background:
     Given the user is authenticated
     And the user navigates to the "Inquire" module
-
   # POSITIVE SCENARIOS
+
   Scenario: Load module page successfully
     When the user opens the module
     Then the module page should load
     And the page title should display "Inquire"
     And all main elements should be visible
-
   # NEGATIVE SCENARIOS
 
   Scenario: Display validation error for invalid input
@@ -35,7 +32,6 @@ Feature: Inquire - Inquire Deduct Transaction
     When the user attempts to create a duplicate entry
     Then an appropriate error message should be displayed
     And the duplicate entry should not be created
-
   # EDGE CASES
 
   Scenario: Handle boundary values correctly

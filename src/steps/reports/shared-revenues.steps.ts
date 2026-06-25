@@ -30,17 +30,26 @@ Before(function (this: World) {
 
 Given('the following transactions are posted under shared service on {string}:', async function (
   this: World,
-  date: string,
+  dateStr: string,
   dataTable: any
 ) {
   const data = dataTable.hashes();
-  this.addLog(`Setting up shared service transactions for ${date}:`);
+  
+  // Parse date string: "2026-06-15" format
+  const transactionDate = new Date(dateStr);
+  if (isNaN(transactionDate.getTime())) {
+    throw new Error(`Invalid date format: ${dateStr}. Expected format: YYYY-MM-DD`);
+  }
+  
+  this.addLog(`Setting up shared service transactions for ${dateStr}:`);
   data.forEach((row: any) => {
     this.addLog(`  - Service: ${row.Service}, Amount: ${row.Amount} AED, Entities: ${row.Entities}`);
   });
-  // Parse and store the date for later use
-  (this as any).transactionDate = new Date(date);
-  this.addLog(`Transaction date set to: ${date}`);
+  
+  // Store parsed date and data for later verification
+  (this as any).transactionDate = transactionDate;
+  (this as any).transactionData = data;
+  this.addLog(`Transaction date set to: ${dateStr}`);
 });
 
 Given('sharing rule for {string} is {string}', async function (
@@ -54,14 +63,21 @@ Given('sharing rule for {string} is {string}', async function (
 
 Given('the sharing rule is updated on {string} to {string}', async function (
   this: World,
-  date: string,
+  dateStr: string,
   newSplitRule: string
 ) {
-  this.addLog(`Sharing rule updated on ${date} to: ${newSplitRule}`);
-  // Parse date for comparison
-  (this as any).ruleChangeDate = new Date(date);
+  // Parse date string: "2026-06-15" format
+  const changeDate = new Date(dateStr);
+  if (isNaN(changeDate.getTime())) {
+    throw new Error(`Invalid date format: ${dateStr}. Expected format: YYYY-MM-DD`);
+  }
+  
+  this.addLog(`Sharing rule updated on ${dateStr} to: ${newSplitRule}`);
+  
+  // Store for later verification
+  (this as any).ruleChangeDate = changeDate;
   (this as any).newSharingRule = newSplitRule;
-  this.addLog(`Rule change date stored: ${date}`);
+  this.addLog(`Rule change date stored: ${dateStr}`);
 });
 
 Given('the following transactions are posted for the month of June:', async function (
@@ -100,13 +116,24 @@ When('the user runs the shared revenues report for {string}', async function (
   }
 
   this.addLog(`Running shared revenues report for: ${dateRange}`);
-  await reportPage.navigateToDTPSSharjahReport();
+  
+  // Parse date range (e.g., "June 2026")
+  const [month, year] = dateRange.split(' ');
+  
+  // Navigate to report
+  await reportPage.navigateToReport();
 
-  const today = new Date().toISOString().split('T')[0];
-  await reportPage.setFromDate(today);
-  await reportPage.setToDate(today);
+  // Set date filters for the specified month
+  const monthNum = getMonthNumber(month);
+  const fromDate = `${year}-${monthNum}-01`;
+  const toDate = `${year}-${monthNum}-${getDaysInMonth(month, parseInt(year))}`;
+
+  await reportPage.setFromDate(fromDate);
+  await reportPage.setToDate(toDate);
   await reportPage.showReport();
 
+  // Store date range in context
+  (this as any).reportDateRange = { fromDate, toDate, month, year };
   this.addLog('✅ Shared revenues report executed');
 });
 
@@ -116,6 +143,11 @@ When('the user runs the "Total Transactions report by revenue entity" for June {
 ) {
   if (!reportPage) {
     throw new Error('Report page not initialized');
+  }
+
+  // Validate year is reasonable
+  if (year < 2000 || year > 2100) {
+    throw new Error(`Invalid year: ${year}. Must be between 2000 and 2100`);
   }
 
   this.addLog(`Running Total Transactions report for June ${year}`);
@@ -129,6 +161,8 @@ When('the user runs the "Total Transactions report by revenue entity" for June {
   await reportPage.setToDate(toDate);
   await reportPage.showReport();
 
+  // Store date range in context for later verification
+  (this as any).reportDateRange = { fromDate, toDate, month: 'June', year };
   this.addLog(`✅ Total Transactions report executed for June ${year}`);
 });
 
@@ -236,15 +270,25 @@ Then('the splits sum to the total transaction amount for each transaction', asyn
 
 Then('the report reflects the updated sharing rule from {string} onwards', async function (
   this: World,
-  changeDate: string
+  changeDateStr: string
 ) {
   if (!reportPage) {
     throw new Error('Report page not initialized');
   }
 
-  this.addLog(`Verifying rule change from ${changeDate}...`);
-  const changeDateObj = new Date(changeDate);
-  const midPeriodImpact = await reportPage.verifyMidPeriodRuleChange(changeDateObj.toISOString(), 60, 40);
+  // Parse date string: "2026-06-15" format
+  const changeDate = new Date(changeDateStr);
+  if (isNaN(changeDate.getTime())) {
+    throw new Error(`Invalid date format: ${changeDateStr}. Expected format: YYYY-MM-DD`);
+  }
+
+  this.addLog(`Verifying rule change from ${changeDateStr}...`);
+  
+  // Retrieve the new sharing rule from context (set in earlier Given step)
+  const newRule = (this as any).newSharingRule || '60/40';
+  const [beforePercent, afterPercent] = newRule.split('/').map(Number);
+
+  const midPeriodImpact = await reportPage.verifyMidPeriodRuleChange(changeDate.toISOString(), beforePercent, afterPercent);
 
   this.addLog(`Before rule change: ${midPeriodImpact.beforeChange} AED`);
   this.addLog(`After rule change: ${midPeriodImpact.afterChange} AED`);
@@ -318,6 +362,25 @@ Then('the user cannot access shared revenue details', async function (this: Worl
   }
 });
 
-// Export steps are inherited from BaseListPage and defined in detailed-transactions-revenue-entity.steps.ts
+// Export steps are inherited from BaseListPage and defined in shared.steps.ts
 // Steps "the report can be exported to Excel" and "the report can be exported to PDF" are reused across all revenue reports
-// Step "the report displays {string}" is defined in detailed-transactions-revenue-entity.steps.ts
+// Step "the report displays {string}" is defined in shared.steps.ts
+
+// ────────────────────────────────────────────────────────────────────────────
+// Helper Functions
+// ────────────────────────────────────────────────────────────────────────────
+
+function getMonthNumber(monthName: string): string {
+  const months: { [key: string]: string } = {
+    'January': '01', 'February': '02', 'March': '03', 'April': '04',
+    'May': '05', 'June': '06', 'July': '07', 'August': '08',
+    'September': '09', 'October': '10', 'November': '11', 'December': '12'
+  };
+  return months[monthName] || '06';
+}
+
+function getDaysInMonth(monthName: string, year: number): number {
+  const monthNum = parseInt(getMonthNumber(monthName), 10);
+  const date = new Date(year, monthNum, 0);
+  return date.getDate();
+}

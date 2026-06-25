@@ -1,32 +1,31 @@
 Feature: Transactions Sent By Payment Link - Search Criteria
-  
   As a user
   I want to interact with the Transactions Sent By Payment Link module
   So that I can manage and track search criteria
 
-
   Background:
     Given the user is authenticated
     And the user navigates to the "Transactions Sent By Payment Link" module
-
   # POSITIVE SCENARIOS
+
   Scenario: Load module page successfully
     When the user opens the module
     Then the module page should load
     And the page title should display "Transactions Sent By Payment Link"
     And all main elements should be visible
+
   Scenario: Search for data
     Given the module page is loaded
     When the user searches for "test data"
     Then the search results should display
     And the results should contain the search term
+
   Scenario: Export data to file
     Given the module page is loaded
     When the user clicks the export button
     And the user selects "Excel" format
     Then the file should be downloaded
     And the file should contain valid data
-
   # NEGATIVE SCENARIOS
 
   Scenario: Display validation error for invalid input
@@ -46,7 +45,6 @@ Feature: Transactions Sent By Payment Link - Search Criteria
     When the user attempts to create a duplicate entry
     Then an appropriate error message should be displayed
     And the duplicate entry should not be created
-
   # EDGE CASES
 
   Scenario: Handle boundary values correctly

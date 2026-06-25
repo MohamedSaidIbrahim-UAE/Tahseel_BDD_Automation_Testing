@@ -1,35 +1,31 @@
-Feature: Deposits Refund - Deposit Refund Request
+Feature: Deposits Refund - Deposit Refund Request Management
   
   As a user
   I want to interact with the Deposits Refund module
-  So that I can manage and track deposit refund request
-
+  So that I can manage deposit refund requests
 
   Background:
     Given the user is authenticated
     And the user navigates to the "Deposits Refund" module
 
-  # POSITIVE SCENARIOS
   Scenario: Load module page successfully
     When the user opens the module
     Then the module page should load
     And the page title should display "Deposits Refund"
     And all main elements should be visible
+
   Scenario: Submit form with valid data
     Given the form is open
-    When the user fills the form with the following data:
-      - Ref.No *: [Valid value]
-    - ReceiptNo *: [Valid value]
+    When the user fills refund form with valid deposit data
     And the user submits the form
     Then the success message should be displayed
     And the form should close
+
   Scenario: View data in table
     Given the module page is loaded
     When the user views the data table
-    Then the table should display the following columns: 
+    Then the table should display valid records
     And the table should contain at least one row
-
-  # NEGATIVE SCENARIOS
 
   Scenario: Display validation error for invalid input
     Given the form is open
@@ -48,8 +44,6 @@ Feature: Deposits Refund - Deposit Refund Request
     When the user attempts to create a duplicate entry
     Then an appropriate error message should be displayed
     And the duplicate entry should not be created
-
-  # EDGE CASES
 
   Scenario: Handle boundary values correctly
     Given the form is open

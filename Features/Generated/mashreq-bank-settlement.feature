@@ -1,37 +1,37 @@
 Feature: Mashreq Bank Settlement - Transaction exsist in Mashreq bank and not exsist in Tahseel
-  
   As a user
   I want to interact with the Mashreq Bank Settlement module
   So that I can manage and track transaction exsist in mashreq bank and not exsist in tahseel
 
-
   Background:
     Given the user is authenticated
     And the user navigates to the "Mashreq Bank Settlement" module
-
   # POSITIVE SCENARIOS
+
   Scenario: Load module page successfully
     When the user opens the module
     Then the module page should load
     And the page title should display "Mashreq Bank Settlement"
     And all main elements should be visible
+
   Scenario: View data in table
     Given the module page is loaded
     When the user views the data table
     Then the table should display the following columns: Transaction No, Reference Number, Receipt Number
     And the table should contain at least one row
+
   Scenario: Search for data
     Given the module page is loaded
     When the user searches for "test data"
     Then the search results should display
     And the results should contain the search term
+
   Scenario: Export data to file
     Given the module page is loaded
     When the user clicks the export button
     And the user selects "Excel" format
     Then the file should be downloaded
     And the file should contain valid data
-
   # NEGATIVE SCENARIOS
 
   Scenario: Display validation error for invalid input
@@ -51,7 +51,6 @@ Feature: Mashreq Bank Settlement - Transaction exsist in Mashreq bank and not ex
     When the user attempts to create a duplicate entry
     Then an appropriate error message should be displayed
     And the duplicate entry should not be created
-
   # EDGE CASES
 
   Scenario: Handle boundary values correctly

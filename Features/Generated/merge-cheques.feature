@@ -1,26 +1,24 @@
 Feature: Merge Cheques - Module management and operations
-  
   As a user
   I want to interact with the Merge Cheques module
   So that I can manage and track module management and operations
 
-
   Background:
     Given the user is authenticated
     And the user navigates to the "Merge Cheques" module
-
   # POSITIVE SCENARIOS
+
   Scenario: Load module page successfully
     When the user opens the module
     Then the module page should load
     And the page title should display "Merge Cheques"
     And all main elements should be visible
+
   Scenario: View data in table
     Given the module page is loaded
     When the user views the data table
     Then the table should display the following columns: Cheque Number, Cheque Number, Cheque Claim Date
     And the table should contain at least one row
-
   # NEGATIVE SCENARIOS
 
   Scenario: Display validation error for invalid input
@@ -40,7 +38,6 @@ Feature: Merge Cheques - Module management and operations
     When the user attempts to create a duplicate entry
     Then an appropriate error message should be displayed
     And the duplicate entry should not be created
-
   # EDGE CASES
 
   Scenario: Handle boundary values correctly

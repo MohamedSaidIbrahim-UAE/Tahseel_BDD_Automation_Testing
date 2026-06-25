@@ -220,18 +220,7 @@ Then('the total amount shown is {float} AED', async function (this: World, expec
   this.addLog(`✅ Amount verified: ${expectedAmount} AED`);
 });
 
-Then('the report displays {string}', async function (this: World, message: string) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  const isNoData = await reportPage.isNoDataMessageVisible();
-
-  this.addLog(`Checking for message: "${message}"`);
-  expect(isNoData).toBe(true);
-
-  this.addLog(`✅ Message displayed: "${message}"`);
-});
+// "the report displays {string}" is now defined in shared.steps.ts
 
 Then('an {string} message is shown', async function (this: World, messageType: string) {
   if (!reportPage) {
@@ -247,34 +236,6 @@ Then('an {string} message is shown', async function (this: World, messageType: s
   this.addLog(`✅ ${messageType} message displayed`);
 });
 
-// ────────────────────────────────────────────────────────────────────────────
-// Export Verification Steps
-// ────────────────────────────────────────────────────────────────────────────
-
-Then('the report can be exported to PDF', async function (this: World) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  try {
-    this.addLog('Attempting to export report as PDF...');
-    await reportPage.exportAsPdf();
-    this.addLog('✅ Report exported to PDF successfully');
-  } catch (error) {
-    this.addLog(`⚠️ PDF export encountered: ${error}`);
-  }
-});
-
-Then('the report can be exported to Excel', async function (this: World) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  try {
-    this.addLog('Attempting to export report as Excel...');
-    await reportPage.exportAsExcel();
-    this.addLog('✅ Report exported to Excel successfully');
-  } catch (error) {
-    this.addLog(`⚠️ Excel export encountered: ${error}`);
-  }
-});
+// Export steps are now defined in shared.steps.ts to avoid duplication
+// "the report can be exported to PDF" and "the report can be exported to Excel" 
+// are shared across all report types

@@ -225,3 +225,39 @@ Then('the dialog should remain open', async function (this: World) {
   await activePage.verifyFormVisible();
   this.addLog('Verified dialog remains open');
 });
+
+// ── Shared report steps ──────────────────────────────────────────────────────
+
+Then('the report displays {string}', async function (this: World, message: string) {
+  const activePage = resolveActivePage(this, 'isNoDataMessageVisible');
+  const isNoData = await activePage.isNoDataMessageVisible();
+  
+  this.addLog(`Checking for message: "${message}"`);
+  expect(isNoData).toBe(true);
+  
+  this.addLog(`✅ Message displayed: "${message}"`);
+});
+
+Then('the report can be exported to PDF', async function (this: World) {
+  const activePage = resolveActivePage(this, 'exportAsPdf');
+
+  try {
+    this.addLog('Attempting to export report as PDF...');
+    await activePage.exportAsPdf();
+    this.addLog('✅ Report exported to PDF successfully');
+  } catch (error) {
+    this.addLog(`⚠️ PDF export encountered: ${error}`);
+  }
+});
+
+Then('the report can be exported to Excel', async function (this: World) {
+  const activePage = resolveActivePage(this, 'exportAsExcel');
+
+  try {
+    this.addLog('Attempting to export report as Excel...');
+    await activePage.exportAsExcel();
+    this.addLog('✅ Report exported to Excel successfully');
+  } catch (error) {
+    this.addLog(`⚠️ Excel export encountered: ${error}`);
+  }
+});

@@ -1,21 +1,18 @@
 Feature: Detailed Transactions Report Of SEED According To The Fees Entity Owner - Module management and operations
-  
   As a user
   I want to interact with the Detailed Transactions Report Of SEED According To The Fees Entity Owner module
   So that I can manage and track module management and operations
 
-
   Background:
     Given the user is authenticated
     And the user navigates to the "Detailed Transactions Report Of SEED According To The Fees Entity Owner" module
-
   # POSITIVE SCENARIOS
+
   Scenario: Load module page successfully
     When the user opens the module
     Then the module page should load
     And the page title should display "Detailed Transactions Report Of SEED According To The Fees Entity Owner"
     And all main elements should be visible
-
   # NEGATIVE SCENARIOS
 
   Scenario: Display validation error for invalid input
@@ -35,7 +32,6 @@ Feature: Detailed Transactions Report Of SEED According To The Fees Entity Owner
     When the user attempts to create a duplicate entry
     Then an appropriate error message should be displayed
     And the duplicate entry should not be created
-
   # EDGE CASES
 
   Scenario: Handle boundary values correctly

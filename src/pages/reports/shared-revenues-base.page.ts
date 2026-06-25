@@ -16,29 +16,29 @@ import { BaseListPage } from '../base-list.page';
 
 export class SharedRevenuesBasePage extends BaseListPage {
   // ── Filter selectors ─────────────────────────────────────────────────────
-  readonly fromDateInput = 'input[aria-label*="From"], input[placeholder*="From"], input[name*="from"], input[id*="from"]';
-  readonly toDateInput = 'input[aria-label*="To"], input[placeholder*="To"], input[name*="to"], input[id*="to"]';
-  readonly entityFilterDropdown = 'select[aria-label*="Entity"], div[role="combobox"][aria-label*="Entity"], [data-component="select"][aria-label*="Entity"]';
-  readonly serviceFilterDropdown = 'select[aria-label*="Service"], div[role="combobox"][aria-label*="Service"], [data-component="select"][aria-label*="Service"]';
-  readonly showReportButton = 'button:has-text("Show Report"), button:has-text("Search"), button[aria-label*="Search"], button[aria-label*="Show"], button[type="submit"]';
-  readonly clearFilterButton = 'button:has-text("Clear"), button[aria-label*="Clear"], button[aria-label*="Reset"]';
+  readonly fromDateInput = 'input[aria-label*="From"], input[placeholder*="From"], input[name*="from"], input[id*="from"], input[type="date"]:first-of-type';
+  readonly toDateInput = 'input[aria-label*="To"], input[placeholder*="To"], input[name*="to"], input[id*="to"], input[type="date"]:last-of-type';
+  readonly entityFilterDropdown = 'select[aria-label*="Entity"], div[role="combobox"][aria-label*="Entity"], [data-component="select"][aria-label*="Entity"], dx-select-box[aria-label*="Entity"], select[name*="entity"]';
+  readonly serviceFilterDropdown = 'select[aria-label*="Service"], div[role="combobox"][aria-label*="Service"], [data-component="select"][aria-label*="Service"], dx-select-box[aria-label*="Service"]';
+  readonly showReportButton = 'button:has-text("Show Report"), button:has-text("Display"), button:has-text("Generate"), button:has-text("View"), button:has-text("Search"), button:has-text("Find"), button[aria-label*="Search"], button[aria-label*="Show"], button[aria-label*="Report"], button[type="submit"], input[type="submit"], dx-button';
+  readonly clearFilterButton = 'button:has-text("Clear"), button:has-text("Reset"), button[aria-label*="Clear"], button[aria-label*="Reset"]';
 
   // ── Report table selectors ──────────────────────────────────────────────
-  // Multiple fallbacks to handle different table implementations
-  readonly reportTable = 'table[role="grid"], table.report-table, dx-data-grid, [role="grid"], table[class*="table"], table[class*="data"], table[class*="grid"], .dx-datagrid, .report-table, .data-table, .grid-container, [class*="grid-wrapper"], table';
-  readonly transactionIdColumn = 'td:has-text("Transaction ID"), td:has-text("ID"), [data-field="transactionId"], [class*="transaction-id"]';
+  // Multiple fallbacks to handle different table implementations (DevExtreme, HTML, etc)
+  readonly reportTable = 'dx-data-grid, table[role="grid"], table.report-table, [role="grid"], table[class*="table"], table[class*="data"], table[class*="grid"], .dx-datagrid, .report-table, .data-table, .grid-container, [class*="grid-wrapper"], table, [class*="dx-grid"]';
+  readonly transactionIdColumn = 'td:has-text("Transaction ID"), td:has-text("ID"), td:has-text("Txn"), [data-field="transactionId"], [class*="transaction-id"], td[data-rowindex]';
   readonly serviceColumn = 'td:has-text("Service"), td:has-text("Service Name"), [data-field="service"], [class*="service"]';
-  readonly amountColumn = 'td:has-text("Amount"), td:has-text("Total"), [data-field="amount"], [class*="amount"]';
-  readonly entityAShareColumn = 'td:has-text("Entity A"), td:has-text("Share A"), [data-field="entityAShare"], [class*="entity-a"]';
-  readonly entityBShareColumn = 'td:has-text("Entity B"), td:has-text("Share B"), [data-field="entityBShare"], [class*="entity-b"]';
+  readonly amountColumn = 'td:has-text("Amount"), td:has-text("Total"), [data-field="amount"], [class*="amount"], td[align="right"]';
+  readonly entityAShareColumn = 'td:has-text("Entity A"), td:has-text("Share A"), td:has-text("DTPS"), [data-field="entityAShare"], [class*="entity-a"]';
+  readonly entityBShareColumn = 'td:has-text("Entity B"), td:has-text("Share B"), td:has-text("Municipality"), [data-field="entityBShare"], [class*="entity-b"]';
   readonly splitPercentageColumn = 'td:has-text("Split"), td:has-text("Split %"), [data-field="splitPercentage"], [class*="split"]';
 
   // ── Summary rows ────────────────────────────────────────────────────────
-  readonly entityASummaryRow = 'tr:has-text("Total"), tr[class*="summary"]';
-  readonly grandTotalRow = 'tr:has-text("Grand Total")';
+  readonly entityASummaryRow = 'tr:has-text("Total"), tr[class*="summary"], tr[class*="dx-row-focused"]';
+  readonly grandTotalRow = 'tr:has-text("Grand Total"), tr:has-text("Total"), tr[class*="grand-total"], tr[class*="summary"], tr[class*="footer"]';
 
   // ── Empty/No-data states ────────────────────────────────────────────────
-  readonly noDataMessage = 'span:has-text("No data"), .empty-state, .no-records-message';
+  readonly noDataMessage = 'span:has-text("No data"), span:has-text("No records"), .empty-state, .no-records-message, .dx-empty-row, [class*="no-data"], [class*="empty"]';
 
   // Revenue split configurations
   protected splitRules: {

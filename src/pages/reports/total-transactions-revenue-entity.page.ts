@@ -14,22 +14,22 @@ import { BaseListPage } from '../base-list.page';
 
 export class TotalTransactionsRevenueEntityPage extends BaseListPage {
   // ── Report-specific filter selectors ────────────────────────────────────
-  readonly fromDateInput = 'input[aria-label*="From"], input[placeholder*="From"], input[name*="from"], input[id*="from"]';
-  readonly toDateInput = 'input[aria-label*="To"], input[placeholder*="To"], input[name*="to"], input[id*="to"]';
-  readonly entityFilterDropdown = 'div[aria-label*="Entity"], select[aria-label*="Entity"], [data-component="select"][aria-label*="Entity"]';
-  readonly showReportButton = 'button:has-text("Show Report"), button[aria-label*="Show"], button:has-text("Search"), button[type="submit"]';
-  readonly clearFilterButton = 'button:has-text("Clear"), button[aria-label*="Clear"], button[aria-label*="Reset"]';
+  readonly fromDateInput = 'input[aria-label*="From"], input[placeholder*="From"], input[name*="from"], input[id*="from"], input[type="date"]:first-of-type';
+  readonly toDateInput = 'input[aria-label*="To"], input[placeholder*="To"], input[name*="to"], input[id*="to"], input[type="date"]:last-of-type';
+  readonly entityFilterDropdown = 'select[aria-label*="Entity"], div[role="combobox"][aria-label*="Entity"], [data-component="select"][aria-label*="Entity"], dx-select-box[aria-label*="Entity"], select[name*="entity"]';
+  readonly showReportButton = 'button:has-text("Show Report"), button:has-text("Display"), button:has-text("Generate"), button:has-text("View"), button:has-text("Search"), button:has-text("Find"), button[aria-label*="Search"), button[aria-label*="Show"), button[aria-label*="Report"), button[type="submit"], input[type="submit"], dx-button';
+  readonly clearFilterButton = 'button:has-text("Clear"), button:has-text("Reset"), button[aria-label*="Clear"), button[aria-label*="Reset"]';
 
   // ── Report table selectors ──────────────────────────────────────────────
-  readonly reportTable = 'table[role="grid"], table.report-table, dx-data-grid, [role="grid"], table[class*="table"], table[class*="data"], table[class*="grid"], .dx-datagrid, .data-table, .grid-container, [class*="grid-wrapper"], table';
-  readonly revenueEntityColumn = 'td:has-text("Revenue Entity"), td:has-text("Entity"), [data-field="revenueEntity"], [class*="entity"]';
-  readonly transactionCountColumn = 'td:has-text("Transaction Count"), td:has-text("Count"), td:has-text("Transactions"), [data-field="count"], [data-field="transactionCount"]';
-  readonly totalAmountColumn = 'td:has-text("Total Amount"), td:has-text("Amount"), td:has-text("Total"), [data-field="amount"], [data-field="totalAmount"]';
-  readonly grandTotalRow = 'tr:has-text("Grand Total"), tr:has-text("Total"), tr[class*="grand-total"], tr[class*="summary"]';
-  readonly grandTotalAmount = 'span:has-text("Grand Total") ~ span, td:has-text("Grand Total") ~ td';
+  readonly reportTable = 'dx-data-grid, table[role="grid"], table.report-table, [role="grid"], table[class*="table"], table[class*="data"], table[class*="grid"], .dx-datagrid, .report-table, .data-table, .grid-container, [class*="grid-wrapper"], table, [class*="dx-grid"]';
+  readonly revenueEntityColumn = 'td:has-text("Revenue Entity"), td:has-text("Entity"), td:has-text("Department"), [data-field="revenueEntity"], [class*="entity"], td[data-field*="entity"]';
+  readonly transactionCountColumn = 'td:has-text("Transaction Count"), td:has-text("Count"), td:has-text("Transactions"), td:has-text("Total Txns"), [data-field="count"], [data-field="transactionCount"], [data-field*="count"]';
+  readonly totalAmountColumn = 'td:has-text("Total Amount"), td:has-text("Amount"), td:has-text("Total"), td:has-text("Total Value"), [data-field="amount"], [data-field="totalAmount"], [data-field*="amount"], td[align="right"]';
+  readonly grandTotalRow = 'tr:has-text("Grand Total"), tr:has-text("Total"), tr[class*="grand-total"], tr[class*="summary"], tr[class*="footer"], tr[class*="dx-row-focused"]';
+  readonly grandTotalAmount = 'span:has-text("Grand Total") ~ span, td:has-text("Grand Total") ~ td, td[class*="grand-total"]';
 
   // ── Empty/No-data states ────────────────────────────────────────────────
-  readonly noDataMessage = 'span:has-text("No data"), .empty-state, .no-records-message';
+  readonly noDataMessage = 'span:has-text("No data"), span:has-text("No records"), .empty-state, .no-records-message, .dx-empty-row, [class*="no-data"], [class*="empty"]';
 
   // ── Export controls ─────────────────────────────────────────────────────
   // Note: Export functionality is inherited from BaseListPage.clickExportAndSelectFormat()

@@ -1,37 +1,37 @@
 Feature: Issue Workflow Management - Page heading mismatch for "Issue Workflow Management"
-  
   As a user
   I want to interact with the Issue Workflow Management module
   So that I can manage and track page heading mismatch for "issue workflow management"
 
-
   Background:
     Given the user is authenticated
     And the user navigates to the "Issue Workflow Management" module
-
   # POSITIVE SCENARIOS
+
   Scenario: Load module page successfully
     When the user opens the module
     Then the module page should load
     And the page title should display "Issue Workflow Management"
     And all main elements should be visible
+
   Scenario: View data in table
     Given the module page is loaded
     When the user views the data table
     Then the table should display the following columns: English Name, Issue Category, Active
     And the table should contain at least one row
+
   Scenario: Search for data
     Given the module page is loaded
     When the user searches for "test data"
     Then the search results should display
     And the results should contain the search term
+
   Scenario: Export data to file
     Given the module page is loaded
     When the user clicks the export button
     And the user selects "Excel" format
     Then the file should be downloaded
     And the file should contain valid data
-
   # NEGATIVE SCENARIOS
 
   Scenario: Display validation error for invalid input
@@ -51,7 +51,6 @@ Feature: Issue Workflow Management - Page heading mismatch for "Issue Workflow M
     When the user attempts to create a duplicate entry
     Then an appropriate error message should be displayed
     And the duplicate entry should not be created
-
   # EDGE CASES
 
   Scenario: Handle boundary values correctly

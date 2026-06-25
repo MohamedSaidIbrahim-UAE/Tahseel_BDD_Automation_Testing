@@ -1,34 +1,31 @@
-Feature: Tickets Delivery - Receipt Number *
+Feature: Tickets Delivery - Receipt Number
   
   As a user
   I want to interact with the Tickets Delivery module
-  So that I can manage and track receipt number *
-
+  So that I can manage and track receipt numbers
 
   Background:
     Given the user is authenticated
     And the user navigates to the "Tickets Delivery" module
 
-  # POSITIVE SCENARIOS
   Scenario: Load module page successfully
     When the user opens the module
     Then the module page should load
     And the page title should display "Tickets Delivery"
     And all main elements should be visible
+
   Scenario: Submit form with valid data
     Given the form is open
-    When the user fills the form with the following data:
-      - Receipt Number *: [Valid value]
+    When the user fills the form with valid receipt number
     And the user submits the form
     Then the success message should be displayed
     And the form should close
+
   Scenario: View data in table
     Given the module page is loaded
     When the user views the data table
-    Then the table should display the following columns: 
+    Then the table should display valid records
     And the table should contain at least one row
-
-  # NEGATIVE SCENARIOS
 
   Scenario: Display validation error for invalid input
     Given the form is open
@@ -47,8 +44,6 @@ Feature: Tickets Delivery - Receipt Number *
     When the user attempts to create a duplicate entry
     Then an appropriate error message should be displayed
     And the duplicate entry should not be created
-
-  # EDGE CASES
 
   Scenario: Handle boundary values correctly
     Given the form is open
