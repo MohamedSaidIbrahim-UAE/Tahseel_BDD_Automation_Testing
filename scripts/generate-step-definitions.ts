@@ -28,12 +28,13 @@ function moduleNameToClassName(name: string): string {
  * Convert module name to filename
  */
 function moduleNameToFilename(name: string): string {
+  if (!name) return 'unnamed-module';
   return name
     .toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^a-z0-9-]/g, '')
     .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
+    .replace(/^-|-$/g, '') || 'unnamed-module';
 }
 
 /**
@@ -41,21 +42,25 @@ function moduleNameToFilename(name: string): string {
  */
 function generateStepDefinitionsContent(config: GeneratorConfig): string {
   const { moduleName, className } = config;
-  const filename = moduleNameToFilename(moduleName);
+  const filename = moduleNameToFilename(moduleName || 'unnamed-module');
+  const safeClassName = className && className.length > 0 ? className : 'UnnamedModule';
+  const instanceName = safeClassName.length > 0 
+    ? safeClassName[0].toLowerCase() + safeClassName.slice(1) 
+    : 'unnamedModule';
 
   return `/**
- * Step Definitions for ${moduleName} Module
- * 
- * This file contains all step definitions for the ${moduleName} feature.
+ * Step Definitions for ${moduleName || 'Unnamed'} Module
+ *
+ * This file contains all step definitions for the ${moduleName || 'Unnamed'} feature.
  * Steps are organized by type: Given, When, Then
- * 
+ *
  * @category Step Definitions
  * @module ${filename}.steps
  */
 
 import { Given, When, Then, DataTable } from '@cucumber/cucumber';
 import { Page, expect } from '@playwright/test';
-import { ${className} } from '../pages/${filename}.page';
+import { ${safeClassName} } from '../pages/generated/${filename}.page';
 import { ElementInteractions } from '../utils/element-interactions';
 import { AssertionHelpers } from '../utils/assertion-helpers';
 import { WaitAndRetry } from '../utils/wait-and-retry';
@@ -65,7 +70,7 @@ import { DataGenerators } from '../utils/data-generators';
  * Test context containing page and module instance
  */
 let page: Page;
-let ${className[0].toLowerCase() + className.slice(1)}: ${className};
+let ${instanceName}: ${safeClassName};
 
 /**
  * Initialize page instance
@@ -75,7 +80,7 @@ function initializePageObject(): void {
   if (!page) {
     throw new Error('Page instance not initialized');
   }
-  ${className[0].toLowerCase() + className.slice(1)} = new ${className}(page);
+  ${instanceName} = new ${safeClassName}(page);
 }
 
 // ============================================================================
@@ -87,7 +92,7 @@ function initializePageObject(): void {
  */
 Given('the user navigates to the "{string}" module', async (moduleName: string) => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.navigateToModule();
+  await ${instanceName}.navigateToModule();
 });
 
 /**
@@ -95,7 +100,7 @@ Given('the user navigates to the "{string}" module', async (moduleName: string) 
  */
 Given('the module page is loaded', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyPageLoaded();
+  await ${instanceName}.verifyPageLoaded();
 });
 
 /**
@@ -103,7 +108,7 @@ Given('the module page is loaded', async () => {
  */
 Given('the form is open', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyFormVisible();
+  await ${instanceName}.verifyFormVisible();
 });
 
 /**
@@ -122,7 +127,7 @@ Given('the user fills the form with the following data:', async (dataTable: Data
   const data = dataTable.rowsHash();
 
   for (const [fieldName, fieldValue] of Object.entries(data)) {
-    await ${className[0].toLowerCase() + className.slice(1)}.fillField(fieldName, fieldValue);
+    await ${instanceName}.fillField(fieldName, fieldValue);
   }
 });
 
@@ -152,7 +157,7 @@ Given('the user attempts to create a duplicate entry', async () => {
  */
 When('the user opens the module', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.navigateToModule();
+  await ${instanceName}.navigateToModule();
 });
 
 /**
@@ -160,7 +165,7 @@ When('the user opens the module', async () => {
  */
 When('the user views the data table', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyPageLoaded();
+  await ${instanceName}.verifyPageLoaded();
 });
 
 /**
@@ -168,7 +173,7 @@ When('the user views the data table', async () => {
  */
 When('the user searches for "{string}"', async (searchTerm: string) => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.searchTable(searchTerm);
+  await ${instanceName}.searchTable(searchTerm);
 });
 
 /**
@@ -176,7 +181,7 @@ When('the user searches for "{string}"', async (searchTerm: string) => {
  */
 When('the user clicks the export button', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.exportData();
+  await ${instanceName}.exportData();
 });
 
 /**
@@ -193,7 +198,7 @@ When('the user selects "{string}" format', async (format: string) => {
  */
 When('the user submits the form', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.submitForm();
+  await ${instanceName}.submitForm();
 });
 
 /**
@@ -201,7 +206,7 @@ When('the user submits the form', async () => {
  */
 When('the user tries to submit without filling required fields', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.submitForm();
+  await ${instanceName}.submitForm();
 });
 
 /**
@@ -230,7 +235,7 @@ When('the user fills the form with valid data', async () => {
  */
 Then('the module page should load', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyPageLoaded();
+  await ${instanceName}.verifyPageLoaded();
 });
 
 /**
@@ -247,7 +252,7 @@ Then('all main elements should be visible', async () => {
   initializePageObject();
   await AssertionHelpers.assertElementVisible(
     page,
-    ${className[0].toLowerCase() + className.slice(1)}.selectors.mainContainer as string
+    ${instanceName}.selectors.mainContainer as string
   );
 });
 
@@ -271,7 +276,7 @@ Then('the table should display the following columns: {string}', async (columns:
  */
 Then('the table should contain at least one row', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyTableHasData();
+  await ${instanceName}.verifyTableHasData();
 });
 
 /**
@@ -279,7 +284,7 @@ Then('the table should contain at least one row', async () => {
  */
 Then('the success message should be displayed', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifySuccessMessage();
+  await ${instanceName}.verifySuccessMessage();
 });
 
 /**
@@ -287,7 +292,7 @@ Then('the success message should be displayed', async () => {
  */
 Then('the form should close', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyFormClosed();
+  await ${instanceName}.verifyFormClosed();
 });
 
 /**
@@ -297,7 +302,7 @@ Then('the validation error should be displayed', async () => {
   initializePageObject();
   await AssertionHelpers.assertElementVisible(
     page,
-    ${className[0].toLowerCase() + className.slice(1)}.selectors.errorMessage as string
+    ${instanceName}.selectors.errorMessage as string
   );
 });
 
@@ -308,7 +313,7 @@ Then('the validation errors should be displayed', async () => {
   initializePageObject();
   const errorCount = await ElementInteractions.getElementCount(
     page,
-    ${className[0].toLowerCase() + className.slice(1)}.selectors.errorMessage as string
+    ${instanceName}.selectors.errorMessage as string
   );
   expect(errorCount).toBeGreaterThan(0);
 });
@@ -318,7 +323,7 @@ Then('the validation errors should be displayed', async () => {
  */
 Then('the form should remain open', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyFormVisible();
+  await ${instanceName}.verifyFormVisible();
 });
 
 /**
@@ -328,7 +333,7 @@ Then('an appropriate error message should be displayed', async () => {
   initializePageObject();
   await AssertionHelpers.assertElementVisible(
     page,
-    ${className[0].toLowerCase() + className.slice(1)}.selectors.errorMessage as string
+    ${instanceName}.selectors.errorMessage as string
   );
 });
 
@@ -338,7 +343,7 @@ Then('an appropriate error message should be displayed', async () => {
 Then('the duplicate entry should not be created', async () => {
   // Verify through database or API call that entry wasn't created
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyPageLoaded();
+  await ${instanceName}.verifyPageLoaded();
 });
 
 /**
@@ -346,7 +351,7 @@ Then('the duplicate entry should not be created', async () => {
  */
 Then('the data should be processed successfully', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifySuccessMessage();
+  await ${instanceName}.verifySuccessMessage();
 });
 
 /**
@@ -354,7 +359,7 @@ Then('the data should be processed successfully', async () => {
  */
 Then('the result should be valid', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyPageLoaded();
+  await ${instanceName}.verifyPageLoaded();
 });
 
 /**
@@ -376,7 +381,7 @@ Then('the file should contain valid data', async () => {
  */
 Then('the search results should display', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyPageLoaded();
+  await ${instanceName}.verifyPageLoaded();
 });
 
 /**
@@ -392,7 +397,7 @@ Then('the results should contain the search term', async () => {
  */
 Then('the module should display success message', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifySuccessMessage();
+  await ${instanceName}.verifySuccessMessage();
 });
 
 /**
@@ -400,7 +405,7 @@ Then('the module should display success message', async () => {
  */
 Then('the module should update correctly', async () => {
   initializePageObject();
-  await ${className[0].toLowerCase() + className.slice(1)}.verifyPageLoaded();
+  await ${instanceName}.verifyPageLoaded();
 });
 
 /**
@@ -410,7 +415,7 @@ Then('all fields should be marked as valid', async () => {
   initializePageObject();
   const errorCount = await ElementInteractions.getElementCount(
     page,
-    ${className[0].toLowerCase() + className.slice(1)}.selectors.errorMessage as string
+    ${instanceName}.selectors.errorMessage as string
   );
   expect(errorCount).toBe(0);
 });
@@ -422,7 +427,7 @@ Then('the submit button should be enabled', async () => {
   initializePageObject();
   await AssertionHelpers.assertElementEnabled(
     page,
-    ${className[0].toLowerCase() + className.slice(1)}.selectors.submitButton as string
+    ${instanceName}.selectors.submitButton as string
   );
 });
 
@@ -433,7 +438,7 @@ Then('the submit button should be disabled', async () => {
   initializePageObject();
   await AssertionHelpers.assertElementDisabled(
     page,
-    ${className[0].toLowerCase() + className.slice(1)}.selectors.submitButton as string
+    ${instanceName}.selectors.submitButton as string
   );
 });
 `;
@@ -443,7 +448,7 @@ Then('the submit button should be disabled', async () => {
  * Generate step definitions file
  */
 function generateStepFile(config: GeneratorConfig): void {
-  const filename = moduleNameToFilename(config.moduleName) + '.steps.ts';
+  const filename = moduleNameToFilename(config.moduleName || 'unnamed-module') + '.steps.ts';
   const filepath = path.join(config.outputPath, filename);
 
   const content = generateStepDefinitionsContent(config);
@@ -494,3 +499,15 @@ async function generateAllStepFiles(auditPath: string, outputPath: string): Prom
 }
 
 export { generateStepFile, generateAllStepFiles, moduleNameToClassName };
+
+// Run if executed directly (CommonJS check)
+if (require.main === module) {
+  const auditPath = process.argv[2] || './page-audit-results.json';
+  const outputPath = process.argv[3] || './src/steps/generated';
+
+  console.log(`🚀 Starting Step Definition Generation`);
+  console.log(`   📊 Audit data: ${auditPath}`);
+  console.log(`   📁 Output path: ${outputPath}\n`);
+
+  generateAllStepFiles(auditPath, outputPath);
+}

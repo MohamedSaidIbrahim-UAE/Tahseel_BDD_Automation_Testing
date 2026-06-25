@@ -44,7 +44,7 @@ export class ElementInteractions {
     await locator.waitFor({ state: 'visible', timeout: config.timeout });
     
     if (clearFirst) {
-      await locator.triple(); // Select all
+      await locator.fill(''); // Clear field
     }
     
     await locator.type(text, { delay: 50 });
