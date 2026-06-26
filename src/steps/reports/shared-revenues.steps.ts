@@ -9,8 +9,9 @@
  * - Sharjah Municipality & Service Centers (80/20)
  */
 
-import { Given, When, Then, Before } from '@cucumber/cucumber';
+import { Given, When, Then, DataTable, Before } from '@cucumber/cucumber';
 import { World } from '../../fixtures/world.fixture';
+import { parseGherkinDate, getMonthDateRange } from '../../utils/date-parser';
 import { expect } from '@playwright/test';
 import { SharedRevenuesDTPSSharjahPage } from '../../pages/reports/shared-revenues-dtps-sharjah.page';
 import { testContext } from '../test-context';
@@ -31,14 +32,16 @@ Before(function (this: World) {
 Given('the following transactions are posted under shared service on {string}:', async function (
   this: World,
   dateStr: string,
-  dataTable: any
+  dataTable: DataTable
 ) {
   const data = dataTable.hashes();
   
-  // Parse date string: "2026-06-15" format
-  const transactionDate = new Date(dateStr);
-  if (isNaN(transactionDate.getTime())) {
-    throw new Error(`Invalid date format: ${dateStr}. Expected format: YYYY-MM-DD`);
+  // Parse date string using centralized utility
+  let transactionDate: Date;
+  try {
+    transactionDate = parseGherkinDate(dateStr);
+  } catch (error) {
+    throw new Error(`Invalid date format: ${dateStr}. ${(error as Error).message}`);
   }
   
   this.addLog(`Setting up shared service transactions for ${dateStr}:`);
@@ -49,7 +52,7 @@ Given('the following transactions are posted under shared service on {string}:',
   // Store parsed date and data for later verification
   (this as any).transactionDate = transactionDate;
   (this as any).transactionData = data;
-  this.addLog(`Transaction date set to: ${dateStr}`);
+  this.addLog(`Transaction date set to: ${transactionDate.toISOString().split('T')[0]}`);
 });
 
 Given('sharing rule for {string} is {string}', async function (
@@ -66,10 +69,12 @@ Given('the sharing rule is updated on {string} to {string}', async function (
   dateStr: string,
   newSplitRule: string
 ) {
-  // Parse date string: "2026-06-15" format
-  const changeDate = new Date(dateStr);
-  if (isNaN(changeDate.getTime())) {
-    throw new Error(`Invalid date format: ${dateStr}. Expected format: YYYY-MM-DD`);
+  // Parse date string using centralized utility
+  let changeDate: Date;
+  try {
+    changeDate = parseGherkinDate(dateStr);
+  } catch (error) {
+    throw new Error(`Invalid date format: ${dateStr}. ${(error as Error).message}`);
   }
   
   this.addLog(`Sharing rule updated on ${dateStr} to: ${newSplitRule}`);
@@ -77,21 +82,7 @@ Given('the sharing rule is updated on {string} to {string}', async function (
   // Store for later verification
   (this as any).ruleChangeDate = changeDate;
   (this as any).newSharingRule = newSplitRule;
-  this.addLog(`Rule change date stored: ${dateStr}`);
-});
-
-Given('the following transactions are posted for the month of June:', async function (
-  this: World,
-  dataTable: any
-) {
-  const data = dataTable.hashes();
-  this.addLog(`Setting up transactions for June:`);
-  data.forEach((row: any) => {
-    this.addLog(`  - Entity: ${row.Entity}, Count: ${row.Count}, Amount: ${row['Total Amount']} AED`);
-  });
-  // Store for later verification
-  (this as any).juneTransactions = data;
-  this.addLog(`Transaction data set for June verification`);
+  this.addLog(`Rule change date stored: ${changeDate.toISOString().split('T')[0]}`);
 });
 
 Given('the user is a center manager for {string}', async function (this: World, centerName: string) {
@@ -101,6 +92,35 @@ Given('the user is a center manager for {string}', async function (this: World, 
 
 Given('transaction date range has no applicable transactions', async function (this: World) {
   this.addLog('Date range with no transactions selected');
+});
+
+Given('the following transactions are posted for the month of {string}:', async function (
+  this: World,
+  monthStr: string,
+  dataTable: DataTable
+) {
+  const data = dataTable.hashes();
+  
+  // Parse month string (e.g., "June") with current year as default
+  const currentYear = new Date().getFullYear();
+  let monthDate: Date;
+  
+  try {
+    monthDate = parseGherkinDate(`${monthStr} 2026`); // Using 2026 as default if not specified
+  } catch (error) {
+    throw new Error(`Invalid month format: ${monthStr}. ${(error as Error).message}`);
+  }
+  
+  this.addLog(`Setting up transactions for ${monthStr}:`);
+  data.forEach((row: any) => {
+    this.addLog(`  - Transaction: ${row.Transaction}, Service: ${row.Service}, Amount: ${row.Amount} AED`);
+  });
+  
+  // Store parsed month and data for later verification
+  (this as any).transactionMonth = monthStr;
+  (this as any).transactionYear = currentYear;
+  (this as any).monthTransactionData = data;
+  this.addLog(`Transactions set up for month: ${monthStr}`);
 });
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -117,53 +137,76 @@ When('the user runs the shared revenues report for {string}', async function (
 
   this.addLog(`Running shared revenues report for: ${dateRange}`);
   
-  // Parse date range (e.g., "June 2026")
-  const [month, year] = dateRange.split(' ');
+  // Parse date range using centralized utility
+  let monthName: string;
+  let year: number;
+  
+  const dateRangeParts = dateRange.split(/\s+/);
+  if (dateRangeParts.length === 2) {
+    monthName = dateRangeParts[0];
+    year = parseInt(dateRangeParts[1], 10);
+  } else {
+    throw new Error(`Invalid date range format: "${dateRange}". Expected format: "June 2026"`);
+  }
+  
+  // Build report URL
+  const baseUrl = process.env.BASE_URL || 'https://your-app-host/masar/';
+  const reportUrl = `${baseUrl}reports/shared-revenues`;
   
   // Navigate to report
-  await reportPage.navigateToReport();
+  await reportPage.navigateToReport(reportUrl);
 
-  // Set date filters for the specified month
-  const monthNum = getMonthNumber(month);
-  const fromDate = `${year}-${monthNum}-01`;
-  const toDate = `${year}-${monthNum}-${getDaysInMonth(month, parseInt(year))}`;
+  // Get date range for the month
+  const dateRange_ = getMonthDateRange(monthName, year);
+  const fromDate = dateRange_.from.toISOString().split('T')[0];
+  const toDate = dateRange_.to.toISOString().split('T')[0];
 
   await reportPage.setFromDate(fromDate);
   await reportPage.setToDate(toDate);
   await reportPage.showReport();
 
   // Store date range in context
-  (this as any).reportDateRange = { fromDate, toDate, month, year };
+  (this as any).reportDateRange = { fromDate, toDate, month: monthName, year };
   this.addLog('✅ Shared revenues report executed');
 });
 
-When('the user runs the "Total Transactions report by revenue entity" for June {int}', async function (
+When('the user runs the {string} for {string}', async function (
   this: World,
-  year: number
+  reportName: string,
+  dateRange: string
 ) {
   if (!reportPage) {
     throw new Error('Report page not initialized');
   }
 
-  // Validate year is reasonable
-  if (year < 2000 || year > 2100) {
-    throw new Error(`Invalid year: ${year}. Must be between 2000 and 2100`);
+  this.addLog(`Running report: ${reportName} for ${dateRange}`);
+  
+  // Parse date range (e.g., "June 2026")
+  let monthName: string;
+  let year: number;
+  
+  const dateRangeParts = dateRange.split(/\s+/);
+  if (dateRangeParts.length === 2) {
+    monthName = dateRangeParts[0];
+    year = parseInt(dateRangeParts[1], 10);
+  } else {
+    throw new Error(`Invalid date range format: "${dateRange}". Expected format: "June 2026"`);
   }
+  
+  // Get date range for the month
+  const monthRange = getMonthDateRange(monthName, year);
+  const fromDate = monthRange.from.toISOString().split('T')[0];
+  const toDate = monthRange.to.toISOString().split('T')[0];
 
-  this.addLog(`Running Total Transactions report for June ${year}`);
-  await reportPage.navigateToDTPSSharjahReport();
-
-  // Set date filters for June of the given year
-  const fromDate = `${year}-06-01`;
-  const toDate = `${year}-06-30`;
-
+  // Navigate and show report
   await reportPage.setFromDate(fromDate);
   await reportPage.setToDate(toDate);
   await reportPage.showReport();
 
-  // Store date range in context for later verification
-  (this as any).reportDateRange = { fromDate, toDate, month: 'June', year };
-  this.addLog(`✅ Total Transactions report executed for June ${year}`);
+  // Store context
+  (this as any).reportName = reportName;
+  (this as any).reportDateRange = { fromDate, toDate, month: monthName, year };
+  this.addLog(`✅ Report "${reportName}" executed for ${dateRange}`);
 });
 
 When('the user applies a new sharing rule mid-period', async function (this: World) {
@@ -276,10 +319,12 @@ Then('the report reflects the updated sharing rule from {string} onwards', async
     throw new Error('Report page not initialized');
   }
 
-  // Parse date string: "2026-06-15" format
-  const changeDate = new Date(changeDateStr);
-  if (isNaN(changeDate.getTime())) {
-    throw new Error(`Invalid date format: ${changeDateStr}. Expected format: YYYY-MM-DD`);
+  // Parse date string using centralized utility
+  let changeDate: Date;
+  try {
+    changeDate = parseGherkinDate(changeDateStr);
+  } catch (error) {
+    throw new Error(`Invalid date format: ${changeDateStr}. ${(error as Error).message}`);
   }
 
   this.addLog(`Verifying rule change from ${changeDateStr}...`);
@@ -288,7 +333,11 @@ Then('the report reflects the updated sharing rule from {string} onwards', async
   const newRule = (this as any).newSharingRule || '60/40';
   const [beforePercent, afterPercent] = newRule.split('/').map(Number);
 
-  const midPeriodImpact = await reportPage.verifyMidPeriodRuleChange(changeDate.toISOString(), beforePercent, afterPercent);
+  const midPeriodImpact = await reportPage.verifyMidPeriodRuleChange(
+    changeDate.toISOString(),
+    beforePercent,
+    afterPercent
+  );
 
   this.addLog(`Before rule change: ${midPeriodImpact.beforeChange} AED`);
   this.addLog(`After rule change: ${midPeriodImpact.afterChange} AED`);
@@ -367,20 +416,43 @@ Then('the user cannot access shared revenue details', async function (this: Worl
 // Step "the report displays {string}" is defined in shared.steps.ts
 
 // ────────────────────────────────────────────────────────────────────────────
-// Helper Functions
+// Helper Functions (now imported from src/utils/date-parser.ts)
 // ────────────────────────────────────────────────────────────────────────────
 
-function getMonthNumber(monthName: string): string {
-  const months: { [key: string]: string } = {
-    'January': '01', 'February': '02', 'March': '03', 'April': '04',
-    'May': '05', 'June': '06', 'July': '07', 'August': '08',
-    'September': '09', 'October': '10', 'November': '11', 'December': '12'
-  };
-  return months[monthName] || '06';
-}
+// Using centralized date utilities imported at the top of this file
+// See: src/utils/date-parser.ts for implementations
+// - getMonthNumberUtil() - Convert month name to number
+// - getDaysInMonthUtil() - Get days in month
+// - parseGherkinDate() - Parse various date formats
+// - getMonthDateRange() - Get date range for entire month
 
-function getDaysInMonth(monthName: string, year: number): number {
-  const monthNum = parseInt(getMonthNumber(monthName), 10);
-  const date = new Date(year, monthNum, 0);
-  return date.getDate();
-}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Additional Missing Steps - Add now to match feature file
+// ────────────────────────────────────────────────────────────────────────────
+
+Given('the user is logged in as {string}', async function (this: World, userRole: string) {
+  this.addLog(`User login: ${userRole}`);
+  (this as any).userRole = userRole;
+});
+
+Given('the revenue entities {string} and {string} are configured', async function (
+  this: World,
+  entityA: string,
+  entityB: string
+) {
+  this.addLog(`Revenue entities configured: ${entityA} and ${entityB}`);
+  (this as any).configuredEntities = { entityA, entityB };
+});
+
+Then('the grand total is {float} AED', async function (this: World, expectedGrandTotal: number) {
+  if (!reportPage) {
+    throw new Error('Report page not initialized');
+  }
+
+  this.addLog(`Verifying grand total: ${expectedGrandTotal} AED`);
+  const actualGrandTotal = await reportPage.getGrandTotal();
+  this.addLog(`Actual grand total: ${actualGrandTotal} AED`);
+  expect(actualGrandTotal).toBeCloseTo(expectedGrandTotal, 2);
+  this.addLog(`✅ Grand total verified: ${expectedGrandTotal} AED`);
+});

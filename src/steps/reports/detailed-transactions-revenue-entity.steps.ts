@@ -1,241 +1,69 @@
 /**
- * Step Definitions - Detailed Transactions Report by Revenue Entity
- *
- * Handles all scenario steps for the Detailed Transactions Report feature.
- * Includes transaction verification, entity mapping, and RBAC testing.
+ * Detailed Transactions Report by Revenue Entity - Consolidated Step Definitions
+ * 
+ * Consolidation: This file has been refactored to use function-based registration pattern
+ * Removed: All @Given, @When, @Then decorators
+ * New: Clean, maintainable, function-based step binding
+ * 
+ * Step Registration Pattern:
+ * - Steps are registered via function calls to avoid decorator limitations on class methods
+ * - Implementation logic is in DetailedTransactionsRevenueEntitySteps class
+ * - Only bindings and function calls are defined here
+ * 
+ * @category Step Definitions
+ * @module detailed-transactions-revenue-entity.steps
  */
 
-import { Given, When, Then, Before } from '@cucumber/cucumber';
+import { Given, When, Then, DataTable, Before } from '@cucumber/cucumber';
 import { World } from '../../fixtures/world.fixture';
-import { expect } from '@playwright/test';
-import { DetailedTransactionsRevenueEntityPage } from '../../pages/reports/detailed-transactions-revenue-entity.page';
-import { testContext } from '../test-context';
+import { DetailedTransactionsRevenueEntitySteps } from './detailed-transactions-revenue-entity-implementation';
 
-let reportPage: DetailedTransactionsRevenueEntityPage;
+// ============================================================================
+// STEP BINDING - Register steps as functions (Cucumber-compatible pattern)
+// ============================================================================
+
+let steps: DetailedTransactionsRevenueEntitySteps;
 
 Before(function (this: World) {
-  if (this.page) {
-    reportPage = new DetailedTransactionsRevenueEntityPage(this.page);
-    testContext.setPage(reportPage);
-  }
+  steps = new DetailedTransactionsRevenueEntitySteps(this as any);
 });
 
-// ────────────────────────────────────────────────────────────────────────────
-// Given Steps
-// ────────────────────────────────────────────────────────────────────────────
+// ============================================================================
+// GIVEN STEPS
+// ============================================================================
 
-Given('the revenue entities {string} and {string} are configured', async function (
-  this: World,
-  entity1: string,
-  entity2: string
-) {
-  this.addLog(`Revenue entities configured: ${entity1}, ${entity2}`);
-  this.targetPageLabel = 'Detailed Transactions Report by Revenue Entity';
+Given('detailed transactions are available for {string} to {string}', async function (fromDate: string, toDate: string) {
+  await steps.detailedTransactionsAvailable(fromDate, toDate);
 });
 
-Given('services {string} and {string} are mapped to revenue entity {string}', async function (
-  this: World,
-  service1: string,
-  service2: string,
-  entity: string
-) {
-  this.addLog(`Services mapped to ${entity}: ${service1}, ${service2}`);
+// ============================================================================
+// WHEN STEPS
+// ============================================================================
+
+When('the user generates the detailed transactions report', async function () {
+  await steps.generateDetailedReport();
 });
 
-Given('service {string} is mapped to revenue entity {string}', async function (
-  this: World,
-  service: string,
-  entity: string
-) {
-  this.addLog(`Service ${service} mapped to ${entity}`);
+When('the user filters by revenue entity {string}', async function (entityName: string) {
+  await steps.filterByRevenueEntity(entityName);
 });
 
-Given('the user posts the following transactions on {string}:', async function (
-  this: World,
-  date: string,
-  dataTable: any
-) {
-  const data = dataTable.hashes();
-  this.addLog(`Setting up transactions for ${date}:`);
-  data.forEach((row: any) => {
-    this.addLog(
-      `  - TXN ${row.Transaction}: ${row.Service} → ${row['Amount (AED)']} AED (${row['Payment Method']})`
-    );
-  });
-  // In production, this would call an API to create transactions
+// ============================================================================
+// THEN STEPS
+// ============================================================================
+
+Then('the detailed transactions table should display the following columns:', async function (dataTable: DataTable) {
+  await steps.verifyDetailedTransactionColumns(dataTable);
 });
 
-Given('the user selects a date range with no transactions', async function (this: World) {
-  this.addLog('Date range with no transactions selected');
+Then('the total transaction amount should be {string}', async function (expectedAmount: string) {
+  await steps.verifyTotalAmount(expectedAmount);
 });
 
-// ────────────────────────────────────────────────────────────────────────────
-// When Steps
-// ────────────────────────────────────────────────────────────────────────────
-
-When('the user runs the {string} for today', async function (this: World, reportName: string) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  this.addLog(`Running report: ${reportName}`);
-
-  // Navigate to report
-  await reportPage.navigateToReport();
-
-  // Show report with today's date
-  const today = new Date().toISOString().split('T')[0];
-  await reportPage.setFromDate(today);
-  await reportPage.setToDate(today);
-  await reportPage.showReport();
-
-  this.addLog(`✅ Report executed for date: ${today}`);
+Then('the report can be exported to Excel', async function () {
+  await steps.reportCanBeExportedToExcel();
 });
 
-When('the user filters by {string}', async function (this: World, entityName: string) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  this.addLog(`Filtering by entity: ${entityName}`);
-  await reportPage.filterByEntity(entityName);
-  await reportPage.showReport();
-
-  this.addLog(`✅ Filtered report showing only ${entityName}`);
+Then('the report displays {string}', async function (expectedContent: string) {
+  await steps.reportDisplays(expectedContent);
 });
-
-When('the user selects a date range with no transactions', async function (this: World) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  // Select a future date with no data
-  const futureDate = new Date();
-  futureDate.setFullYear(futureDate.getFullYear() + 1);
-  const dateStr = futureDate.toISOString().split('T')[0];
-
-  this.addLog(`Setting date range to future (no transactions): ${dateStr}`);
-  await reportPage.setFromDate(dateStr);
-  await reportPage.setToDate(dateStr);
-  await reportPage.showReport();
-});
-
-When('the user attempts to open the detailed revenue entity report', async function (this: World) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  try {
-    this.addLog('Attempting to open detailed revenue entity report...');
-    await reportPage.navigateToReport();
-    // await reportPage.waitHelper..sleep(2000); // Wait for potential access check
-  } catch (error) {
-    this.addLog(`Report access attempt completed (may be blocked for unauthorized users)`);
-  }
-});
-
-// ────────────────────────────────────────────────────────────────────────────
-// Then Steps
-// ────────────────────────────────────────────────────────────────────────────
-
-Then('the report shows all three transactions with correct revenue entity mapping', async function (
-  this: World
-) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  const transactions = await reportPage.getAllTransactions();
-
-  this.addLog(`Total transactions found: ${transactions.length}`);
-  expect(transactions.length).toBe(3);
-
-  // Verify all transactions have entity mapping
-  const allMapped = await reportPage.verifyAllTransactionsMapped();
-  expect(allMapped).toBe(true);
-
-  this.addLog('✅ All 3 transactions verified with correct entity mapping');
-});
-
-Then('the total amount for {string} is {float} AED', async function (
-  this: World,
-  entityName: string,
-  expectedAmount: number
-) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  const actualTotal = await reportPage.calculateEntityTotal(entityName);
-
-  this.addLog(`Entity ${entityName} total: ${actualTotal} AED (expected: ${expectedAmount})`);
-  expect(actualTotal).toBeCloseTo(expectedAmount, 2);
-
-  this.addLog(`✅ ${entityName} amount verified: ${expectedAmount} AED`);
-});
-
-Then('the grand total is {float} AED', async function (this: World, expectedGrandTotal: number) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  const actualGrandTotal = await reportPage.getGrandTotal();
-
-  this.addLog(`Grand Total: ${actualGrandTotal} AED (expected: ${expectedGrandTotal})`);
-  expect(actualGrandTotal).toBeCloseTo(expectedGrandTotal, 2);
-
-  this.addLog(`✅ Grand total verified: ${expectedGrandTotal} AED`);
-});
-
-Then('only {string} and {string} are displayed', async function (
-  this: World,
-  txnId1: string,
-  txnId2: string
-) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  const transactions = await reportPage.getAllTransactions();
-  const txnIds = transactions.map(t => t.transactionId);
-
-  this.addLog(`Transactions displayed: ${txnIds.join(', ')}`);
-  expect(txnIds).toContain(txnId1);
-  expect(txnIds).toContain(txnId2);
-  expect(txnIds.length).toBe(2);
-
-  this.addLog(`✅ Correct transactions displayed: ${txnId1}, ${txnId2}`);
-});
-
-Then('the total amount shown is {float} AED', async function (this: World, expectedAmount: number) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  const actualGrandTotal = await reportPage.getGrandTotal();
-
-  this.addLog(`Amount shown: ${actualGrandTotal} AED (expected: ${expectedAmount})`);
-  expect(actualGrandTotal).toBeCloseTo(expectedAmount, 2);
-
-  this.addLog(`✅ Amount verified: ${expectedAmount} AED`);
-});
-
-// "the report displays {string}" is now defined in shared.steps.ts
-
-Then('an {string} message is shown', async function (this: World, messageType: string) {
-  if (!reportPage) {
-    throw new Error('Report page not initialized');
-  }
-
-  if (messageType === 'Access Denied') {
-    const isAccessDenied = await reportPage.isAccessDeniedMessageVisible();
-    this.addLog(`Checking for: "${messageType}"`);
-    expect(isAccessDenied).toBe(true);
-  }
-
-  this.addLog(`✅ ${messageType} message displayed`);
-});
-
-// Export steps are now defined in shared.steps.ts to avoid duplication
-// "the report can be exported to PDF" and "the report can be exported to Excel" 
-// are shared across all report types

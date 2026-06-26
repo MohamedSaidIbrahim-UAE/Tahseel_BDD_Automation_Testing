@@ -1,6 +1,6 @@
 module.exports = {
   default: {
-    require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/**/*.steps.ts'],
+    require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/reports/**/*.steps.ts', 'src/steps/core/**/*.steps.ts'],
     requireModule: ['ts-node/register'],
     format: [
       'progress',
@@ -11,7 +11,7 @@ module.exports = {
     timeout: 60000
   },
   chromium: {
-    require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/**/*.steps.ts'],
+    require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/reports/**/*.steps.ts', 'src/steps/core/**/*.steps.ts'],
     requireModule: ['ts-node/register'],
     format: [
       'progress',
@@ -21,8 +21,19 @@ module.exports = {
     parallel: 4,
     timeout: 60000
   },
+  'revenue-tests': {
+    require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/reports/total-transactions-revenue-entity.steps.ts', 'src/steps/reports/shared-revenues.steps.ts', 'src/steps/reports/detailed-transactions-revenue-entity.steps.ts'],
+    requireModule: ['ts-node/register'],
+    format: [
+      'progress-bar',
+      'html:cucumber-report-chromium.html',
+      'json:allure-results/chromium-results.json'
+    ],
+    parallel: 1,
+    timeout: 120000
+  },
   firefox: {
-    require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/**/*.steps.ts'],
+    require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/reports/**/*.steps.ts', 'src/steps/core/**/*.steps.ts'],
     requireModule: ['ts-node/register'],
     format: [
       'progress',
@@ -33,7 +44,7 @@ module.exports = {
     timeout: 60000
   },
   webkit: {
-    require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/**/*.steps.ts'],
+    require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/reports/**/*.steps.ts', 'src/steps/core/**/*.steps.ts'],
     requireModule: ['ts-node/register'],
     format: [
       'progress',

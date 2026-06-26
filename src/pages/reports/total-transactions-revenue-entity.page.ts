@@ -212,69 +212,65 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
    * Click Show Report button with multiple selector strategies
    */
   private async clickShowReportButton(): Promise<boolean> {
-    const buttonSelectors = [
+    // Tier 1: Most specific & reliable patterns (try first)
+    const tier1Selectors = [
       'button:has-text("Show Report")',
-      'button:has-text("Display Report")',
-      'button:has-text("Generate Report")',
-      'button:has-text("View Report")',
-      'button:has-text("Search")',
-      'button:has-text("Find")',
-      'button:has-text("Apply")',
-      'button[aria-label*="Show"]',
-      'button[aria-label*="Report"]',
-      'button[aria-label*="Search"]',
-      'button[aria-label*="Display"]',
-      'button[aria-label*="Generate"]',
-      'button[title*="Show"]',
-      'button[title*="Report"]',
-      'button[title*="Search"]',
+      'button[aria-label="Show Report"]',
+      'button.btn-report',
+    ];
+    
+    // Tier 2: Framework-specific patterns (DevExtreme, etc.)
+    const tier2Selectors = [
+      'dx-button:has-text("Show Report")',
+      '[dx-button]:has-text("Show Report")',
+      'button[class*="dx-button"]',
+    ];
+    
+    // Tier 3: Broad but efficient patterns
+    const tier3Selectors = [
       'button[type="submit"]',
-      'button[class*="btn-primary"]',
-      'button[class*="btn-submit"]',
-      'button[class*="search"]',
-      'button[class*="report"]',
-      'button[class*="submit"]',
-      '[role="button"]:has-text("Show Report")',
-      '[role="button"]:has-text("Search")',
-      'input[type="submit"]',
-      'input[type="button"][value*="Show"]',
-      'input[type="button"][value*="Search"]',
-      '.btn-report',
+      '[role="button"]:has-text("Show")',
+      'button:has-text("Search")',
+      'button[aria-label*="Report"]',
+      '[role="button"]:has-text("Report")',
+    ];
+    
+    // Tier 4: Alternative frameworks & fallbacks
+    const tier4Selectors = [
+      'input[type="submit"][value*="Show"]',
       '.search-button',
       '.show-report-button',
       'button:visible',
     ];
+    
+    const allSelectors = [...tier1Selectors, ...tier2Selectors, ...tier3Selectors, ...tier4Selectors];
 
-    for (const selector of buttonSelectors) {
+    for (const selector of allSelectors) {
       try {
         const buttons = this.page.locator(selector);
         const count = await buttons.count().catch(() => 0);
         
         if (count > 0) {
-          // Try each button
-          for (let i = 0; i < Math.min(count, 5); i++) {
+          // Try each button (limit to 3 attempts)
+          for (let i = 0; i < Math.min(count, 3); i++) {
             try {
               const btn = buttons.nth(i);
-              const isVisible = await btn.isVisible({ timeout: 800 }).catch(() => false);
+              const isVisible = await btn.isVisible({ timeout: 500 }).catch(() => false);
               const isDisabled = await btn.isDisabled().catch(() => false);
-              const isHidden = await btn.evaluate((el: any) => {
-                const style = window.getComputedStyle(el);
-                return style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0';
-              }).catch(() => false);
               
-              if (isVisible && !isDisabled && !isHidden) {
+              if (isVisible && !isDisabled) {
                 // Scroll button into view
                 await btn.scrollIntoViewIfNeeded().catch(() => {});
-                await btn.click({ timeout: 3000 });
-                return true;
+                await btn.click({ timeout: 2000 });
+                return true; // Success - exit immediately
               }
             } catch {
-              continue;
+              continue; // Try next button instance
             }
           }
         }
       } catch {
-        continue;
+        continue; // Try next selector
       }
     }
 
@@ -285,32 +281,52 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
    * Wait for report to render after clicking Show Report
    */
   private async waitForReportToRender(): Promise<void> {
-    const tableSelectors = [
-      'table[role="grid"]',
-      'table.report-table',
-      'table[class*="data"]',
-      'table[class*="grid"]',
-      'table[class*="table"]',
+    // Framework-specific selectors (try first - likely DevExtreme)
+    const frameworkSelectors = [
       'dx-data-grid',
-      '[role="grid"]',
-      '[class*="grid-wrapper"]',
-      '.data-table',
-      '.grid-container',
-      '.report-container',
-      'table',
+      '.dx-datagrid-rowsview',
+      '.dx-grid-container',
+      '[class*="dx-datagrid"]',
     ];
+    
+    // Standard HTML with semantic roles
+    const semanticSelectors = [
+      '[role="grid"]',
+      'table[role="grid"]',
+      'table[role="table"]',
+    ];
+    
+    // Class-based patterns
+    const classSelectors = [
+      '.data-table',
+      '.report-table',
+      '.grid-container',
+      '[class*="datagrid"]',
+      '.report-container',
+    ];
+    
+    // Generic HTML selectors (fallback)
+    const genericSelectors = [
+      'table',
+      'div[role="grid"]',
+      '[role="presentation"] table',
+      '.table-wrapper table',
+      'tbody',
+    ];
+    
+    const allSelectors = [...frameworkSelectors, ...semanticSelectors, ...classSelectors, ...genericSelectors];
 
     let tableVisible = false;
     let lastError: Error | null = null;
     
-    for (const selector of tableSelectors) {
+    for (const selector of allSelectors) {
       try {
         const element = this.page.locator(selector).first();
-        const isVisible = await element.isVisible({ timeout: 3000 }).catch(() => false);
+        const isVisible = await element.isVisible({ timeout: 2000 }).catch(() => false);
         
         if (isVisible) {
           // Give the table time to load its data
-          await this.page.waitForTimeout(500);
+          await this.page.waitForTimeout(300);
           tableVisible = true;
           break;
         }
@@ -321,41 +337,57 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
     }
 
     if (!tableVisible) {
-      // If no table but page has content, check for error or empty state
+      // Check for error messages first
       try {
-        const bodyContent = await this.page.locator('body').textContent().catch(() => '');
-        const hasErrorMessage = await this.page.locator('[class*="error"], [role="alert"], .error-message, .alert-danger')
+        const errorElement = await this.page.locator('[class*="error"], [role="alert"], .error-message, .alert-danger')
           .first()
           .isVisible({ timeout: 500 })
           .catch(() => false);
         
-        if (hasErrorMessage) {
+        if (errorElement) {
           const errorText = await this.page.locator('[class*="error"], [role="alert"], .error-message, .alert-danger')
             .first()
             .textContent()
             .catch(() => 'Unknown error');
-          throw new Error(`Error on page: ${errorText}`);
+          throw new Error(`Report error: ${errorText}`);
         }
-        
-        // Check for empty/no data state
-        const hasNoDataMessage = await this.page.locator(this.noDataMessage)
+      } catch (error) {
+        if ((error as Error).message.startsWith('Report error:')) {
+          throw error;
+        }
+      }
+      
+      // Check for no-data/empty state
+      try {
+        const noDataVisible = await this.page.locator(this.noDataMessage)
           .isVisible({ timeout: 500 })
           .catch(() => false);
         
-        if (hasNoDataMessage) {
-          // No data is acceptable - exit without error
+        if (noDataVisible) {
+          // No data is an acceptable state
           return;
         }
-        
-        if (!bodyContent || bodyContent.length < 100) {
-          throw new Error('Report not rendered - no table or content found');
-        }
-      } catch (error) {
-        if ((error as Error).message.includes('Report not rendered')) {
-          throw error;
-        }
-        // Otherwise allow it to continue - might be valid no-data state
+      } catch {
+        // Continue to other checks
       }
+      
+      // Check if page has any content (fallback)
+      try {
+        const bodyContent = await this.page.locator('body').textContent().catch(() => '');
+        if (bodyContent && bodyContent.length > 100) {
+          // Page has content, assume report loaded
+          return;
+        }
+      } catch {
+        // Continue
+      }
+      
+      // If we get here, table was not found
+      throw new Error(
+        `Report table not found within 20 seconds. ` +
+        `Tried ${allSelectors.length} selector patterns. ` +
+        `Last error: ${lastError?.message || 'None'}`
+      );
     }
   }
 

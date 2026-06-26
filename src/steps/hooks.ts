@@ -32,6 +32,18 @@ Before({ timeout: 60000 }, async function (this: any, scenario) {
   this.page = page;
   this.authManager = new AuthManager(page, context);
 
+  // Add logging support if not already present
+  if (!this.addLog) {
+    const logs: string[] = [];
+    this.addLog = function(message: string) {
+      const timestamp = new Date().toISOString();
+      logs.push(`[${timestamp}] ${message}`);
+    };
+    this.getLogs = function() {
+      return logs.join('\n');
+    };
+  }
+
   // Real‑time session violation recovery (401/403 → re‑login)
   if (tags.includes('@authenticated')) {
     page.on('response', async (response: Response) => {
