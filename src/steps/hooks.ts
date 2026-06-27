@@ -8,7 +8,7 @@ import { BasePage } from '../pages/base.page';
 // ── Timeout Configuration ──────────────────────────────────────────────────────
 // Stage environment needs generous timeouts due to infrastructure limitations.
 // setDefaultTimeout overrides the cucumber.js profile timeout for all step defs.
-const STEP_TIMEOUT_MS = process.env.TEST_ENV === 'stage' ? 120_000 : 60_000;
+const STEP_TIMEOUT_MS = process.env.TEST_ENV === 'stage' ? 300_000 : 60_000;
 setDefaultTimeout(STEP_TIMEOUT_MS);
 
 let browser: Browser;

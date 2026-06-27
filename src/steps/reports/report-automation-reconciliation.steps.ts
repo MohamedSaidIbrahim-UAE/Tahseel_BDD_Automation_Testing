@@ -139,7 +139,7 @@ When('the user extracts values from the {string} report', async function (report
     'Deposit All Payment Methods': () => steps.extractDepositAllPaymentMethodsValues(),
     'Incurred Fees': () => steps.extractIncurredFeesValues(),
     'Smart Receipt': () => steps.extractSmartReceiptValues(),
-    'Deposit Receivable': () => steps.extractDepositReceivableValues(),
+    'Transaction deposits detail Report (receivable)': () => steps.extractDepositReceivableValues(),
   };
 
   const extractor = extractorMap[reportLabel];

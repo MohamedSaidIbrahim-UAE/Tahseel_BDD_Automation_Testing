@@ -44,17 +44,17 @@ import {
 
 // ── Report key to human-readable name mapping ─────────────────────────────────
 const REPORT_NAME_TO_KEY: Record<string, string> = {
-  'Total Transactions by Revenue Source - Receivables': 'total-transactions-revenue-receivable',
+  'Detailed Report of POS Transactions by Revenue Source': 'total-transactions-revenue-receivable',
   'Transaction Fees for All Payment Methods': 'transaction-fees-all-payment-methods',
   'Universal Payment Methods': 'universal-payments',
   'Amanat Universal Payments': 'amanat-universal-payments',
   'Total Credit Card Report': 'total-credit-card',
-  'Smart Receipt Printing Fees': 'smart-receipt-printing-fees',
-  'Support Services Transactions': 'support-services-transactions',
-  'Total Charges by Revenue Source': 'total-charges-by-revenue',
+  'Smart Receipt Details': 'smart-receipt-printing-fees',
+  'Support Services Reports': 'support-services-transactions',
+  'Report the total service charges for loading Transactions': 'total-charges-by-revenue',
   'Total Tax Report': 'total-tax',
   'Total Transaction Report': 'total-transaction',
-  'Deposit Receivable': 'deposit-receivable',
+  'Transaction deposits detail Report (receivable)': 'deposit-receivable',
 };
 
 export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
@@ -98,17 +98,26 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
 
   async setDateRange(fromStr: string, toStr: string): Promise<void> {
     this.dateRange = { from: fromStr, to: toStr };
-    // Format dates in Arabic format for the date inputs
-    this.storeTestData('fromDate', this.formatArabicDate(fromStr));
-    this.storeTestData('toDate', this.formatArabicDate(toStr));
+    // Format dates in Arabic format for the DevExtreme dx-date-box inputs
+    this.storeTestData('fromDate', this.formatArabicDate(fromStr, true));
+    this.storeTestData('toDate', this.formatArabicDate(toStr, false));
     this.log(`Date range set: ${fromStr} → ${toStr}`);
   }
 
-  private formatArabicDate(dateStr: string): string {
-    // Input: "01/06/2026" → Output: "01/06/2026 12:00 ص" (Arabic AM/PM)
+  /**
+   * Format a "DD/MM/YYYY" date string to the Arabic datetime format
+   * expected by DevExtreme dx-date-box inputs:
+   *   From: "01/06/2026 12:00 ص" (midnight)
+   *   To:   "30/06/2026 11:59 م" (end of day)
+   */
+  private formatArabicDate(dateStr: string, isFrom: boolean): string {
     const parts = dateStr.split('/');
     if (parts.length === 3) {
-      return `${parts[0]}/${parts[1]}/${parts[2]} 12:00 ص`;
+      const day = parts[0];
+      const month = parts[1];
+      const year = parts[2];
+      const time = isFrom ? '12:00 ص' : '11:59 م';
+      return `${day}/${month}/${year} ${time}`;
     }
     return dateStr;
   }
@@ -152,7 +161,7 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
     if (this.reportPage instanceof TransactionsFeeReportPage) {
       await this.reportPage.applyRevenueFilters(fromDate, toDate);
     } else {
-      await this.reportPage.selectRadioOption('معاملات ايراد');
+      await this.reportPage.selectRadioOption('Revenue Transactions');
     }
     this.logSuccess('Revenue Transactions radio selected');
   }
@@ -165,7 +174,7 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
     if (this.reportPage instanceof AmanatUniversalPaymentsPage) {
       await this.reportPage.applyAmanatFilters(fromDate, toDate);
     } else {
-      await this.reportPage.selectRadioOption('معاملات امانات');
+      await this.reportPage.selectRadioOption('Deposit Transactions');
     }
     this.logSuccess('Deposit Transactions radio selected');
   }
@@ -548,7 +557,7 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
   }
 
   async extractDepositReceivableValues(): Promise<void> {
-    this.log('Extracting Deposit Receivable values...');
+    this.log('Extracting Transaction deposits detail Report (receivable) values...');
     const file = this.reconciliation.getLatestExcelFile(EXPECTED_EXPORT_FILES.depositReceivable);
     const sheet = SHEET_NAMES.transactionSummary;
 
@@ -558,7 +567,7 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
 
     this.reconciliation.saveEntry('إجمالي قيمة الرسوم في تقرير إجمالي بالمعاملات حسب جهة الأمانة - المقبوضات', feeValue ?? 0);
 
-    this.logSuccess('Deposit Receivable values extracted');
+    this.logSuccess('Transaction deposits detail Report (receivable) values extracted');
   }
 
   // ═══════════════════════════════════════════════════════════════════════════════

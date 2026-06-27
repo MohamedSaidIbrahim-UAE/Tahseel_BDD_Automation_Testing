@@ -1308,14 +1308,14 @@ while True:
             
             ################################################################################
             # تقرير إجمالي لرسوم طباعة الإيصال الذكي
-            # Total report of smart receipt printing fees
+            # Total report of Smart Receipt Details
             # ==========================
             # run_total_report_with_retry("GITFees_ShjGovTransStatistics.xlsx",folder_path,TotalreportOfSmartReceiptPrintingFees,3,driver, from_date_arabic, to_date_arabic, folder_path)
 
             ################################################################################
             # ==========================
             #تقـريـر  إجمالي بمعاملات الخدمات الداعمة
-            #Total report on support services transactions Section
+            #Total report on Support Services Reports Section
             # =========================
             # run_total_report_with_retry("TRANSACTIONPAYMENTDEPENDANTSERVICESSUMMARY_sec.xlsx",folder_path,TotalReportOnSupportServicesTransactionsSection,3,driver, from_date_arabic, to_date_arabic, folder_path)
 

@@ -1,16 +1,21 @@
 /**
  * Report Filter Utility for Report Form Interactions
- * 
+ *
  * Migrated from Python ReportAutomationConsoleSaveToExcel.py
- * Handles date pickers, dropdowns, radio buttons, and multi-select controls
+ * Handles DevExtreme components:
+ *   - dx-date-box (calendar popup + Submit)
+ *   - dx-tag-box (multi-select with applyvaluemode="useButtons" → OK button)
+ *   - dx-select-box (dropdown)
+ *   - dx-radio-group (radio buttons)
+ *
+ * Updated to use Playwright locator API (not deprecated ElementHandle methods).
  */
 
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { WaitHelper } from './wait.helper';
 
 export interface FilterOptions {
   timeout?: number;
-  waitForNetworkIdle?: boolean;
 }
 
 export class ReportFilterUtility {
@@ -22,411 +27,371 @@ export class ReportFilterUtility {
     this.waitHelper = new WaitHelper(page);
   }
 
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // DevExtreme dx-date-box (Date Picker with Calendar Popup)
+  // ═══════════════════════════════════════════════════════════════════════════════
+
   /**
-   * Set date picker value (DevExtreme dx-date-box)
+   * Set a DevExtreme dx-date-box value by typing into the text input.
+   *
+   * The dx-date-box has `openonfieldclick="true"` — clicking opens a calendar.
+   * For typed dates (e.g., "01/06/2026 12:00 ص"), we type into the text input
+   * and press Tab to trigger Angular change detection.
+   *
+   * If the calendar popup opens, we close it by clicking Submit.
    */
   async setDatePickerValue(
-    datePickerSelector: string,
+    datePickerXPath: string,
     dateValue: string,
     options: FilterOptions = {}
   ): Promise<void> {
-    const { timeout = 10000, waitForNetworkIdle = true } = options;
+    const { timeout = 15000 } = options;
 
-    // Find the input element within the date picker
-    const input = await this.page.waitForSelector(
-      `${datePickerSelector} input[type="text"]`,
-      { timeout }
-    );
+    // Locate the input inside the dx-date-box
+    const input = this.page
+      .locator(`xpath=${datePickerXPath}`)
+      .first();
 
-    if (!input) {
-      throw new Error(`Date picker input not found: ${datePickerSelector}`);
-    }
-
-    // Click to focus
+    await input.waitFor({ state: 'visible', timeout });
     await input.click();
+    await input.clear();
+    await this.page.waitForTimeout(300);
 
-    // Clear existing value
-    await input.fill('');
+    // Type the Arabic-formatted date
+    await input.fill(dateValue);
 
-    // Type new value
-    await input.type(dateValue);
-
-    // Tab to trigger change event
+    // Tab away to trigger Angular ngModel update
     await input.press('Tab');
+    await this.page.waitForTimeout(500);
 
-    if (waitForNetworkIdle) {
-      await this.page.waitForLoadState('networkidle');
+    // If the calendar popup opened, dismiss it
+    await this.dismissCalendarPopup();
+  }
+
+  /**
+   * Dismiss the dx-date-box calendar popup by clicking Submit if visible.
+   */
+  private async dismissCalendarPopup(): Promise<void> {
+    try {
+      const submitBtn = this.page.locator('.dx-popup-done').first();
+      if (await submitBtn.isVisible({ timeout: 1000 }).catch(() => false)) {
+        await submitBtn.click();
+        await this.page.waitForTimeout(300);
+      }
+    } catch { /* popup not open — that's fine */ }
+  }
+
+  /**
+   * Set date by clicking a calendar cell directly.
+   * Useful when typing doesn't trigger the Angular binding.
+   *
+   * @param dateBoxLocator - The dx-date-box wrapper or its input locator
+   * @param day   - Day of month (1-31)
+   * @param month - Month (1-12)
+   * @param year  - Full year (e.g., 2026)
+   */
+  async setDateByCalendar(
+    dateBoxLocator: Locator,
+    day: number,
+    month: number,
+    year: number
+  ): Promise<void> {
+    // Click to open calendar
+    await dateBoxLocator.click();
+    await this.page.waitForTimeout(500);
+
+    // Build the data-value attribute: "YYYY/MM/DD" with zero-padding
+    const dataValue = `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
+
+    // Find and click the calendar cell
+    const cell = this.page.locator(`td.dx-calendar-cell[data-value="${dataValue}"]`).first();
+    await cell.waitFor({ state: 'visible', timeout: 10000 });
+    await cell.click();
+    await this.page.waitForTimeout(300);
+
+    // Click Submit to close the popup
+    const submitBtn = this.page.locator('.dx-popup-done').first();
+    if (await submitBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await submitBtn.click();
+      await this.page.waitForTimeout(500);
     }
   }
 
-  /**
-   * Set from date
-   */
-  async setFromDate(
-    fromDateSelector: string,
-    dateValue: string,
-    options: FilterOptions = {}
-  ): Promise<void> {
-    await this.setDatePickerValue(fromDateSelector, dateValue, options);
+  /** Convenience: set "From" date */
+  async setFromDate(datePickerXPath: string, dateValue: string): Promise<void> {
+    await this.setDatePickerValue(datePickerXPath, dateValue);
   }
 
-  /**
-   * Set to date
-   */
-  async setToDate(
-    toDateSelector: string,
-    dateValue: string,
-    options: FilterOptions = {}
-  ): Promise<void> {
-    await this.setDatePickerValue(toDateSelector, dateValue, options);
+  /** Convenience: set "To" date */
+  async setToDate(datePickerXPath: string, dateValue: string): Promise<void> {
+    await this.setDatePickerValue(datePickerXPath, dateValue);
   }
 
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // DevExtreme dx-select-box (Single-select Dropdown)
+  // ═══════════════════════════════════════════════════════════════════════════════
+
   /**
-   * Select second option from dropdown
+   * Select an option from a dx-select-box dropdown.
+   * Opens the dropdown, waits for the overlay, clicks the matching item.
    */
-  async selectSecondOptionFromDropdown(
-    dropdownButtonSelector: string,
-    expectedOptionText: string,
+  async selectDropdownOption(
+    dropdownButtonXPath: string,
+    optionText: string,
     options: FilterOptions = {}
   ): Promise<void> {
     const { timeout = 20000 } = options;
 
-    // Click dropdown to open
-    const dropdownButton = await this.page.waitForSelector(
-      dropdownButtonSelector,
-      { timeout }
-    );
+    // Click the dropdown button to open
+    const dropdownBtn = this.page.locator(`xpath=${dropdownButtonXPath}`).first();
+    await dropdownBtn.waitFor({ state: 'visible', timeout });
+    await this.safeClick(dropdownBtn);
+    await this.page.waitForTimeout(500);
 
-    if (!dropdownButton) {
-      throw new Error(`Dropdown button not found: ${dropdownButtonSelector}`);
-    }
+    // Wait for the dropdown overlay to become visible
+    const overlay = this.page.locator(
+      "div.dx-overlay-content:visible, div[class*='dx-overlay-content']:not(.dx-state-invisible)"
+    ).first();
+    await overlay.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {
+      console.warn('[FilterUtil] Overlay not immediately visible, continuing...');
+    });
 
-    // Use JS click to avoid interception issues
-    await this.page.evaluate((el) => {
-      (el as HTMLElement).click();
-    }, dropdownButton);
-
-    // Wait for dropdown overlay to appear
-    await this.page.waitForSelector(
-      "div[class*='dx-overlay-content'][style*='visibility: visible']",
-      { timeout }
-    );
-
-    // Find and click the option
-    const optionSelector = `//div[contains(@class,'dx-overlay-content') and contains(@style,'visibility: visible')]//div[contains(@class,'dx-item') and contains(., '${expectedOptionText}')]`;
-    const option = await this.page.waitForSelector(optionSelector, { timeout });
-
-    if (!option) {
-      throw new Error(`Dropdown option not found: ${expectedOptionText}`);
-    }
-
-    // Scroll into view and click
-    await this.page.evaluate((el) => {
-      (el as HTMLElement).scrollIntoView(true);
-    }, option);
-
-    await option.click();
-
-    // Wait for network to settle
-    await this.page.waitForLoadState('networkidle');
+    // Click the option item containing the expected text
+    const option = this.page.locator(
+      `div.dx-item:has-text("${optionText}"), ` +
+      `div[role="option"]:has-text("${optionText}"), ` +
+      `div.dx-list-item:has-text("${optionText}")`
+    ).first();
+    await option.waitFor({ state: 'visible', timeout });
+    await this.safeClick(option);
+    await this.page.waitForTimeout(500);
   }
 
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // DevExtreme dx-radio-group (Radio Buttons)
+  // ═══════════════════════════════════════════════════════════════════════════════
+
   /**
-   * Select radio button option
+   * Select a DevExtreme radio button by its label text.
+   *
+   * The pattern is:
+   *   <div class="dx-item-content" ...>Option Text</div>
+   *   ..parent::div[@role='radio']
    */
-  async selectRadioButtonOption(
+  async selectRadioOption(
     optionText: string,
     options: FilterOptions = {}
   ): Promise<void> {
     const { timeout = 15000 } = options;
 
-    const radioSelector = `//div[@class='dx-item-content' and contains(text(), '${optionText}')]/parent::div[@role='radio']`;
-    
-    const radioButton = await this.page.waitForSelector(radioSelector, {
-      timeout
-    });
+    const radio = this.page.locator(
+      `div.dx-item-content:has-text("${optionText}"):visible`
+    ).locator('xpath=ancestor::div[@role="radio"]').first();
 
-    if (!radioButton) {
-      throw new Error(`Radio button not found: ${optionText}`);
+    await radio.waitFor({ state: 'visible', timeout });
+    await radio.scrollIntoViewIfNeeded().catch(() => {});
+    await this.safeClick(radio);
+    await this.page.waitForTimeout(400);
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // DevExtreme dx-tag-box (Multi-select with applyvaluemode="useButtons")
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Select multiple items from a dx-tag-box with `applyvaluemode="useButtons"`.
+   *
+   * Workflow:
+   *   1. Click the tag-box to open the dropdown
+   *   2. For each item text, find and click the matching dx-list-item
+   *   3. Click the OK/Submit button (`.dx-popup-done`) to confirm selection
+   */
+  async selectFromTagBox(
+    tagBoxXPath: string,
+    itemsToSelect: string[],
+    okButtonXPath?: string,
+    options: FilterOptions = {}
+  ): Promise<void> {
+    const { timeout = 15000 } = options;
+
+    // Step 1: Open the tag-box dropdown
+    const tagBox = this.page.locator(`xpath=${tagBoxXPath}`).first();
+    await tagBox.waitFor({ state: 'visible', timeout });
+    await this.safeClick(tagBox);
+    await this.page.waitForTimeout(600);
+
+    // Step 2: Select each item
+    for (const itemText of itemsToSelect) {
+      await this.selectTagBoxItem(itemText, timeout);
     }
 
-    // Scroll into view
-    await this.page.evaluate((el) => {
-      (el as HTMLElement).scrollIntoView();
-    }, radioButton);
-
-    // Click using JS to avoid interception
-    await this.page.evaluate((el) => {
-      (el as HTMLElement).click();
-    }, radioButton);
-
-    // Wait for change to apply
-    await this.page.waitForLoadState('networkidle');
+    // Step 3: Click OK button (applyvaluemode="useButtons" requires confirmation)
+    await this.clickTagBoxOkButton(okButtonXPath, timeout);
   }
 
   /**
-   * Select multiple items from tag box (multi-select)
+   * Select a single item inside an open tag-box dropdown.
    */
-  async selectFromTagBox(
-    tagBoxSelector: string,
-    itemsToSelect: string[],
+  private async selectTagBoxItem(itemText: string, timeout: number): Promise<void> {
+    try {
+      // DevExtreme multi-select items are dx-list-item divs in an overlay
+      const item = this.page.locator(
+        `div.dx-list-item:has-text("${itemText}"):visible, ` +
+        `div[role="option"]:has-text("${itemText}"):visible`
+      ).first();
+
+      await item.waitFor({ state: 'visible', timeout: 3000 });
+      await item.scrollIntoViewIfNeeded().catch(() => {});
+      await this.safeClick(item);
+      await this.page.waitForTimeout(250);
+    } catch {
+      console.warn(`[FilterUtil] Could not select tag-box item: ${itemText}`);
+    }
+  }
+
+  /**
+   * Click the OK button in the tag-box dropdown to confirm selections.
+   * Try multiple selector strategies for the OK button.
+   */
+  private async clickTagBoxOkButton(
+    okButtonXPath?: string,
+    timeout: number = 5000
+  ): Promise<void> {
+    try {
+      // Strategy 1: Explicit XPath if provided
+      if (okButtonXPath) {
+        const btn = this.page.locator(`xpath=${okButtonXPath}`).first();
+        if (await btn.isVisible({ timeout: 2000 }).catch(() => false)) {
+          await this.safeClick(btn);
+          await this.page.waitForTimeout(500);
+          return;
+        }
+      }
+
+      // Strategy 2: dx-popup-done class (the standard "Submit" button in DevExtreme overlays)
+      const doneBtn = this.page.locator('.dx-popup-done').first();
+      if (await doneBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+        await this.safeClick(doneBtn);
+        await this.page.waitForTimeout(500);
+        return;
+      }
+
+      // Strategy 3: Button with OK/موافق text
+      const okBtn = this.page.locator(
+        'button:has-text("OK"), button:has-text("موافق"), ' +
+        'div[role="button"]:has-text("OK"), div[role="button"]:has-text("موافق")'
+      ).first();
+      if (await okBtn.isVisible({ timeout: 1500 }).catch(() => false)) {
+        await this.safeClick(okBtn);
+        await this.page.waitForTimeout(500);
+        return;
+      }
+
+      // Strategy 4: Press Escape to close (fallback — may or may not apply selection)
+      console.warn('[FilterUtil] OK button not found for tag-box — pressing Escape');
+      await this.page.keyboard.press('Escape');
+      await this.page.waitForTimeout(300);
+    } catch {
+      console.warn('[FilterUtil] Failed to click OK button for tag-box');
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // Shared helpers
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Click an element using JS click (avoids visibility/overlap issues).
+   */
+  private async safeClick(locator: Locator): Promise<void> {
+    await locator.scrollIntoViewIfNeeded().catch(() => {});
+    try {
+      await locator.click({ timeout: 3000 });
+    } catch {
+      // Fallback: force JS click
+      await locator.evaluate((el: HTMLElement) => el.click());
+    }
+  }
+
+  /**
+   * Click a search/submit button using multiple fallback selectors.
+   */
+  async clickSearchButton(
+    searchButtonXPath: string,
     options: FilterOptions = {}
   ): Promise<void> {
     const { timeout = 10000 } = options;
 
-    // Click to open tag box
-    const tagBox = await this.page.waitForSelector(tagBoxSelector, {
-      timeout
-    });
-
-    if (!tagBox) {
-      throw new Error(`Tag box not found: ${tagBoxSelector}`);
-    }
-
-    await tagBox.click();
-
-    // Select each item
-    for (const item of itemsToSelect) {
-      // Find the item in the list
-      const itemSelector = `//div[contains(@class,'dx-list-item')]`;
-      const items = await this.page.$$(itemSelector);
-
-      let found = false;
-      for (const el of items) {
-        const text = await el.evaluate((node) => (node as HTMLElement).innerText);
-        if (text.includes(item)) {
-          await el.scrollIntoViewIfNeeded();
-          await el.click();
-          found = true;
-          break;
-        }
-      }
-
-      if (!found) {
-        console.warn(`⚠️ Could not find/select tag box item: ${item}`);
-      }
-    }
-
-    // Wait for changes to apply
-    await this.page.waitForLoadState('networkidle');
+    const btn = this.page.locator(`xpath=${searchButtonXPath}`).first();
+    await btn.waitFor({ state: 'visible', timeout });
+    await this.safeClick(btn);
+    await this.page.waitForTimeout(500);
   }
 
   /**
-   * Click OK/Confirm button in modal
+   * Format a JavaScript Date to Arabic display format.
+   * Output: "DD/MM/YYYY HH:MM ص/م"
    */
+  formatDateToArabic(date: Date, isFromDate: boolean = true): string {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    const hours = isFromDate ? 0 : 23;
+    const minutes = isFromDate ? 0 : 59;
+    const ampm = hours >= 12 ? 'م' : 'ص';
+
+    const displayHours = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
+    const hoursStr = String(displayHours).padStart(2, '0');
+    const minutesStr = String(minutes).padStart(2, '0');
+
+    return `${day}/${month}/${year} ${hoursStr}:${minutesStr} ${ampm}`;
+  }
+
+  /**
+   * Parse flexible date string to Date object.
+   */
+  parseDateString(dateStr: string): Date {
+    let normalized = dateStr.trim().replace(/-/g, '/').replace(/\./g, '/');
+    if (/^\d{8}$/.test(normalized)) {
+      normalized = `${normalized.substring(0, 2)}/${normalized.substring(2, 4)}/${normalized.substring(4)}`;
+    }
+    const date = new Date(normalized);
+    if (isNaN(date.getTime())) {
+      throw new Error(`Invalid date format: ${dateStr}`);
+    }
+    return date;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // Legacy compatibility methods (used by existing code)
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  /** @deprecated Use selectDropdownOption() instead */
+  async selectSecondOptionFromDropdown(
+    dropdownButtonSelector: string,
+    expectedOptionText: string,
+    options: FilterOptions = {}
+  ): Promise<void> {
+    await this.selectDropdownOption(dropdownButtonSelector, expectedOptionText, options);
+  }
+
+  /** @deprecated Use selectRadioOption() instead */
+  async selectRadioButtonOption(
+    optionText: string,
+    options: FilterOptions = {}
+  ): Promise<void> {
+    await this.selectRadioOption(optionText, options);
+  }
+
+  /** @deprecated Use .dx-popup-done or specific button instead */
   async clickConfirmButton(
     confirmButtonSelector: string,
     options: FilterOptions = {}
   ): Promise<void> {
     const { timeout = 5000 } = options;
-
-    const button = await this.page.waitForSelector(confirmButtonSelector, {
-      timeout
-    });
-
-    if (!button) {
-      throw new Error(`Confirm button not found: ${confirmButtonSelector}`);
-    }
-
-    // Scroll into view
-    await this.page.evaluate((el) => {
-      (el as HTMLElement).scrollIntoView(true);
-    }, button);
-
-    // Try regular click first
-    try {
-      await button.click();
-    } catch {
-      // Fallback to JS click
-      await this.page.evaluate((el) => {
-        (el as HTMLElement).click();
-      }, button);
-    }
-
-    // Wait for modal to close/network to settle
-    await this.page.waitForLoadState('networkidle');
-  }
-
-  /**
-   * Click search/submit button
-   */
-  async clickSearchButton(
-    searchButtonSelector: string,
-    options: FilterOptions = {}
-  ): Promise<void> {
-    const { timeout = 10000, waitForNetworkIdle = true } = options;
-
-    const button = await this.page.waitForSelector(searchButtonSelector, {
-      timeout
-    });
-
-    if (!button) {
-      throw new Error(`Search button not found: ${searchButtonSelector}`);
-    }
-
-    // Use JS click to avoid interception
-    await this.page.evaluate((el) => {
-      (el as HTMLElement).click();
-    }, button);
-
-    if (waitForNetworkIdle) {
-      await this.page.waitForLoadState('networkidle');
-    }
-  }
-
-  /**
-   * Set text input value
-   */
-  async setTextInput(
-    inputSelector: string,
-    value: string,
-    options: FilterOptions = {}
-  ): Promise<void> {
-    const { timeout = 5000 } = options;
-
-    const input = await this.page.waitForSelector(inputSelector, { timeout });
-
-    if (!input) {
-      throw new Error(`Input not found: ${inputSelector}`);
-    }
-
-    await input.click();
-    await input.fill('');
-    await input.type(value);
-  }
-
-  /**
-   * Select option from dx-select-box dropdown
-   */
-  async selectDxSelectOption(
-    selectBoxSelector: string,
-    optionText: string,
-    options: FilterOptions = {}
-  ): Promise<void> {
-    const { timeout = 10000 } = options;
-
-    // Find and click the dropdown button
-    const dropdownBtn = await this.page.$(`${selectBoxSelector} .dx-dropdowneditor-button`);
-
-    if (!dropdownBtn) {
-      throw new Error(`Select box not found: ${selectBoxSelector}`);
-    }
-
-    await this.page.evaluate((el) => {
-      (el as HTMLElement).click();
-    }, dropdownBtn);
-
-    // Wait for overlay and select option
-    await this.page.waitForSelector(
-      "div[class*='dx-overlay-content'][style*='visibility: visible']",
-      { timeout }
-    );
-
-    const optionSelector = `//div[contains(@class,'dx-item') and contains(., '${optionText}')]`;
-    const option = await this.page.waitForSelector(optionSelector, { timeout });
-
-    if (!option) {
-      throw new Error(`Option not found: ${optionText}`);
-    }
-
-    await this.page.evaluate((el) => {
-      (el as HTMLElement).click();
-    }, option);
-
-    await this.page.waitForLoadState('networkidle');
-  }
-
-  /**
-   * Format date to Arabic display format
-   * Input: Date object
-   * Output: "DD/MM/YYYY HH:MM AM/PM" with Arabic AM/PM
-   */
-  formatDateToArabic(date: Date): string {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-
-    let hours = date.getHours();
-    let minutes = String(date.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'م' : 'ص';
-
-    if (hours > 12) {
-      hours -= 12;
-    } else if (hours === 0) {
-      hours = 12;
-    }
-
-    const hoursStr = String(hours).padStart(2, '0');
-
-    return `${day}/${month}/${year} ${hoursStr}:${minutes} ${ampm}`;
-  }
-
-  /**
-   * Parse flexible date string (handles various formats)
-   */
-  parseDateString(dateStr: string): Date {
-    // Normalize separators
-    let normalized = dateStr.trim().replace(/-/g, '/').replace(/\./g, '/');
-
-    // Handle 8-digit format like 18092025 → 18/09/2025
-    if (/^\d{8}$/.test(normalized)) {
-      normalized = `${normalized.substring(0, 2)}/${normalized.substring(2, 4)}/${normalized.substring(4)}`;
-    }
-
-    const date = new Date(normalized);
-
-    if (isNaN(date.getTime())) {
-      throw new Error(`Invalid date format: ${dateStr}`);
-    }
-
-    return date;
-  }
-
-  /**
-   * Clear all filters on report
-   */
-  async clearAllFilters(clearButtonSelector: string): Promise<void> {
-    const clearBtn = await this.page.$(clearButtonSelector);
-
-    if (clearBtn) {
-      await clearBtn.click();
-      await this.page.waitForLoadState('networkidle');
-    }
-  }
-
-  /**
-   * Wait for report table to load
-   */
-  async waitForReportTable(
-    tableSelector: string = "table[role='grid'], div.dx-datagrid",
-    timeout: number = 30000
-  ): Promise<void> {
-    await this.page.waitForSelector(tableSelector, { timeout, state: 'visible' });
-  }
-
-  /**
-   * Check if filter is applied
-   */
-  async isFilterApplied(filterIndicatorSelector: string): Promise<boolean> {
-    const indicator = await this.page.$(filterIndicatorSelector);
-    return indicator !== null && (await indicator?.isVisible());
-  }
-
-  /**
-   * Get filter values (useful for verification)
-   */
-  async getFilterValues(
-    fromDateSelector: string,
-    toDateSelector: string
-  ): Promise<{ fromDate: string; toDate: string }> {
-    const fromInput = await this.page.$(
-      `${fromDateSelector} input[type="text"]`
-    );
-    const toInput = await this.page.$(`${toDateSelector} input[type="text"]`);
-
-    const fromDate = fromInput ? await fromInput.inputValue() : '';
-    const toDate = toInput ? await toInput.inputValue() : '';
-
-    return { fromDate, toDate };
+    const btn = this.page.locator(`xpath=${confirmButtonSelector}`).first();
+    await btn.waitFor({ state: 'visible', timeout }).catch(() => {});
+    await this.safeClick(btn);
   }
 }

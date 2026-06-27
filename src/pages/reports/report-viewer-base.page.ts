@@ -52,8 +52,8 @@ export abstract class ReportViewerBasePage extends BaseListPage {
 
   // ── Common filter selectors ─────────────────────────────────────────────────
   protected readonly showReportButtonSelector =
-    'button:has-text("عرض تقرير"), button:has-text("Show Report"), ' +
-    'div[role="button"]:has-text("عرض"), [aria-label*="عرض"]';
+    'button:has-text("Show Report"), button:has-text("Submit"), ' +
+    'button[type="submit"], [aria-label*="Show"], [aria-label*="Submit"]';
 
   // ── New-tab tracking ────────────────────────────────────────────────────────
   private _openedInNewTab = false;
@@ -93,6 +93,7 @@ export abstract class ReportViewerBasePage extends BaseListPage {
 
   /**
    * Navigate via side-menu search (mimics real user behavior).
+   * First ensures we're on the dashboard, then uses the side-menu search.
    */
   async navigateToReportViaSideMenu(): Promise<void> {
     let attempts = 0;
@@ -102,7 +103,20 @@ export abstract class ReportViewerBasePage extends BaseListPage {
     while (attempts < maxAttempts) {
       try {
         attempts++;
-        await this.navigateViaSideMenuSearch(this.config.arabicName);
+
+        // Ensure we are on the dashboard (side-menu only exists there)
+        const dashboardUrl = `${config.baseUrl}/dashboard`;
+        const currentUrl = this.page.url();
+        if (!currentUrl.includes('/dashboard')) {
+          console.log(`[ReportViewer] Navigating to dashboard first: ${dashboardUrl}`);
+          await this.navigateToUrl(dashboardUrl);
+          await this.page.waitForTimeout(2000);
+        }
+
+        // Ensure English language before side-menu search
+        await this.ensureEnglishLanguage();
+
+        await this.navigateViaSideMenuSearch(this.config.englishName);
         const loaded = await this.isFilterPageLoaded();
         if (loaded) return;
         throw new Error('Report filter page did not load');
@@ -123,21 +137,72 @@ export abstract class ReportViewerBasePage extends BaseListPage {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // SIDE-MENU SEARCH (mirrors existing pattern from total-transactions-revenue-entity)
+  // LANGUAGE DETECTION & AUTO-SWITCH
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  private async navigateViaSideMenuSearch(arabicName: string): Promise<void> {
+  /**
+   * Detect the current portal language and switch to English if Arabic is active.
+   *
+   * Logic:
+   *   - Count img[src*="arab"] elements on the page
+   *   - If ≥ 2 → Arabic is active → switch to English:
+   *       1. Click first img[src*="arab"]   (opens language dropdown)
+   *       2. Wait 800ms
+   *       3. Click img[src*="king"]          (select English)
+   *       4. Wait 1500ms
+   *       5. Assert img[src*="king"].count ≥ 2
+   *   - If < 2 → Already English → do nothing
+   */
+  private async ensureEnglishLanguage(): Promise<void> {
+    try {
+      const arabImages = this.page.locator('img[src*="arab"]');
+      const arabCount = await arabImages.count().catch(() => 0);
+
+      if (arabCount >= 2) {
+        console.log('[ReportViewer] Arabic language detected — switching to English...');
+
+        // Step 1: Click the first Arabic flag icon to open the language dropdown
+        await arabImages.first().click();
+        await this.page.waitForTimeout(800);
+
+        // Step 2: Click the English (king) flag icon to select English
+        const kingImg = this.page.locator('img[src*="king"]').first();
+        await kingImg.waitFor({ state: 'visible', timeout: 5000 });
+        await kingImg.click();
+        await this.page.waitForTimeout(1500);
+
+        // Step 3: Verify the switch succeeded
+        const kingCount = await this.page.locator('img[src*="king"]').count().catch(() => 0);
+        if (kingCount >= 2) {
+          console.log('[ReportViewer] Language switched to English ✓');
+        } else {
+          console.warn('[ReportViewer] Language switch may not have completed — proceeding anyway');
+        }
+      } else {
+        console.log('[ReportViewer] Already in English — no switch needed');
+      }
+    } catch (error) {
+      console.warn('[ReportViewer] Language detection/switch failed:', error);
+      // Non-fatal — proceed with original language
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // SIDE-MENU SEARCH (English names — language is auto-switched to English first)
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  private async navigateViaSideMenuSearch(moduleName: string): Promise<void> {
     const searchInput = this.page.locator('#kt_aside_menu input[type="search"]');
     await searchInput.waitFor({ state: 'visible', timeout: 10000 });
     await searchInput.click();
     await searchInput.clear();
-    await searchInput.fill(arabicName);
+    await searchInput.fill(moduleName);
     await this.page.waitForTimeout(1500);
     await this.waitHelper.waitForRequestQuiet(500, undefined, 8000);
 
-    const clicked = await this.clickExactMenuItem(arabicName);
+    const clicked = await this.clickExactMenuItem(moduleName);
     if (!clicked) {
-      throw new Error(`Side-menu item "${arabicName}" not found.`);
+      throw new Error(`Side-menu item "${moduleName}" not found.`);
     }
 
     await this.page.waitForLoadState('domcontentloaded', { timeout: 30000 });
@@ -252,9 +317,10 @@ export abstract class ReportViewerBasePage extends BaseListPage {
   /** Select multiple items from a dx-tag-box (multi-select) */
   async selectTagBoxItems(
     tagBoxSelector: string,
-    items: string[]
+    items: string[],
+    okButtonSelector?: string
   ): Promise<void> {
-    await this.filterUtility.selectFromTagBox(tagBoxSelector, items);
+    await this.filterUtility.selectFromTagBox(tagBoxSelector, items, okButtonSelector);
   }
 
   /** Click the OK/Confirm button in a modal */
@@ -309,14 +375,14 @@ export abstract class ReportViewerBasePage extends BaseListPage {
 
   private async clickShowReportButton(): Promise<void> {
     const tier1 = [
-      'button:has-text("عرض تقرير")',
       'button:has-text("Show Report")',
+      'button:has-text("Submit")',
       'button[type="submit"]',
     ];
     const tier2 = [
-      'dx-button:has-text("عرض")',
-      '[role="button"]:has-text("عرض")',
-      'button:has-text("عرض")',
+      'dx-button:has-text("Show")',
+      '[role="button"]:has-text("Show")',
+      'button:has-text("Display")',
       'button:has-text("Search")',
     ];
     const allSelectors = [...tier1, ...tier2];

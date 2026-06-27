@@ -14,8 +14,8 @@ Feature: Report Automation and Cross-Report Reconciliation
   # ═══════════════════════════════════════════════════════════════════════════════
 
   @export @revenue
-  Scenario: Export Total Transactions by Revenue Source - Receivables to Excel
-    When the user navigates to the report "Total Transactions by Revenue Source - Receivables"
+  Scenario: Export Detailed Report of POS Transactions by Revenue Source to Excel
+    When the user navigates to the report "Detailed Report of POS Transactions by Revenue Source"
     And the user applies the filter status "Paid"
     And the user sets the date range
     And the user clicks "Show Report"
@@ -59,8 +59,8 @@ Feature: Report Automation and Cross-Report Reconciliation
     Then the Excel file should be downloaded successfully
 
   @export @smart-receipt
-  Scenario: Export Smart Receipt Printing Fees Report to Excel
-    When the user navigates to the report "Smart Receipt Printing Fees"
+  Scenario: Export Smart Receipt Details Report to Excel
+    When the user navigates to the report "Smart Receipt Details"
     And the user applies the filter status "Paid"
     And the user sets the date range
     And the user clicks "Show Report"
@@ -68,8 +68,8 @@ Feature: Report Automation and Cross-Report Reconciliation
     Then the Excel file should be downloaded successfully
 
   @export @support-services
-  Scenario: Export Support Services Transactions Report to Excel
-    When the user navigates to the report "Support Services Transactions"
+  Scenario: Export Support Services Reports Report to Excel
+    When the user navigates to the report "Support Services Reports"
     And the user selects the "Revenue Transactions" radio option
     And the user applies the filter status "Paid"
     And the user sets the date range
@@ -78,8 +78,8 @@ Feature: Report Automation and Cross-Report Reconciliation
     Then the Excel file should be downloaded successfully
 
   @export @total-charges
-  Scenario: Export Total Charges by Revenue Source Report to Excel
-    When the user navigates to the report "Total Charges by Revenue Source"
+  Scenario: Export Report the total service charges for loading Transactions Report to Excel
+    When the user navigates to the report "Report the total service charges for loading Transactions"
     And the user applies the filter status "Paid"
     And the user applies the filter fee type "Revenue Fees"
     And the user sets the date range
@@ -108,8 +108,8 @@ Feature: Report Automation and Cross-Report Reconciliation
     Then the Excel file should be downloaded successfully
 
   @export @deposit-receivable
-  Scenario: Export Deposit Receivable Report to Excel
-    When the user navigates to the report "Deposit Receivable"
+  Scenario: Export Transaction deposits detail Report (receivable) Report to Excel
+    When the user navigates to the report "Transaction deposits detail Report (receivable)"
     And the user sets the date range
     And the user clicks "Show Report"
     And the user exports the report to Excel with filename "transactionpaymentservicessummaryDepositreceivable"
@@ -133,7 +133,7 @@ Feature: Report Automation and Cross-Report Reconciliation
     And the user extracts values from the "Deposit All Payment Methods" report
     And the user extracts values from the "Incurred Fees" report
     And the user extracts values from the "Smart Receipt" report
-    And the user extracts values from the "Deposit Receivable" report
+    And the user extracts values from the "Transaction deposits detail Report (receivable)" report
 
     And the user compares transaction fee totals across reports
     And the user compares VAT totals across reports

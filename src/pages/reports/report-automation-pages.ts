@@ -25,7 +25,7 @@ export class TotalTransactionsRevenueReceivablePage extends ReportViewerBasePage
     super(page, {
       reportId: '7c9f7dcd-1163-4e89-91dd-02b841c24ed7',
       arabicName: 'تقـريـر  إجمالى بالمعاملات حسب جهة الايراد - المقبوضات',
-      englishName: 'Total Transactions by Revenue Source - Receivables',
+      englishName: 'Detailed Report of POS Transactions by Revenue Source',
     });
   }
 
@@ -40,7 +40,7 @@ export class TotalTransactionsRevenueReceivablePage extends ReportViewerBasePage
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectDropdownOption(this.statusDropdownXPath, 'مدفوعة');
+    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
@@ -48,7 +48,6 @@ export class TotalTransactionsRevenueReceivablePage extends ReportViewerBasePage
 
 // ═══════════════════════════════════════════════════════════════════════════════════
 // 2. Transactions Fee Report for All Payment Methods
-//    تقرير رسوم المعاملات لكافة وسائل الدفع
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 export class TransactionsFeeReportPage extends ReportViewerBasePage {
@@ -68,14 +67,12 @@ export class TransactionsFeeReportPage extends ReportViewerBasePage {
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
-  /** Select the "Revenue Transactions" (معاملات ايراد) radio button */
   async selectRevenueTransactionsRadio(): Promise<void> {
-    await this.selectRadioOption('معاملات ايراد');
+    await this.selectRadioOption('Revenue Transactions');
   }
 
-  /** Select the "Deposit Transactions" (معاملات امانات) radio button */
   async selectDepositTransactionsRadio(): Promise<void> {
-    await this.selectRadioOption('معاملات امانات');
+    await this.selectRadioOption('Deposit Transactions');
   }
 
   async applyRevenueFilters(fromDate: string, toDate: string): Promise<void> {
@@ -121,13 +118,12 @@ export class UniversalPaymentsPage extends ReportViewerBasePage {
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
     await this.selectTagBoxItems(this.tagBoxXPath, [
-      'بطاقة ائتمان',
-      'جهاز الدفع البنكي',
-      'جوجل باي',
-      'سامسونج باي',
-      'آبل باي',
-    ]);
-    await this.clickConfirmButton(this.okButtonXPath);
+      'Credit Card',
+      'Bank POS',
+      'Google Pay',
+      'Samsung Pay',
+      'Apple Pay',
+    ], this.okButtonXPath);
   }
 }
 
@@ -154,7 +150,7 @@ export class AmanatUniversalPaymentsPage extends ReportViewerBasePage {
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyAmanatFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectRadioOption('معاملات امانات');
+    await this.selectRadioOption('Deposit Transactions');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
@@ -162,7 +158,6 @@ export class AmanatUniversalPaymentsPage extends ReportViewerBasePage {
 
 // ═══════════════════════════════════════════════════════════════════════════════════
 // 5. Total Credit Card Report
-//    تقرير اجمالي بطاقات الائتمان
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 export class TotalCreditCardReportPage extends ReportViewerBasePage {
@@ -187,15 +182,14 @@ export class TotalCreditCardReportPage extends ReportViewerBasePage {
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectTagBoxItems(this.tagBoxXPath, ['معاملات ايراد', 'معاملات امانات']);
-    await this.clickConfirmButton(this.okButtonXPath);
+    await this.selectTagBoxItems(this.tagBoxXPath, ['Revenue Transactions', 'Deposit Transactions'], this.okButtonXPath);
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════════
-// 6. Smart Receipt Printing Fees Report
+// 6. Smart Receipt Details Report
 //    تقرير إجمالي لرسوم طباعة الإيصال الذكي
 // ═══════════════════════════════════════════════════════════════════════════════════
 
@@ -204,7 +198,7 @@ export class SmartReceiptPrintingFeesPage extends ReportViewerBasePage {
     super(page, {
       reportId: '6f3f71e3-246e-48ed-853f-b5b6966a5267',
       arabicName: 'إجمالي رسوم طباعة الإيصال الذكي',
-      englishName: 'Smart Receipt Printing Fees',
+      englishName: 'Smart Receipt Details',
     });
   }
 
@@ -219,15 +213,14 @@ export class SmartReceiptPrintingFeesPage extends ReportViewerBasePage {
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectDropdownOption(this.statusDropdownXPath, 'مدفوعة');
+    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════════
-// 7. Support Services Transactions Report
-//    تقـريـر إجمالي بمعاملات الخدمات الداعمة
+// 7. Support Services Reports Report
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 export class SupportServicesTransactionsPage extends ReportViewerBasePage {
@@ -235,7 +228,7 @@ export class SupportServicesTransactionsPage extends ReportViewerBasePage {
     super(page, {
       reportId: 'b541adc6-ef50-4019-aac2-32e748add600',
       arabicName: 'إجمالي بمعاملات الخدمات الداعمة',
-      englishName: 'Support Services Transactions',
+      englishName: 'Support Services Reports',
     });
   }
 
@@ -250,8 +243,8 @@ export class SupportServicesTransactionsPage extends ReportViewerBasePage {
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectRadioOption('معاملات ايراد');
-    await this.selectDropdownOption(this.statusDropdownXPath, 'مدفوعة');
+    await this.selectRadioOption('Revenue Transactions');
+    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
@@ -259,7 +252,6 @@ export class SupportServicesTransactionsPage extends ReportViewerBasePage {
 
 // ═══════════════════════════════════════════════════════════════════════════════════
 // 8. Total Charges Report by Revenue Source
-//    تقرير إجمالي التحملات حسب جهة الإيراد
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 export class TotalChargesByRevenuePage extends ReportViewerBasePage {
@@ -267,7 +259,7 @@ export class TotalChargesByRevenuePage extends ReportViewerBasePage {
     super(page, {
       reportId: 'cb6cde66-44d4-4755-84b5-ec32e76c3d30',
       arabicName: 'إجمالي التحملات حسب جهة الإيراد',
-      englishName: 'Total Charges by Revenue Source',
+      englishName: 'Report the total service charges for loading Transactions',
     });
   }
 
@@ -284,8 +276,8 @@ export class TotalChargesByRevenuePage extends ReportViewerBasePage {
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectDropdownOption(this.statusDropdownXPath, 'مدفوعة');
-    await this.selectDropdownOption(this.feeTypeDropdownXPath, 'رسوم إيرادات');
+    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
+    await this.selectDropdownOption(this.feeTypeDropdownXPath, 'Revenue Fees');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
@@ -293,7 +285,6 @@ export class TotalChargesByRevenuePage extends ReportViewerBasePage {
 
 // ═══════════════════════════════════════════════════════════════════════════════════
 // 9. Total Tax Report
-//    تقـريـر إجمالي بالرسوم الضريبية
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 export class TotalTaxReportPage extends ReportViewerBasePage {
@@ -316,8 +307,8 @@ export class TotalTaxReportPage extends ReportViewerBasePage {
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectDropdownOption(this.statusDropdownXPath, 'مدفوعة');
-    await this.selectRadioOption('معاملات ايراد');
+    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
+    await this.selectRadioOption('Revenue Transactions');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
@@ -325,7 +316,6 @@ export class TotalTaxReportPage extends ReportViewerBasePage {
 
 // ═══════════════════════════════════════════════════════════════════════════════════
 // 10. Total Transaction Report
-//     تقـريـر إجمالي بالمعاملات
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 export class TotalTransactionReportPage extends ReportViewerBasePage {
@@ -348,15 +338,15 @@ export class TotalTransactionReportPage extends ReportViewerBasePage {
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectDropdownOption(this.statusDropdownXPath, 'مدفوعة');
-    await this.selectRadioOption('معاملات ايراد');
+    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
+    await this.selectRadioOption('Revenue Transactions');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════════
-// 11. Transaction Payment Services Summary Deposit Receivable
+// 11. Transaction Payment Services Summary Transaction deposits detail Report (receivable)
 //     تقـريـر إجمالى بالمعاملات حسب جهة الامانة - المقبوضات
 // ═══════════════════════════════════════════════════════════════════════════════════
 
@@ -365,7 +355,7 @@ export class DepositReceivableReportPage extends ReportViewerBasePage {
     super(page, {
       reportId: '962e3249-71d7-4dc9-973d-da2005ae7745',
       arabicName: 'إجمالى بالمعاملات حسب جهة الامانة - المقبوضات',
-      englishName: 'Transaction Payment Services Summary - Deposit Receivable',
+      englishName: 'Transaction Payment Services Summary - Transaction deposits detail Report (receivable)',
     });
   }
 
