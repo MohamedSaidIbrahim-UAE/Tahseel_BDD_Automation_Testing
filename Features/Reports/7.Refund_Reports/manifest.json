@@ -1,0 +1,14 @@
+{
+  "source": "r10.md",
+  "extracted_at": "2026-06-19T06:33:10.113229+00:00",
+  "feature_count": 6,
+  "features": [
+    "Detailed_Refund_Report.feature",
+    "Refund_Loaded_Balance_Report_on_Tahseel_Card.feature",
+    "Evoucher_Refund_Detailed_Report.feature",
+    "Sharjah_Islamic_Bank_Refund_Report_Detailed.feature",
+    "Sharjah_Islamic_Bank_Refund_Report_in_Period_Summary.feature",
+    "Automatic_Transaction_Refund_Report.feature"
+  ],
+  "warnings": []
+}

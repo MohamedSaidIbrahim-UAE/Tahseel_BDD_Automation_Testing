@@ -1,0 +1,20 @@
+{
+  "source": "r8.md",
+  "extracted_at": "2026-06-19T06:33:10.357780+00:00",
+  "feature_count": 12,
+  "features": [
+    "Payment_Card_Statistic_Report.feature",
+    "Detailed_Tahseel_Card_Report.feature",
+    "Transaction_Done_by_Tahseel_Card.feature",
+    "Aggregated_Fees_Report_Tahseel_Cards.feature",
+    "SFD_Tahseel_Card_Detail_Report.feature",
+    "Tahseel_Lost_Cards_Report.feature",
+    "Tahseel_Account_Deduct_Load_Request_Report.feature",
+    "Voucher_Receipt_Report.feature",
+    "Tahseel_Account_Initial_Balance_Report.feature",
+    "SFD_Detailed_Wallets_Transactions_Report.feature",
+    "Tahseel_Card_Transaction_Details_Reports.feature",
+    "Corporate_Card_Balance_Report.feature"
+  ],
+  "warnings": []
+}

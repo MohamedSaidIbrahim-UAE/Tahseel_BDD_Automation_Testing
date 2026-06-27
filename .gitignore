@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Test Results
+test-results/
+allure-results/
+allure-report/
+cucumber-report*.html
+cucumber-report*.json
+
+# Environment
+.env
+.env.local
+.env.stage
+.env.production
+storageState.json
+storageState.local.json
+storageState.stage.json
+storageState.production.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+auth-setup-failure.png
+auth-setup-failure-local.png
+auth-setup-failure-stage.png
+auth-setup-failure-production.png

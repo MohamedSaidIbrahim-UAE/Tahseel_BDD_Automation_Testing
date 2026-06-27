@@ -1,0 +1,297 @@
+{
+  "generatedAt": "2026-06-26T14:41:24.180Z",
+  "totalModules": 211,
+  "auditedModules": 6,
+  "skippedModules": 205,
+  "environment": "stage",
+  "results": {
+    "FORMS": {
+      "meta": {
+        "url": "https://staging.tahseel.gov.ae/ManagePortal/forms",
+        "pageTitle": "Tahseel Administration",
+        "heading": "FORMS",
+        "breadcrumb": [],
+        "pageType": "form",
+        "timestamp": "2026-06-26T14:42:37.008Z"
+      },
+      "filters": {},
+      "actionButtons": {
+        "header": [],
+        "table": []
+      },
+      "table": {
+        "hasTable": false,
+        "selector": "",
+        "columns": [],
+        "rowCount": 0,
+        "hasPagination": false,
+        "rowActionButtons": []
+      },
+      "formFields": [
+        {
+          "key": "input_0",
+          "label": "Search...",
+          "type": "text",
+          "required": false,
+          "placeholder": "Search...",
+          "selector": "",
+          "maxLength": null
+        },
+        {
+          "key": "input_1",
+          "label": "Search Forms",
+          "type": "text",
+          "required": false,
+          "placeholder": "Search Forms",
+          "selector": "",
+          "maxLength": null
+        }
+      ],
+      "dialogInvestigations": {},
+      "error": null
+    },
+    "Cancelled Refund Requests": {
+      "meta": {
+        "url": "https://staging.tahseel.gov.ae/ManagePortal/refund/cancelled-requests",
+        "pageTitle": "Tahseel Administration",
+        "heading": "Inquire Refund Requests",
+        "breadcrumb": [],
+        "pageType": "report",
+        "timestamp": "2026-06-26T14:43:41.202Z"
+      },
+      "filters": {},
+      "actionButtons": {
+        "header": [],
+        "table": []
+      },
+      "table": {
+        "hasTable": true,
+        "selector": "dx-data-grid",
+        "columns": [
+          {
+            "index": 0,
+            "text": "Request Send Date",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 1,
+            "text": "Department",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 2,
+            "text": "Status",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 3,
+            "text": "Reference Number",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 4,
+            "text": "Reciept Number",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 5,
+            "text": "Beneficiary English Name",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 6,
+            "text": "Tahseel Account Type",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 7,
+            "text": "Beneficiary Account Number",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 8,
+            "text": "Request Number",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 9,
+            "text": "Amount",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 10,
+            "text": "Balance Before Request",
+            "field": null,
+            "sortable": false
+          },
+          {
+            "index": 11,
+            "text": "Refund Method",
+            "field": null,
+            "sortable": false
+          }
+        ],
+        "rowCount": 12,
+        "hasPagination": true,
+        "rowActionButtons": []
+      },
+      "formFields": [
+        {
+          "key": "input_0",
+          "label": "Search...",
+          "type": "text",
+          "required": false,
+          "placeholder": "Search...",
+          "selector": "",
+          "maxLength": null
+        }
+      ],
+      "dialogInvestigations": {},
+      "error": null
+    },
+    "Home": {
+      "meta": {
+        "url": "https://staging.tahseel.gov.ae/ManagePortal/dashboard",
+        "pageTitle": "Tahseel Administration",
+        "heading": "Home",
+        "breadcrumb": [],
+        "pageType": "form",
+        "timestamp": "2026-06-26T14:44:44.178Z"
+      },
+      "filters": {},
+      "actionButtons": {
+        "header": [],
+        "table": []
+      },
+      "table": {
+        "hasTable": false,
+        "selector": "",
+        "columns": [],
+        "rowCount": 0,
+        "hasPagination": false,
+        "rowActionButtons": []
+      },
+      "formFields": [
+        {
+          "key": "input_0",
+          "label": "Search...",
+          "type": "text",
+          "required": false,
+          "placeholder": "Search...",
+          "selector": "",
+          "maxLength": null
+        }
+      ],
+      "dialogInvestigations": {},
+      "error": null
+    },
+    "Transactions Analysis": {
+      "meta": {
+        "url": "https://staging.tahseel.gov.ae/ManagePortal/dashboard",
+        "pageTitle": "Tahseel Administration",
+        "heading": "Home",
+        "breadcrumb": [],
+        "pageType": "form",
+        "timestamp": "2026-06-26T14:45:47.073Z"
+      },
+      "filters": {},
+      "actionButtons": {
+        "header": [],
+        "table": []
+      },
+      "table": {
+        "hasTable": false,
+        "selector": "",
+        "columns": [],
+        "rowCount": 0,
+        "hasPagination": false,
+        "rowActionButtons": []
+      },
+      "formFields": [
+        {
+          "key": "input_0",
+          "label": "Search...",
+          "type": "text",
+          "required": false,
+          "placeholder": "Search...",
+          "selector": "",
+          "maxLength": null
+        }
+      ],
+      "dialogInvestigations": {},
+      "error": null
+    },
+    "Transactions Details": {
+      "meta": {
+        "url": "https://staging.tahseel.gov.ae/ManagePortal/dashboard",
+        "pageTitle": "Tahseel Administration",
+        "heading": "Home",
+        "breadcrumb": [],
+        "pageType": "form",
+        "timestamp": "2026-06-26T14:46:49.930Z"
+      },
+      "filters": {},
+      "actionButtons": {
+        "header": [],
+        "table": []
+      },
+      "table": {
+        "hasTable": false,
+        "selector": "",
+        "columns": [],
+        "rowCount": 0,
+        "hasPagination": false,
+        "rowActionButtons": []
+      },
+      "formFields": [
+        {
+          "key": "input_0",
+          "label": "Search...",
+          "type": "text",
+          "required": false,
+          "placeholder": "Search...",
+          "selector": "",
+          "maxLength": null
+        }
+      ],
+      "dialogInvestigations": {},
+      "error": null
+    },
+    "Fee-free transactions": {
+      "meta": {
+        "url": "https://staging.tahseel.gov.ae/ManagePortal/business-intelligence/dashborad/3",
+        "pageTitle": "",
+        "heading": "",
+        "breadcrumb": [],
+        "pageType": "unknown",
+        "timestamp": "2026-06-26T14:47:14.427Z"
+      },
+      "filters": {},
+      "actionButtons": {
+        "header": [],
+        "table": []
+      },
+      "table": {
+        "hasTable": false,
+        "selector": "",
+        "columns": [],
+        "rowCount": 0,
+        "hasPagination": false,
+        "rowActionButtons": []
+      },
+      "formFields": [],
+      "dialogInvestigations": {},
+      "error": "locator.count: Target page, context or browser has been closed"
+    }
+  }
+}

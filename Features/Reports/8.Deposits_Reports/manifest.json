@@ -1,0 +1,15 @@
+{
+  "source": "r11.md",
+  "extracted_at": "2026-06-19T06:33:10.123857+00:00",
+  "feature_count": 7,
+  "features": [
+    "Deposits_Balance_Summary_Report.feature",
+    "Deposits_Details_Report.feature",
+    "Deposits_Statement_Report.feature",
+    "Detailed_Deposit_Retain_Transactions.feature",
+    "Summary_Deposit_Retain_Transactions.feature",
+    "Total_Transactions_Report_by_Deposit_Entity.feature",
+    "Transaction_Deposits_Detail_Report_Receivable.feature"
+  ],
+  "warnings": []
+}

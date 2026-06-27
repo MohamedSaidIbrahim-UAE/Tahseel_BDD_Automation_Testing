@@ -1,0 +1,18 @@
+{
+  "source": "r6.md",
+  "extracted_at": "2026-06-19T06:33:10.325441+00:00",
+  "feature_count": 10,
+  "features": [
+    "Summary_Cheques_Report.feature",
+    "Detailed_Cheques_Report.feature",
+    "Detailed_Report_of_Transactions_Paid_by_Credit_Cards.feature",
+    "Aggregated_Transactions_Report_Paid_by_Credit_Cards.feature",
+    "E-Voucher_Status_Inquire_Report.feature",
+    "Cheque_and_Voucher_Transactions_Report.feature",
+    "Credit_Card_Summary_By_Merchant.feature",
+    "Payment_Methods_Detailed_Report.feature",
+    "Payment_Method_Summary_Report.feature",
+    "Detailed_Cheques_Report_-_Revenues.feature"
+  ],
+  "warnings": []
+}
