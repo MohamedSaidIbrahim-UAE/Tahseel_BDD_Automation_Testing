@@ -53,7 +53,7 @@ export abstract class ReportViewerBasePage extends BaseListPage {
   // ── Common filter selectors ─────────────────────────────────────────────────
   protected readonly showReportButtonSelector =
     'button:has-text("Show Report"), button:has-text("Submit"), ' +
-    'button[type="submit"], [aria-label*="Show"], [aria-label*="Submit"]';
+    '[aria-label="Submit"], button[type="submit"], [aria-label*="Show"], [aria-label*="Submit"]';
 
   // ── New-tab tracking ────────────────────────────────────────────────────────
   private _openedInNewTab = false;
@@ -301,12 +301,25 @@ export abstract class ReportViewerBasePage extends BaseListPage {
     await this.filterUtility.setToDate(sel, dateValue);
   }
 
+  /** Set the "from" date using calendar month-navigation (regular scenario approach) */
+  async setFromDateByCalendar(targetDateStr: string, selector?: string): Promise<void> {
+    const sel = selector || this.getDefaultFromDateSelector();
+    await this.filterUtility.setFromDateByCalendarNavigation(sel, targetDateStr);
+  }
+
+  /** Set the "to" date by clicking the Today button in the calendar (irregular scenario / quick reset) */
+  async setToDateByToday(selector?: string): Promise<void> {
+    const sel = selector || this.getDefaultToDateSelector();
+    await this.filterUtility.setToDateByTodayButton(sel);
+  }
+
   /** Select second option from a dx-select-box dropdown */
   async selectDropdownOption(
     dropdownButtonSelector: string,
-    optionText: string
+    optionText: string,
+    nthIndex?: number
   ): Promise<void> {
-    await this.filterUtility.selectSecondOptionFromDropdown(dropdownButtonSelector, optionText);
+    await this.filterUtility.selectSecondOptionFromDropdown(dropdownButtonSelector, optionText, { nthIndex });
   }
 
   /** Select a DevExtreme radio button by its label text */
@@ -377,6 +390,7 @@ export abstract class ReportViewerBasePage extends BaseListPage {
     const tier1 = [
       'button:has-text("Show Report")',
       'button:has-text("Submit")',
+      '[aria-label="Submit"]',
       'button[type="submit"]',
     ];
     const tier2 = [

@@ -45,7 +45,7 @@ import {
 // ── Report key to human-readable name mapping ─────────────────────────────────
 const REPORT_NAME_TO_KEY: Record<string, string> = {
   'Detailed Report of POS Transactions by Revenue Source': 'total-transactions-revenue-receivable',
-  'Transaction Fees for All Payment Methods': 'transaction-fees-all-payment-methods',
+  'Transaction Fees For All Payment Methods': 'transaction-fees-all-payment-methods',
   'Universal Payment Methods': 'universal-payments',
   'Amanat Universal Payments': 'amanat-universal-payments',
   'Total Credit Card Report': 'total-credit-card',
@@ -565,7 +565,7 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
 
     this.values['depositRec_feeValue'] = feeValue;
 
-    this.reconciliation.saveEntry('إجمالي قيمة الرسوم في تقرير إجمالي بالمعاملات حسب جهة الأمانة - المقبوضات', feeValue ?? 0);
+    this.reconciliation.saveEntry('إجمالي قيمة الرسوم في تقرير Transaction summary income report based on collecting entities حسب جهة الأمانة - المقبوضات', feeValue ?? 0);
 
     this.logSuccess('Transaction deposits detail Report (receivable) values extracted');
   }

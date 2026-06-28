@@ -23,24 +23,24 @@ import { ReportViewerBasePage, ReportPageConfig } from './report-viewer-base.pag
 export class TotalTransactionsRevenueReceivablePage extends ReportViewerBasePage {
   constructor(page: Page) {
     super(page, {
-      reportId: '7c9f7dcd-1163-4e89-91dd-02b841c24ed7',
+      reportId: 'da6263af-4818-4b0c-93cd-eafcd446ba5e',
       arabicName: 'تقـريـر  إجمالى بالمعاملات حسب جهة الايراد - المقبوضات',
       englishName: 'Detailed Report of POS Transactions by Revenue Source',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[7]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[8]/div[2]/dx-date-box//input[@type='text']";
-  readonly statusDropdownXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[12]/div[2]/dx-select-box//div[contains(@class,'dx-dropdowneditor-button')]";
+    "dx-date-box input[type='text']";
+  readonly paymentMethodSelector =
+    "[data-dx_placeholder*='Choose'] ";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
+    await this.selectDropdownOption(this.paymentMethodSelector, 'All');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
@@ -54,15 +54,15 @@ export class TransactionsFeeReportPage extends ReportViewerBasePage {
   constructor(page: Page) {
     super(page, {
       reportId: '97353334-399a-4613-9097-9cf5dc95c690',
-      arabicName: 'تقرير رسوم المعاملات لكافة وسائل الدفع',
-      englishName: 'Transaction Fees for All Payment Methods',
+      arabicName: 'Payment methods detailed report',
+      englishName: 'Transaction Fees For All Payment Methods',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[5]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[6]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -90,26 +90,26 @@ export class TransactionsFeeReportPage extends ReportViewerBasePage {
 
 // ═══════════════════════════════════════════════════════════════════════════════════
 // 3. Universal Payment Methods (بطاقة ائتمان, جهاز الدفع البنكي, جوجل باي, etc.)
-//    تقرير رسوم المعاملات لكافة وسائل الدفع | طرق الدفع العالمية
+//    Payment methods detailed report | طرق الدفع العالمية
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 export class UniversalPaymentsPage extends ReportViewerBasePage {
   constructor(page: Page) {
     super(page, {
-      reportId: '97353334-399a-4613-9097-9cf5dc95c690',
-      arabicName: 'تقرير رسوم المعاملات لكافة وسائل الدفع',
-      englishName: 'Universal Payment Methods',
+      reportId: '8604150a-00b4-4189-8465-ee08a32d30ad',
+      arabicName: 'Payment methods detailed report',
+      englishName: 'Payment methods detailed report',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[5]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[6]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly tagBoxXPath =
-    '//*[@id="kt_content"]/div/app-show/div/div[1]/div[3]/div[2]/dx-tag-box/div[1]/div/div[1]';
+    'dx-tag-box';
   readonly okButtonXPath =
-    '/html/body/div[2]/div/div[2]/div/div[2]/div[1]/div/div';
+    '[aria-label="Submit"]';
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -129,22 +129,22 @@ export class UniversalPaymentsPage extends ReportViewerBasePage {
 
 // ═══════════════════════════════════════════════════════════════════════════════════
 // 4. Amanat (Deposits) Universal Payments
-//    تقرير رسوم المعاملات لكافة وسائل الدفع (أمانات)
+//    Payment methods detailed report (أمانات)
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 export class AmanatUniversalPaymentsPage extends ReportViewerBasePage {
   constructor(page: Page) {
     super(page, {
-      reportId: '97353334-399a-4613-9097-9cf5dc95c690',
-      arabicName: 'تقرير رسوم المعاملات لكافة وسائل الدفع',
-      englishName: 'Amanat (Deposit) Universal Payments',
+      reportId: '8604150a-00b4-4189-8465-ee08a32d30ad',
+      arabicName: 'Payment methods detailed report',
+      englishName: 'Payment methods detailed report',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[5]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[6]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -164,19 +164,19 @@ export class TotalCreditCardReportPage extends ReportViewerBasePage {
   constructor(page: Page) {
     super(page, {
       reportId: 'fedfceac-2366-407e-881a-29fa1ec5365b',
-      arabicName: 'تقرير اجمالي بطاقات الائتمان',
-      englishName: 'Total Credit Card Report',
+      arabicName: 'Detailed Report of Transactions paid by Credit cards',
+      englishName: 'Aggregated Transactions Report paid by Credit cards',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[5]/div[2]/dx-date-box/div/div/div[1]/input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[6]/div[2]/dx-date-box/div/div/div[1]/input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly tagBoxXPath =
-    '//*[@id="kt_content"]/div/app-show/div/div[1]/div[8]/div[2]/dx-tag-box/div[1]/div/div[1]';
+    'dx-tag-box';
   readonly okButtonXPath =
-    '/html/body/div[2]/div/div[2]/div/div[2]/div[1]/div/div';
+    '[aria-label="Submit"]';
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -198,22 +198,22 @@ export class SmartReceiptPrintingFeesPage extends ReportViewerBasePage {
     super(page, {
       reportId: '6f3f71e3-246e-48ed-853f-b5b6966a5267',
       arabicName: 'إجمالي رسوم طباعة الإيصال الذكي',
-      englishName: 'Smart Receipt Details',
+      englishName: 'Summary GITFees Report for smart Reciept',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[3]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[4]/div[2]/dx-date-box//input[@type='text']";
-  readonly statusDropdownXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[6]/div[2]/dx-select-box//div[contains(@class,'dx-dropdowneditor-button')]";
+    "dx-date-box input[type='text']";
+  readonly paymentMethodSelector =
+    "[data-dx_placeholder*='Choose'] ";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
+    await this.selectDropdownOption(this.paymentMethodSelector, 'All');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
@@ -228,23 +228,23 @@ export class SupportServicesTransactionsPage extends ReportViewerBasePage {
     super(page, {
       reportId: 'b541adc6-ef50-4019-aac2-32e748add600',
       arabicName: 'إجمالي بمعاملات الخدمات الداعمة',
-      englishName: 'Support Services Reports',
+      englishName: 'Dependant services revenue summary reports',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[7]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[8]/div[2]/dx-date-box//input[@type='text']";
-  readonly statusDropdownXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[11]/div[2]/dx-select-box//div[contains(@class,'dx-dropdowneditor-button')]";
+    "dx-date-box input[type='text']";
+  readonly paymentMethodSelector =
+    "[data-dx_placeholder*='Choose'] ";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
     await this.selectRadioOption('Revenue Transactions');
-    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
+    await this.selectDropdownOption(this.paymentMethodSelector, 'All', 0);
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
@@ -257,27 +257,28 @@ export class SupportServicesTransactionsPage extends ReportViewerBasePage {
 export class TotalChargesByRevenuePage extends ReportViewerBasePage {
   constructor(page: Page) {
     super(page, {
-      reportId: 'cb6cde66-44d4-4755-84b5-ec32e76c3d30',
+      reportId: 'f4bebe7a-28c3-494e-ad2a-d5bd090531b6',
       arabicName: 'إجمالي التحملات حسب جهة الإيراد',
       englishName: 'Report the total service charges for loading Transactions',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[3]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[4]/div[2]/dx-date-box//input[@type='text']";
-  readonly statusDropdownXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[7]/div[2]/dx-select-box//div[contains(@class,'dx-dropdowneditor-button')]";
+    "dx-date-box input[type='text']";
+  readonly paymentMethodSelector =
+    "[data-dx_placeholder*='Choose'] ";
   readonly feeTypeDropdownXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[6]/div[2]/dx-select-box//div[contains(@class,'dx-dropdowneditor-button')]";
+    "[data-dx_placeholder*='Choose'] ";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
-    await this.selectDropdownOption(this.feeTypeDropdownXPath, 'Revenue Fees');
+    // feeType (div[6]) is nth=0, status (div[7]) is nth=1 in DOM order
+    await this.selectDropdownOption(this.paymentMethodSelector, 'All', 1);
+    await this.selectDropdownOption(this.feeTypeDropdownXPath, 'Revenue Fees', 0);
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
   }
@@ -291,23 +292,23 @@ export class TotalTaxReportPage extends ReportViewerBasePage {
   constructor(page: Page) {
     super(page, {
       reportId: '366f4450-11cf-4b44-a5b2-66c472dbe3c1',
-      arabicName: 'إجمالي بالرسوم الضريبية',
-      englishName: 'Total Tax Report',
+      arabicName: 'Transaction Summary Tax Report',
+      englishName: 'Transaction Summary Tax Report',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[5]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[6]/div[2]/dx-date-box//input[@type='text']";
-  readonly statusDropdownXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[9]/div[2]/dx-select-box//div[contains(@class,'dx-dropdowneditor-button')]";
+    "dx-date-box input[type='text']";
+  readonly paymentMethodSelector =
+    "[data-dx_placeholder*='Choose'] ";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
+    await this.selectDropdownOption(this.paymentMethodSelector, 'All');
     await this.selectRadioOption('Revenue Transactions');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
@@ -322,23 +323,23 @@ export class TotalTransactionReportPage extends ReportViewerBasePage {
   constructor(page: Page) {
     super(page, {
       reportId: '132a8205-691c-4c1d-92f5-5c507020940e',
-      arabicName: 'إجمالي بالمعاملات',
-      englishName: 'Total Transaction Report',
+      arabicName: 'Transaction summary income report based on collecting entities',
+      englishName: 'Summary Transactions Report',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[5]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[6]/div[2]/dx-date-box//input[@type='text']";
-  readonly statusDropdownXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[10]/div[2]/dx-select-box//div[contains(@class,'dx-dropdowneditor-button')]";
+    "dx-date-box input[type='text']";
+  readonly paymentMethodSelector =
+    "[data-dx_placeholder*='Choose'] ";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
 
   async applyFilters(fromDate: string, toDate: string): Promise<void> {
-    await this.selectDropdownOption(this.statusDropdownXPath, 'Paid');
+    await this.selectDropdownOption(this.paymentMethodSelector, 'All');
     await this.selectRadioOption('Revenue Transactions');
     await this.setFromDate(fromDate, this.fromDateInputXPath);
     await this.setToDate(toDate, this.toDateInputXPath);
@@ -347,22 +348,22 @@ export class TotalTransactionReportPage extends ReportViewerBasePage {
 
 // ═══════════════════════════════════════════════════════════════════════════════════
 // 11. Transaction Payment Services Summary Transaction deposits detail Report (receivable)
-//     تقـريـر إجمالى بالمعاملات حسب جهة الامانة - المقبوضات
+//     تقـريـر Transaction summary income report based on collecting entities
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 export class DepositReceivableReportPage extends ReportViewerBasePage {
   constructor(page: Page) {
     super(page, {
       reportId: '962e3249-71d7-4dc9-973d-da2005ae7745',
-      arabicName: 'إجمالى بالمعاملات حسب جهة الامانة - المقبوضات',
-      englishName: 'Transaction Payment Services Summary - Transaction deposits detail Report (receivable)',
+      arabicName: 'Transaction summary income report based on collecting entities',
+      englishName: 'Transaction deposits detail Report (receivable)',
     });
   }
 
   readonly fromDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[7]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
   readonly toDateInputXPath =
-    "//*[@id='kt_content']/div/app-show/div/div[1]/div[8]/div[2]/dx-date-box//input[@type='text']";
+    "dx-date-box input[type='text']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }

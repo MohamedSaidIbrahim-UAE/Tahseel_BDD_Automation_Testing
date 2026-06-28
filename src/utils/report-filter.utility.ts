@@ -41,16 +41,14 @@ export class ReportFilterUtility {
    * If the calendar popup opens, we close it by clicking Submit.
    */
   async setDatePickerValue(
-    datePickerXPath: string,
+    datePickerSelector: string,
     dateValue: string,
-    options: FilterOptions = {}
+    options: FilterOptions & { nthIndex?: number } = {}
   ): Promise<void> {
-    const { timeout = 15000 } = options;
+    const { timeout = 15000, nthIndex = 0 } = options;
 
-    // Locate the input inside the dx-date-box
-    const input = this.page
-      .locator(`xpath=${datePickerXPath}`)
-      .first();
+    // Locate the input inside the dx-date-box (supports both CSS and XPath selectors)
+    const input = this.resolveLocator(datePickerSelector).nth(nthIndex);
 
     await input.waitFor({ state: 'visible', timeout });
     await input.click();
@@ -73,7 +71,7 @@ export class ReportFilterUtility {
    */
   private async dismissCalendarPopup(): Promise<void> {
     try {
-      const submitBtn = this.page.locator('.dx-popup-done').first();
+      const submitBtn = this.page.locator('[aria-label="Submit"]').first();
       if (await submitBtn.isVisible({ timeout: 1000 }).catch(() => false)) {
         await submitBtn.click();
         await this.page.waitForTimeout(300);
@@ -110,21 +108,127 @@ export class ReportFilterUtility {
     await this.page.waitForTimeout(300);
 
     // Click Submit to close the popup
-    const submitBtn = this.page.locator('.dx-popup-done').first();
+    const submitBtn = this.page.locator('[aria-label="Submit"]').first();
     if (await submitBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
       await submitBtn.click();
       await this.page.waitForTimeout(500);
     }
   }
 
-  /** Convenience: set "From" date */
-  async setFromDate(datePickerXPath: string, dateValue: string): Promise<void> {
-    await this.setDatePickerValue(datePickerXPath, dateValue);
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // Generic calendar-based date picker (regular scenario approach)
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Set the From Date by navigating the calendar popup to the target month
+   * and clicking the specific date cell.
+   *
+   * Regular-scenario workflow:
+   *   1. Click the From Date input to open the calendar popup
+   *   2. Click `a[class*="previous"]` repeatedly until the target month label is visible
+   *   3. Click `td[data-value="YYYY/MM/DD"]` to select the date
+   *   4. Click `[aria-label="Submit"]` to confirm
+   *
+   * @param datePickerSelector - CSS/XPath selector for the date-box input (first instance)
+   * @param targetDateStr      - Date in "YYYY/MM/DD" format (e.g., "2026/01/01")
+   */
+  async setFromDateByCalendarNavigation(
+    datePickerSelector: string,
+    targetDateStr: string
+  ): Promise<void> {
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const parts = targetDateStr.split('/');
+    if (parts.length !== 3) {
+      throw new Error(`setFromDateByCalendarNavigation: invalid date format "${targetDateStr}". Expected YYYY/MM/DD.`);
+    }
+    const targetMonthLabel = monthNames[parseInt(parts[1], 10) - 1];
+    const dataValue = targetDateStr; // "YYYY/MM/DD"
+
+    // Step 1: Click the From Date input to open the calendar
+    const input = this.resolveLocator(datePickerSelector).nth(0);
+    await input.waitFor({ state: 'visible', timeout: 15000 });
+    await input.click();
+    await this.page.waitForTimeout(600);
+
+    // Step 2: Navigate months backward until the target month is visible
+    const prevButton = this.page.locator('a[class*="previous"]').first();
+    const targetMonthIndicator = this.page.locator(`a[aria-label*="${targetMonthLabel}"]`).first();
+
+    let attempts = 0;
+    const maxAttempts = 24; // up to 2 years back
+    while (attempts < maxAttempts) {
+      const monthVisible = await targetMonthIndicator.isVisible({ timeout: 500 }).catch(() => false);
+      if (monthVisible) break;
+
+      await prevButton.click();
+      await this.page.waitForTimeout(250);
+      attempts++;
+    }
+
+    if (attempts >= maxAttempts) {
+      console.warn(`[FilterUtil] Could not navigate calendar to ${targetMonthLabel} after ${maxAttempts} months`);
+    }
+
+    // Step 3: Click the target date cell
+    const dateCell = this.page.locator(`td[data-value="${dataValue}"]`).first();
+    await dateCell.waitFor({ state: 'visible', timeout: 5000 });
+    await dateCell.click();
+    await this.page.waitForTimeout(300);
+
+    // Step 4: Submit the calendar selection
+    const submitBtn = this.page.locator('[aria-label="Submit"]').first();
+    if (await submitBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await submitBtn.click();
+      await this.page.waitForTimeout(400);
+    }
   }
 
-  /** Convenience: set "To" date */
-  async setToDate(datePickerXPath: string, dateValue: string): Promise<void> {
-    await this.setDatePickerValue(datePickerXPath, dateValue);
+  /**
+   * Set the To Date by clicking the "Today" button in the calendar popup.
+   *
+   * Irregular-scenario / quick-reset workflow:
+   *   1. Click the To Date input to open the calendar popup
+   *   2. Click the last `div[aria-label="Today"]` button
+   *   3. Click `[aria-label="Submit"]` to confirm
+   *
+   * @param datePickerSelector - CSS/XPath selector for the date-box input (second instance)
+   */
+  async setToDateByTodayButton(
+    datePickerSelector: string
+  ): Promise<void> {
+    // Step 1: Click the To Date input to open the calendar
+    const input = this.resolveLocator(datePickerSelector).nth(1);
+    await input.waitFor({ state: 'visible', timeout: 15000 });
+    await input.click();
+    await this.page.waitForTimeout(600);
+
+    // Step 2: Click the "Today" button (last instance)
+    const todayBtn = this.page.locator('div[aria-label="Today"]').last();
+    if (await todayBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
+      await todayBtn.click();
+      await this.page.waitForTimeout(300);
+    } else {
+      console.warn('[FilterUtil] "Today" button not found in calendar popup');
+    }
+
+    // Step 3: Submit the calendar selection
+    const submitBtn = this.page.locator('[aria-label="Submit"]').first();
+    if (await submitBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await submitBtn.click();
+      await this.page.waitForTimeout(400);
+    }
+  }
+
+  /** Convenience: set \"From\" date (first dx-date-box instance) */
+  async setFromDate(datePickerSelector: string, dateValue: string): Promise<void> {
+    await this.setDatePickerValue(datePickerSelector, dateValue, { nthIndex: 0 });
+  }
+
+  /** Convenience: set "To" date (second dx-date-box instance) */
+  async setToDate(datePickerSelector: string, dateValue: string): Promise<void> {
+    await this.setDatePickerValue(datePickerSelector, dateValue, { nthIndex: 1 });
   }
 
   // ═══════════════════════════════════════════════════════════════════════════════
@@ -136,14 +240,14 @@ export class ReportFilterUtility {
    * Opens the dropdown, waits for the overlay, clicks the matching item.
    */
   async selectDropdownOption(
-    dropdownButtonXPath: string,
+    dropdownButtonSelector: string,
     optionText: string,
-    options: FilterOptions = {}
+    options: FilterOptions & { nthIndex?: number } = {}
   ): Promise<void> {
-    const { timeout = 20000 } = options;
+    const { timeout = 20000, nthIndex = 0 } = options;
 
-    // Click the dropdown button to open
-    const dropdownBtn = this.page.locator(`xpath=${dropdownButtonXPath}`).first();
+    // Click the dropdown button to open (supports both CSS and XPath selectors)
+    const dropdownBtn = this.resolveLocator(dropdownButtonSelector).nth(nthIndex);
     await dropdownBtn.waitFor({ state: 'visible', timeout });
     await this.safeClick(dropdownBtn);
     await this.page.waitForTimeout(500);
@@ -215,7 +319,7 @@ export class ReportFilterUtility {
     const { timeout = 15000 } = options;
 
     // Step 1: Open the tag-box dropdown
-    const tagBox = this.page.locator(`xpath=${tagBoxXPath}`).first();
+    const tagBox = this.resolveLocator(tagBoxXPath).first();
     await tagBox.waitFor({ state: 'visible', timeout });
     await this.safeClick(tagBox);
     await this.page.waitForTimeout(600);
@@ -258,9 +362,9 @@ export class ReportFilterUtility {
     timeout: number = 5000
   ): Promise<void> {
     try {
-      // Strategy 1: Explicit XPath if provided
+      // Strategy 1: Explicit selector if provided
       if (okButtonXPath) {
-        const btn = this.page.locator(`xpath=${okButtonXPath}`).first();
+        const btn = this.resolveLocator(okButtonXPath).first();
         if (await btn.isVisible({ timeout: 2000 }).catch(() => false)) {
           await this.safeClick(btn);
           await this.page.waitForTimeout(500);
@@ -268,8 +372,8 @@ export class ReportFilterUtility {
         }
       }
 
-      // Strategy 2: dx-popup-done class (the standard "Submit" button in DevExtreme overlays)
-      const doneBtn = this.page.locator('.dx-popup-done').first();
+      // Strategy 2: [aria-label="Submit"] (the standard "Submit" button in DevExtreme overlays)
+      const doneBtn = this.page.locator('[aria-label="Submit"]').first();
       if (await doneBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
         await this.safeClick(doneBtn);
         await this.page.waitForTimeout(500);
@@ -301,6 +405,17 @@ export class ReportFilterUtility {
   // ═══════════════════════════════════════════════════════════════════════════════
 
   /**
+   * Resolve a selector string to a Playwright Locator.
+   * Auto-detects XPath selectors (starting with // or () vs CSS selectors.
+   */
+  private resolveLocator(selector: string): Locator {
+    if (selector.startsWith('//') || selector.startsWith('(')) {
+      return this.page.locator(`xpath=${selector}`);
+    }
+    return this.page.locator(selector);
+  }
+
+  /**
    * Click an element using JS click (avoids visibility/overlap issues).
    */
   private async safeClick(locator: Locator): Promise<void> {
@@ -322,7 +437,7 @@ export class ReportFilterUtility {
   ): Promise<void> {
     const { timeout = 10000 } = options;
 
-    const btn = this.page.locator(`xpath=${searchButtonXPath}`).first();
+    const btn = this.resolveLocator(searchButtonXPath).first();
     await btn.waitFor({ state: 'visible', timeout });
     await this.safeClick(btn);
     await this.page.waitForTimeout(500);
@@ -371,7 +486,7 @@ export class ReportFilterUtility {
   async selectSecondOptionFromDropdown(
     dropdownButtonSelector: string,
     expectedOptionText: string,
-    options: FilterOptions = {}
+    options: FilterOptions & { nthIndex?: number } = {}
   ): Promise<void> {
     await this.selectDropdownOption(dropdownButtonSelector, expectedOptionText, options);
   }
@@ -384,13 +499,13 @@ export class ReportFilterUtility {
     await this.selectRadioOption(optionText, options);
   }
 
-  /** @deprecated Use .dx-popup-done or specific button instead */
+  /** @deprecated Use [aria-label="Submit"] or specific button instead */
   async clickConfirmButton(
     confirmButtonSelector: string,
     options: FilterOptions = {}
   ): Promise<void> {
     const { timeout = 5000 } = options;
-    const btn = this.page.locator(`xpath=${confirmButtonSelector}`).first();
+    const btn = this.resolveLocator(confirmButtonSelector).first();
     await btn.waitFor({ state: 'visible', timeout }).catch(() => {});
     await this.safeClick(btn);
   }

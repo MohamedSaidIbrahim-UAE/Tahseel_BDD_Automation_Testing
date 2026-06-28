@@ -464,7 +464,7 @@ def TransactionsFeeReport(driver, from_date_arabic, to_date_arabic, folder_path)
     transactionFee_url2 = "https://tahseel.gov.ae/ManagePortal/report-show/97353334-399a-4613-9097-9cf5dc95c690"
     driver.get(transactionFee_url2)
     time.sleep(5)
-    print_arabic(f"🌐 الانتقال إلى صفحة تقرير رسوم المعاملات لكافة وسائل الدفع")
+    print_arabic(f"🌐 الانتقال إلى صفحة Payment methods detailed report")
 
     try:
         wait = WebDriverWait(driver, 15)
@@ -510,7 +510,7 @@ def UniversalPayments(driver, from_date_arabic, to_date_arabic, folder_path):
     transactionFee_url = "https://tahseel.gov.ae/ManagePortal/report-show/97353334-399a-4613-9097-9cf5dc95c690"
     driver.get(transactionFee_url)
     time.sleep(5)
-    print_arabic(f"🌐 الانتقال إلى صفحة تقرير رسوم المعاملات لكافة وسائل الدفع | طرق الدفع العالمية")
+    print_arabic(f"🌐 الانتقال إلى صفحة Payment methods detailed report | طرق الدفع العالمية")
 
     from_date_input2 = driver.find_element(By.XPATH, "//*[@id='kt_content']/div/app-show/div/div[1]/div[5]/div[2]/dx-date-box//input[@type='text']")
     to_date_input2 = driver.find_element(By.XPATH, "//*[@id='kt_content']/div/app-show/div/div[1]/div[6]/div[2]/dx-date-box//input[@type='text']")
@@ -542,7 +542,7 @@ def AmanatUniversalPayments(driver, from_date_arabic, to_date_arabic, folder_pat
     transactionFee_url = "https://tahseel.gov.ae/ManagePortal/report-show/97353334-399a-4613-9097-9cf5dc95c690"
     driver.get(transactionFee_url)
     time.sleep(5)
-    print_arabic(f"🌐 الانتقال إلى صفحة تقرير رسوم المعاملات لكافة وسائل الدفع (أمانات)")
+    print_arabic(f"🌐 الانتقال إلى صفحة Payment methods detailed report (أمانات)")
     try:
         wait = WebDriverWait(driver, 15)
         radio_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//div[@class='dx-item-content' and contains(text(), 'معاملات امانات')]/parent::div[@role='radio']")))
@@ -584,7 +584,7 @@ def TotalCreditCardReport(driver, from_date_arabic, to_date_arabic, folder_path)
     transactionFee_url = "https://tahseel.gov.ae/ManagePortal/report-show/fedfceac-2366-407e-881a-29fa1ec5365b"
     driver.get(transactionFee_url)
     time.sleep(5)
-    print_arabic(f"🌐 الانتقال لصفحة تقرير اجمالي بطاقات الائتمان")
+    print_arabic(f"🌐 الانتقال لصفحة Detailed Report of Transactions paid by Credit cards")
 
     dropdown_xpath = '//*[@id="kt_content"]/div/app-show/div/div[1]/div[8]/div[2]/dx-tag-box/div[1]/div/div[1]'
     ok_button_xpath = '/html/body/div[2]/div/div[2]/div/div[2]/div[1]/div/div'
@@ -722,7 +722,7 @@ def TotalTaxReportSection(driver, from_date_arabic, to_date_arabic, folder_path)
     transactionFee_url = "https://tahseel.gov.ae/ManagePortal/report-show/366f4450-11cf-4b44-a5b2-66c472dbe3c1"
     driver.get(transactionFee_url)
     time.sleep(5)
-    print_arabic(f"🌐 الانتقال لتقرير إجمالي بالرسوم الضريبية")
+    print_arabic(f"🌐 الانتقال لتقرير Transaction Summary Tax Report")
 
     select_second_option_from_dropdown("//*[@id='kt_content']/div/app-show/div/div[1]/div[9]/div[2]/dx-select-box//div[contains(@class,'dx-dropdowneditor-button')]", "مدفوعة")
 
@@ -769,7 +769,7 @@ def TotalTransactionReportSection(driver, from_date_arabic, to_date_arabic, fold
     transactionFee_url = "https://tahseel.gov.ae/ManagePortal/report-show/132a8205-691c-4c1d-92f5-5c507020940e"
     driver.get(transactionFee_url)
     time.sleep(5)
-    print_arabic(f"🌐 الانتقال إلى تقرير إجمالي بالمعاملات")
+    print_arabic(f"🌐 الانتقال إلى تقرير Transaction summary income report based on collecting entities")
 
     select_second_option_from_dropdown("//*[@id='kt_content']/div/app-show/div/div[1]/div[10]/div[2]/dx-select-box//div[contains(@class,'dx-dropdowneditor-button')]", "مدفوعة")
 
@@ -785,13 +785,13 @@ def TotalTransactionReportSection(driver, from_date_arabic, to_date_arabic, fold
             print_arabic(f"❌ لم يتم اختيار خيار معاملات الإيراد")
 
     except Exception as e:
-        print_arabic(f"حدثت المشكلة التالية في تقرير إجمالي بالمعاملات{e}")
+        print_arabic(f"حدثت المشكلة التالية في تقرير Transaction summary income report based on collecting entities{e}")
         
     try:
         from_date_input5 = driver.find_element(By.XPATH, "//*[@id='kt_content']/div/app-show/div/div[1]/div[5]/div[2]/dx-date-box//input[@type='text']")
         to_date_input5 = driver.find_element(By.XPATH, "//*[@id='kt_content']/div/app-show/div/div[1]/div[6]/div[2]/dx-date-box//input[@type='text']")
     except Exception as e:
-        print_arabic(f"لم يتم العثور على حقول التواريخ في تقرير إجمالي بالمعاملات{e}")
+        print_arabic(f"لم يتم العثور على حقول التواريخ في تقرير Transaction summary income report based on collecting entities{e}")
 
     from_date_input5.click()
     from_date_input5.clear()
@@ -804,18 +804,18 @@ def TotalTransactionReportSection(driver, from_date_arabic, to_date_arabic, fold
     time.sleep(0.5)
     to_date_input5.send_keys(to_date_arabic)
     to_date_input5.send_keys(Keys.TAB)
-    print_arabic(f"✅ تم ضبط تواريخ البحث في تقرير إجمالي بالمعاملات")
+    print_arabic(f"✅ تم ضبط تواريخ البحث في تقرير Transaction summary income report based on collecting entities")
         
     submit_button5 = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="kt_content"]/div/app-show/div/div[2]/button')))
     driver.execute_script("arguments[0].click();", submit_button5)
-    print_arabic(f"✅ تم الضغط على زر عرض التقرير في تقرير إجمالي بالمعاملات")
+    print_arabic(f"✅ تم الضغط على زر عرض التقرير في تقرير Transaction summary income report based on collecting entities")
     export_report_to_excel_fixed(folder_path)
 
 def TransactionPaymentServicesSummaryDepositReceivableReportSection(driver, from_date_arabic, to_date_arabic, folder_path):
     transactionFee_url = "https://tahseel.gov.ae/ManagePortal/report-show/962e3249-71d7-4dc9-973d-da2005ae7745"
     driver.get(transactionFee_url)
     time.sleep(5)
-    print_arabic(f"🌐 الانتقال إلى تقـريـر إجمالى بالمعاملات حسب جهة الامانة - المقبوضات")                                                                         
+    print_arabic(f"🌐 الانتقال إلى تقـريـر Transaction summary income report based on collecting entities")                                                                         
         
         
     try:
@@ -823,7 +823,7 @@ def TransactionPaymentServicesSummaryDepositReceivableReportSection(driver, from
         to_date_input = driver.find_element(By.XPATH, "//*[@id='kt_content']/div/app-show/div/div[1]/div[8]/div[2]/dx-date-box//input[@type='text']")
                                                        
     except Exception as e:
-        print_arabic(f"لم يتم العثور على حقول التواريخ في تقرير إجمالى بالمعاملات حسب جهة الامانة - المقبوضات{e}")
+        print_arabic(f"لم يتم العثور على حقول التواريخ في تقرير Transaction summary income report based on collecting entities{e}")
 
     from_date_input.click()
     from_date_input.clear()
@@ -836,11 +836,11 @@ def TransactionPaymentServicesSummaryDepositReceivableReportSection(driver, from
     time.sleep(0.5)
     to_date_input.send_keys(to_date_arabic)
     to_date_input.send_keys(Keys.TAB)
-    print_arabic(f"✅ تم ضبط تواريخ البحث في تقرير إجمالى بالمعاملات حسب جهة الامانة - المقبوضات")
+    print_arabic(f"✅ تم ضبط تواريخ البحث في تقرير Transaction summary income report based on collecting entities")
         
     submit_button5 = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="kt_content"]/div/app-show/div/div[2]/button')))
     driver.execute_script("arguments[0].click();", submit_button5)
-    print_arabic(f"✅ تم الضغط على زر عرض التقرير في تقرير إجمالى بالمعاملات حسب جهة الامانة - المقبوضات")
+    print_arabic(f"✅ تم الضغط على زر عرض التقرير في تقرير Transaction summary income report based on collecting entities")
     export_report_to_excel_fixed(folder_path)
 
 def run_total_report_with_retry(expected_name, folder_path, report_func, retries=3, *args, **kwargs):
@@ -1274,10 +1274,10 @@ while True:
             ################################################################################################################################
 
              ################################################################################
-            # تقرير رسوم المعاملات لكافة وسائل الدفع (أمانات)
+            # Payment methods detailed report (أمانات)
             # run_total_report_with_retry("TransactionFeeReportforAllPaymentMethods(Deposit).xlsx",folder_path,AmanatUniversalPayments,3,driver, from_date_arabic, to_date_arabic, folder_path)
 
-            #تقـريـر إجمالى بالمعاملات حسب جهة الامانة - المقبوضات
+            #تقـريـر Transaction summary income report based on collecting entities
             # Total Report of Transactions by Revenue Source - Receivables Section
             # ==========================
 
@@ -1289,19 +1289,19 @@ while True:
 
             # run_total_report_with_retry("transactionpaymentservicessummaryreceivable_sec.xlsx",folder_path,TotalReportOfTransactionsbyRevenueSourceRec,3,driver, from_date_arabic, to_date_arabic, folder_path)
             ################################################################################
-            # تقرير رسوم المعاملات لكافة وسائل الدفع
+            # Payment methods detailed report
             # Transactions Fee Report Section
             # ==========================
             # run_total_report_with_retry("TransactionFeesForAllPaymentMethods.xlsx",folder_path,TransactionsFeeReport(driver,from_date_arabic,to_date_arabic,folder_path))
             # run_total_report_with_retry("TransactionFeesForAllPaymentMethods.xlsx",folder_path,TransactionsFeeReport,3,driver, from_date_arabic, to_date_arabic, folder_path)
 
             ################################################################################
-            # تقرير رسوم المعاملات لكافة وسائل الدفع (الدفع بالطرق العالمية)
+            # Payment methods detailed report (الدفع بالطرق العالمية)
             # Universal Payments
             # run_total_report_with_retry("BankPayments.xlsx",folder_path,UniversalPayments,3,driver, from_date_arabic, to_date_arabic, folder_path)
 
             ################################################################################
-            # تقرير اجمالي بطاقات الائتمان
+            # Detailed Report of Transactions paid by Credit cards
             # ShjCreditCardSummery.xlsx
             # ==========================
             # run_total_report_with_retry("ShjCreditCardSummery.xlsx",folder_path,TotalCreditCardReport,3,driver, from_date_arabic, to_date_arabic, folder_path)
@@ -1328,14 +1328,14 @@ while True:
 
             ################################################################################
             # ==========================
-            #تقـريـر إجمالي بالرسوم الضريبية
+            #تقـريـر Transaction Summary Tax Report
             #Total tax report Section
             # ==========================
             # run_total_report_with_retry("TRANSACTIONTAXSUMARY.xlsx",folder_path,TotalTaxReportSection,3,driver, from_date_arabic, to_date_arabic, folder_path)
             
             ################################################################################
             # ==========================
-            # تقرير إجمالي بالمعاملات
+            # تقرير Transaction summary income report based on collecting entities
             # Total Transaction Report Section
             # ==========================
             # run_total_report_with_retry("ShjGovTransSummary_sec.xlsx",folder_path,TotalTransactionReportSection,3,driver, from_date_arabic, to_date_arabic, folder_path)
@@ -1343,15 +1343,15 @@ while True:
         ##############################################################################################################################
         # region Getting Values From Excel Files Section
         ###############################################################################################################################
-            # تقـريـر  إجمالى بالمعاملات حسب جهة الامانة - المقبوضات
+            # تقـريـر  Transaction summary income report based on collecting entities
             # transactionpaymentservicessummaryDepositreceivable
             FileName = "transactionpaymentservicessummaryDepositreceivable"
             latest_file_transactionpaymentservicessummaryDepositreceivableFileName = get_latest_excel_file(folder_path, FileName)
             sheet = 'transactionpaymentservicessumma'
 
             last_FeeValue_Depositreceivable = get_last_value_in_column(latest_file_transactionpaymentservicessummaryDepositreceivableFileName, sheet, ['T','U','V','W','X','Y','Z'])
-            print_arabic(f"إجمالي قيمة الرسوم في تقرير إجمالي بالمعاملات حسب جهة الأمانة - المقبوضات:  {last_FeeValue_Depositreceivable}")
-            SaveToExcel(f"إجمالي قيمة الرسوم في تقرير إجمالي بالمعاملات حسب جهة الأمانة - المقبوضات" , latest_file_transactionpaymentservicessummaryDepositreceivableFileName,folder_path)
+            print_arabic(f"إجمالي قيمة الرسوم في تقرير Transaction summary income report based on collecting entities حسب جهة الأمانة - المقبوضات:  {last_FeeValue_Depositreceivable}")
+            SaveToExcel(f"إجمالي قيمة الرسوم في تقرير Transaction summary income report based on collecting entities حسب جهة الأمانة - المقبوضات" , latest_file_transactionpaymentservicessummaryDepositreceivableFileName,folder_path)
             #############################################################
             #تقـريـر  إجمالى بالمعاملات حسب جهة الايراد - المقبوضات    
             #transactionpaymentservicessummaryreceivable_sec   
@@ -1409,8 +1409,8 @@ while True:
             SaveToExcel(f"إجمالي الرسوم البنكية - ضريبة تحمل الرسوم البنكية في تقرير كافة وسائل الدفع",last_BankFees_VAT,folder_path)
 
             Service_Vat_Tahseel_Share = get_last_value_in_column(latest_file_TransactionFeesForAllPaymentMethodsFileName, sheet,"AE")
-            print_arabic(f"إجمالي ضريبة تحصيل في تقرير رسوم المعاملات لكافة وسائل الدفع : {Service_Vat_Tahseel_Share}")
-            SaveToExcel(f"إجمالي ضريبة تحصيل في تقرير رسوم المعاملات لكافة وسائل الدفع",Service_Vat_Tahseel_Share,folder_path)
+            print_arabic(f"إجمالي ضريبة تحصيل في Payment methods detailed report : {Service_Vat_Tahseel_Share}")
+            SaveToExcel(f"إجمالي ضريبة تحصيل في Payment methods detailed report",Service_Vat_Tahseel_Share,folder_path)
 
             Resacrch_Fees = get_last_value_in_column(latest_file_TransactionFeesForAllPaymentMethodsFileName, sheet,"U")
             print_arabic(f"إجمالي رسوم البحث العلمي من تقرير كافة وسائل الدفع: {Resacrch_Fees}")
@@ -1711,8 +1711,8 @@ while True:
             compare_values("إجمالي رسوم البنك ضريبة المخرجات في تقرير معاملات بطاقات الائتمان",Uni_CreditRepprt_OutputTax,"إجمالي ض.تحمل الرسوم البنكية + ضريبة المصاريف البنكية في تقرير كافة وسائل الدفع ( المحافظ العالمية)",Universal_BankVatFee)
             SaveToExcel("الفرق بين إجمالي ض.تحمل الرسوم البنكية + ضريبة المصاريف البنكية في تقرير كافة وسائل الدفع ( المحافظ العالمية) -  إجمالي رسوم البنك ضريبة المخرجات في تقرير معاملات بطاقات الائتمان",Universal_BankVatFee-Uni_CreditRepprt_OutputTax,folder_path)
 
-            compare_values("إجمالي قيمة الرسوم في تقرير إجمالي بالمعاملات حسب جهة الأمانة - المقبوضات",last_FeeValue_Depositreceivable,"إجمالي رسوم المعاملة في تقرير كافة وسائل الدفع - (أمانات)",last_FeeValue_AllPaymentMethods_Deposit)
-            SaveToExcel("إجمالي قيمة الرسوم في تقرير إجمالي بالمعاملات حسب جهة الأمانة - المقبوضات - إجمالي رسوم المعاملة في تقرير كافة وسائل الدفع - (أمانات)",last_FeeValue_Depositreceivable-last_FeeValue_AllPaymentMethods_Deposit,folder_path)
+            compare_values("إجمالي قيمة الرسوم في تقرير Transaction summary income report based on collecting entities حسب جهة الأمانة - المقبوضات",last_FeeValue_Depositreceivable,"إجمالي رسوم المعاملة في تقرير كافة وسائل الدفع - (أمانات)",last_FeeValue_AllPaymentMethods_Deposit)
+            SaveToExcel("إجمالي قيمة الرسوم في تقرير Transaction summary income report based on collecting entities حسب جهة الأمانة - المقبوضات - إجمالي رسوم المعاملة في تقرير كافة وسائل الدفع - (أمانات)",last_FeeValue_Depositreceivable-last_FeeValue_AllPaymentMethods_Deposit,folder_path)
 
 
             compare_values("إجمالي صافي الرسوم في تقرير كافة وسائل الدفع (المحافظ العالمية)",bankPayments_NetFees,"إجمالي المالية في تقرير معاملات بطاقات الائتمان ",Uni_SFDTotal)

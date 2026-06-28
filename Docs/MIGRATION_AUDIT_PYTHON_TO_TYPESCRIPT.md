@@ -565,7 +565,7 @@ Coverage:                11/11 Python functions (100%)
 ### By Report Type
 
 **Financial Reports (3):**
-- Transaction Fees for All Payment Methods
+- Transaction Fees For All Payment Methods
 - Bank Settlement Reports (6 variants)
 - Credit Card Aggregated
 
