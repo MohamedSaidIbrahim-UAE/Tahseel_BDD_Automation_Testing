@@ -21,22 +21,22 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
   private readonly moduleArabicName: string;
 
   // ── Report-specific filter selectors ────────────────────────────────────
-  readonly fromDateInput = 'input[aria-label*="From"], input[placeholder*="From"], input[name*="from"], input[id*="from"], input[type="date"]:first-of-type';
-  readonly toDateInput = 'input[aria-label*="To"], input[placeholder*="To"], input[name*="to"], input[id*="to"], input[type="date"]:last-of-type';
-  readonly entityFilterDropdown = 'select[aria-label*="Entity"], div[role="combobox"][aria-label*="Entity"], [data-component="select"][aria-label*="Entity"], dx-select-box[aria-label*="Entity"], select[name*="entity"]';
-  readonly showReportButton = 'button:has-text("Show Report"), button:has-text("Display"), button:has-text("Generate"), button:has-text("View"), button:has-text("Search"), button:has-text("Find"), button[aria-label*="Search"), button[aria-label*="Show"), button[aria-label*="Report"), button[type="submit"], input[type="submit"], dx-button';
-  readonly clearFilterButton = 'button:has-text("Clear"), button:has-text("Reset"), button[aria-label*="Clear"), button[aria-label*="Reset"]';
+  readonly fromDateInput = 'input[type="date"]:first-of-type, input[aria-label*="From"], input[placeholder*="From"], input[name*="from"], input[id*="from"]';
+  readonly toDateInput = 'input[type="date"]:last-of-type, input[aria-label*="To"], input[placeholder*="To"], input[name*="to"], input[id*="to"]';
+  readonly entityFilterDropdown = 'dx-select-box[aria-label*="Entity"], select[name*="entity"], select[aria-label*="Entity"], div[role="combobox"][aria-label*="Entity"], [data-component="select"][aria-label*="Entity"]';
+  readonly showReportButton = 'button[type="submit"],button:has-text("View Report"), button:has-text("Show Report"), button:has-text("Display"), button:has-text("Generate"), button:has-text("View"), button:has-text("Search"), button:has-text("Find"), button[aria-label*="Search"), button[aria-label*="Show"), button[aria-label*="Report"), input[type="submit"], dx-button';
+  readonly clearFilterButton = 'button:has-text("Clear"), button:has-text("Reset"), button[aria-label*="Clear"), button[aria-label*="Reset"], button:nth-of-type(2)';
 
   // ── Report table selectors ──────────────────────────────────────────────
   readonly reportTable = 'dx-data-grid, table[role="grid"], table.report-table, [role="grid"], table[class*="table"], table[class*="data"], table[class*="grid"], .dx-datagrid, .report-table, .data-table, .grid-container, [class*="grid-wrapper"], table, [class*="dx-grid"]';
-  readonly revenueEntityColumn = 'td:has-text("Revenue Entity"), td:has-text("Entity"), td:has-text("Department"), [data-field="revenueEntity"], [class*="entity"], td[data-field*="entity"]';
-  readonly transactionCountColumn = 'td:has-text("Transaction Count"), td:has-text("Count"), td:has-text("Transactions"), td:has-text("Total Txns"), [data-field="count"], [data-field="transactionCount"], [data-field*="count"]';
-  readonly totalAmountColumn = 'td:has-text("Total Amount"), td:has-text("Amount"), td:has-text("Total"), td:has-text("Total Value"), [data-field="amount"], [data-field="totalAmount"], [data-field*="amount"], td[align="right"]';
-  readonly grandTotalRow = 'tr:has-text("Grand Total"), tr:has-text("Total"), tr[class*="grand-total"], tr[class*="summary"], tr[class*="footer"], tr[class*="dx-row-focused"]';
-  readonly grandTotalAmount = 'span:has-text("Grand Total") ~ span, td:has-text("Grand Total") ~ td, td[class*="grand-total"]';
+  readonly revenueEntityColumn = '[data-field="revenueEntity"], td:has-text("Revenue Entity"), td:has-text("Entity"), td:has-text("Department"), [class*="entity"], td[data-field*="entity"]';
+  readonly transactionCountColumn = '[data-field="count"], td:has-text("Transaction Count"), td:has-text("Count"), td:has-text("Transactions"), td:has-text("Total Txns"), [data-field="transactionCount"], [data-field*="count"]';
+  readonly totalAmountColumn = '[data-field="amount"], td:has-text("Total Amount"), td:has-text("Amount"), td:has-text("Total"), td:has-text("Total Value"), [data-field="totalAmount"], [data-field*="amount"], td[align="right"]';
+  readonly grandTotalRow = '[role="row"][class*="summary"], tr:has-text("Grand Total"), tr:has-text("Total"), tr[class*="grand-total"], tr[class*="summary"], tr[class*="footer"], tr[class*="dx-row-focused"]';
+  readonly grandTotalAmount = '[data-field="amount"]:last-child, span:has-text("Grand Total") ~ span, td:has-text("Grand Total") ~ td, td[class*="grand-total"]';
 
   // ── Empty/No-data states ────────────────────────────────────────────────
-  readonly noDataMessage = 'span:has-text("No data"), span:has-text("No records"), .empty-state, .no-records-message, .dx-empty-row, [class*="no-data"], [class*="empty"]';
+  readonly noDataMessage = '.dx-empty-row, span:has-text("No data"), span:has-text("No records"), .empty-state, .no-records-message, [class*="no-data"], [class*="empty"]';
 
   // ── Export controls ─────────────────────────────────────────────────────
   readonly exportPdfOption = 'button:has-text("PDF"), span:has-text("PDF")';
@@ -254,7 +254,7 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
   private async clickParentAnchor(span: ReturnType<typeof this.page.locator>): Promise<void> {
     const link = span.locator('xpath=ancestor::a[1]');
     await link.waitFor({ state: 'visible', timeout: 5000 });
-    await link.scrollIntoViewIfNeeded().catch(() => {});
+    await link.scrollIntoViewIfNeeded().catch(() => { });
     await link.click();
   }
 
@@ -505,7 +505,7 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
     await newPage.waitForTimeout(3000);
 
     // Close the old filter page (no longer needed)
-    await this.page.close().catch(() => {});
+    await this.page.close().catch(() => { });
 
     // Switch internal page reference to the new tab
     this.page = newPage;
@@ -530,6 +530,8 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
     const tier1Selectors = [
       'button:has-text("Show Report")',
       'button[aria-label="Show Report"]',
+      'button:has-text("View Report")',
+      'button[aria-label="View Report"]',
       'button.btn-report',
     ];
 
@@ -537,6 +539,8 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
     const tier2Selectors = [
       'dx-button:has-text("Show Report")',
       '[dx-button]:has-text("Show Report")',
+      'dx-button:has-text("View Report")',
+      '[dx-button]:has-text("View Report")',
       'button[class*="dx-button"]',
     ];
 
@@ -544,6 +548,7 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
     const tier3Selectors = [
       'button[type="submit"]',
       '[role="button"]:has-text("Show")',
+      '[role="button"]:has-text("View")',
       'button:has-text("Search")',
       'button[aria-label*="Report"]',
       '[role="button"]:has-text("Report")',
@@ -552,6 +557,7 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
     // Tier 4: Alternative frameworks & fallbacks
     const tier4Selectors = [
       'input[type="submit"][value*="Show"]',
+      'input[type="submit"][value*="View"]',
       '.search-button',
       '.show-report-button',
       'button:visible',
@@ -572,7 +578,7 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
               const isDisabled = await btn.isDisabled().catch(() => false);
 
               if (isVisible && !isDisabled) {
-                await btn.scrollIntoViewIfNeeded().catch(() => {});
+                await btn.scrollIntoViewIfNeeded().catch(() => { });
                 await btn.click({ timeout: 2000 });
                 return true;
               }
@@ -588,110 +594,60 @@ export class TotalTransactionsRevenueEntityPage extends BaseListPage {
 
     return false;
   }
-
   /**
    * Wait for the report table/content to render after clicking Show Report.
-   * Uses progressive selector strategies with generous timeouts for stage.
+   * Optimized for DevExtreme framework.
    */
   private async waitForReportToRender(): Promise<void> {
-    // Framework-specific selectors (try first — likely DevExtreme)
-    const frameworkSelectors = [
+    // Primary: DevExtreme grid (most likely)
+    const primarySelectors = [
       'dx-data-grid',
       '.dx-datagrid-rowsview',
-      '.dx-grid-container',
-      '[class*="dx-datagrid"]',
     ];
 
-    // Standard HTML with semantic roles
-    const semanticSelectors = [
+    // Secondary: Standard HTML table with role
+    const secondarySelectors = [
       '[role="grid"]',
       'table[role="grid"]',
-      'table[role="table"]',
     ];
 
-    // Class-based patterns
-    const classSelectors = [
-      '.data-table',
-      '.report-table',
-      '.grid-container',
-      '[class*="datagrid"]',
-      '.report-container',
-    ];
-
-    // Generic HTML selectors (fallback)
-    const genericSelectors = [
+    // Fallback: Generic table
+    const fallbackSelectors = [
       'table',
-      'div[role="grid"]',
-      '[role="presentation"] table',
-      '.table-wrapper table',
       'tbody',
     ];
 
-    const allSelectors = [...frameworkSelectors, ...semanticSelectors, ...classSelectors, ...genericSelectors];
+    const allSelectors = [...primarySelectors, ...secondarySelectors, ...fallbackSelectors];
 
-    let tableVisible = false;
-    let lastError: Error | null = null;
+    let foundVisible = false;
 
     for (const selector of allSelectors) {
       try {
         const element = this.page.locator(selector).first();
-        const isVisible = await element.isVisible({ timeout: 3000 }).catch(() => false);
+        const isVisible = await Promise.race([
+          element.isVisible({ timeout: 3000 }).then(() => true),
+          this.page.waitForTimeout(3000).then(() => false)
+        ]).catch(() => false);
 
         if (isVisible) {
-          // Give the table time to load its data rows
           await this.page.waitForTimeout(500);
-          tableVisible = true;
+          foundVisible = true;
           break;
         }
       } catch (error) {
-        lastError = error as Error;
         continue;
       }
     }
 
-    if (!tableVisible) {
-      // Check for error messages
-      try {
-        const errorElement = await this.page.locator('[class*="error"], [role="alert"], .error-message, .alert-danger')
-          .first()
-          .isVisible({ timeout: 500 })
-          .catch(() => false);
+    if (!foundVisible) {
+      // Check for no-data message
+      const noDataVisible = await this.page.locator(this.noDataMessage).first()
+        .isVisible({ timeout: 1000 })
+        .catch(() => false);
 
-        if (errorElement) {
-          const errorText = await this.page.locator('[class*="error"], [role="alert"], .error-message, .alert-danger')
-            .first()
-            .textContent()
-            .catch(() => 'Unknown error');
-          throw new Error(`Report error: ${errorText}`);
-        }
-      } catch (error) {
-        if ((error as Error).message.startsWith('Report error:')) throw error;
+      if (!noDataVisible) {
+        throw new Error('Report did not render: No data grid or table found');
       }
-
-      // Check for no-data/empty state (acceptable)
-      try {
-        const noDataVisible = await this.page.locator(this.noDataMessage)
-          .isVisible({ timeout: 500 })
-          .catch(() => false);
-
-        if (noDataVisible) return; // No data is valid
-      } catch {
-        // Continue
-      }
-
-      // Check if page has any content at all (fallback)
-      try {
-        const bodyContent = await this.page.locator('body').textContent().catch(() => '');
-        if (bodyContent && bodyContent.length > 100) return; // Page has content
-      } catch {
-        // Continue
-      }
-
-      throw new Error(
-        `Report table not found within timeout. ` +
-        `Tried ${allSelectors.length} selector patterns. ` +
-        `Last error: ${lastError?.message || 'None'}`
-      );
     }
   }
 

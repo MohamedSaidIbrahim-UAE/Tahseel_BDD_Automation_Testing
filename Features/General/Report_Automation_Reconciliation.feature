@@ -158,42 +158,51 @@ Feature: Report Automation and Cross-Report Reconciliation
     Then the Excel file should be downloaded successfully
 
   # ═══════════════════════════════════════════════════════════════════════════════
-  # SCENARIO 16: Cross-Report Reconciliation
+  # SCENARIO 16: Cross-Report Financial Reconciliation
+  # ═══════════════════════════════════════════════════════════════════════════════
+  # Purpose: Validates financial data consistency across all 11 exported reports
+  # by extracting and comparing key totals with acceptable tolerance levels
   # ═══════════════════════════════════════════════════════════════════════════════
 
-  @reconciliation @full-reconciliation
-  Scenario: Reconcile values across all exported reports
-    Given all 11 reports have been exported to Excel
+  @reconciliation @audit @financial-validation
+  Scenario: Reconcile financial totals across all exported reports with tolerance validation
+    Given the user has completed all 11 report exports from scenarios 1-15
+    And the Excel files are available in the download folder with standard naming conventions
 
-    When the user extracts values from the "Revenue Receivable" report
-    And the user extracts values from the "All Payment Methods" report
-    And the user extracts values from the "Universal Payments" report
-    And the user extracts values from the "Credit Card Summary" report
-    And the user extracts values from the "Government Transactions Summary" report
-    And the user extracts values from the "Support Services" report
-    And the user extracts values from the "Tax Summary" report
-    And the user extracts values from the "Deposit All Payment Methods" report
-    And the user extracts values from the "Incurred Fees" report
-    And the user extracts values from the "Smart Receipt" report
-    And the user extracts values from the "Transaction deposits detail Report (receivable)" report
-    And the user compares transaction fee totals across reports
-    And the user compares VAT totals across reports
-    And the user compares service fee totals across reports
-    And the user compares bank fee totals across reports
-    And the user compares universal payment method totals across reports
-    And the user calculates total fee coverage
-    And the user verifies the receipt document value
+    When the user extracts transaction fee totals from all reports
+    And the user extracts VAT totals from all reports
+    And the user extracts service fee totals from all reports
+    And the user extracts bank fee totals from all reports
+    And the user extracts universal payment method totals from all reports
+    And the user calculates the total fee coverage amount
 
-    Then the reconciliation summary is saved to "output.xlsx"
-    And all compared values should be within tolerance
+    Then the transaction fee totals should match within tolerance across all reports
+    And the VAT totals should be consistent within tolerance across all reports
+    And the service fee totals should be consistent within tolerance across all reports
+    And the bank fee totals should be consistent within tolerance across all reports
+    And the universal payment method totals should be consistent across reports
+    And the total fee coverage should represent 100% of reported transactions
+    And the reconciliation summary should be generated and saved to "reconciliation_output_{timestamp}.xlsx"
+    And reconciliation status should be logged with audit trail
 
   # ═══════════════════════════════════════════════════════════════════════════════
-  # SCENARIO 17: End-to-End Full Workflow
+  # SCENARIO 17: End-to-End Automated Report Workflow with Integrated Reconciliation
+  # ═══════════════════════════════════════════════════════════════════════════════
+  # Purpose: Executes the complete workflow in one test run - all exports followed
+  # by automated reconciliation, demonstrating full production-grade process
   # ═══════════════════════════════════════════════════════════════════════════════
 
-  @e2e @smoke
-  Scenario: End-to-end report automation and reconciliation workflow
-    When the user exports all 11 reports for the date range "01/06/2026" to "30/06/2026"
-    And the user performs full cross-report reconciliation
-    Then the reconciliation summary should be saved successfully
-    And all cross-report comparisons should be consistent
+  @e2e @smoke @production-workflow @ci
+  Scenario: Complete end-to-end report generation and automated reconciliation workflow
+    When the user executes the full export workflow for all 11 reports
+    And the user applies the date range "01/06/2026" to "30/06/2026" to all report exports
+    And the user initiates automated cross-report reconciliation on all exported files
+
+    Then all 11 reports should be exported successfully to Excel format
+    And each report file should be named according to standard conventions
+    And each exported file should contain valid data with no errors or warnings
+    And the cross-report reconciliation should complete without exceptions
+    And all extracted values should be within acceptable tolerance thresholds
+    And the reconciliation audit log should document all validation steps performed
+    And the final reconciliation summary should be saved with timestamp and audit metadata
+    And the workflow should complete with zero data inconsistencies reported

@@ -60,10 +60,7 @@ Then('the total transaction amount should be {string}', async function (expected
   await steps.verifyTotalAmount(expectedAmount);
 });
 
-Then('the report can be exported to Excel', async function () {
-  await steps.reportCanBeExportedToExcel();
-});
-
-Then('the report displays {string}', async function (expectedContent: string) {
-  await steps.reportDisplays(expectedContent);
-});
+// NOTE: Removed duplicate step definitions
+// "the report can be exported to Excel" - defined in shared.steps.ts
+// "the report displays {string}" - defined in shared.steps.ts
+// Using shared definitions to avoid ambiguous step matches
