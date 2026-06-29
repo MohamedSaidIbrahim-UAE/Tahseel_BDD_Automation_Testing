@@ -10,12 +10,12 @@ Feature: Tax Report – Transaction Summary Tax Report by Revenue Entity
   Scenario: Aggregated VAT summary per entity over a month
     Given the following transactions are posted across June 2026:
       | Entity    | Number of Txns | Total Base Amount | Taxable? |
-      | Entity-A  | 50             | 50,000            | Yes      |
+      | Civil Aviation  | 50             | 50,000            | Yes      |
       | Entity-B  | 30             | 30,000            | No       |
     When the user generates the "Transaction Summary Tax Report - Revenue" for the month of June 2026
     Then the report shows:
       | Entity    | Total Base Amount | Total VAT | Taxable Count |
-      | Entity-A  | 50,000.00         | 2,500.00  | 50             |
+      | Civil Aviation  | 50,000.00         | 2,500.00  | 50             |
       | Entity-B  | 30,000.00         | 0.00      | 0              |
     And the grand total VAT is 2,500.00 AED
 

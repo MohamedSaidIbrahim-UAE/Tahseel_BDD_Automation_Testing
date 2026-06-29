@@ -4,14 +4,14 @@ Feature: Deposits Details Report
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And deposit accounts "DEP-D1" (Entity-A, Active, balance 20000) and "DEP-D2" (Entity-B, Active, balance 15000) exist
+    And deposit accounts "DEP-D1" (Civil Aviation, Active, balance 20000) and "DEP-D2" (Entity-B, Active, balance 15000) exist
 
   @positive @e2e
   Scenario: Detailed account listing
     When the user runs the "Deposits Details Report"
     Then the report lists both accounts with:
       | Account  | Entity   | Balance | Status  |
-      | DEP-D1   | Entity-A | 20000   | Active  |
+      | DEP-D1   | Civil Aviation | 20000   | Active  |
       | DEP-D2   | Entity-B | 15000   | Active  |
     And the grand total balance is 35000 AED
 
@@ -28,5 +28,5 @@ Feature: Deposits Details Report
 
   @negative @rbac
   Scenario: Entity-restricted user only sees own entity accounts
-    Given the user is "Entity-A Accountant"
-    When the report is viewed, only Entity-A accounts appear
+    Given the user is "Civil Aviation Accountant"
+    When the report is viewed, only Civil Aviation accounts appear

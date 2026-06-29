@@ -4,13 +4,13 @@ Feature: Transaction Deposits Detail Report (Receivable)
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And deposit account "DEP-REC-01" for Entity-A is open
+    And deposit account "DEP-REC-01" for Civil Aviation is open
 
   @positive @e2e
   Scenario: Deposit receipt listing
     Given the following deposit receipts are recorded:
       | Deposit ID | Amount | Entity   | Date       |
-      | D100       | 5000   | Entity-A | 2026-06-10 |
+      | D100       | 5000   | Civil Aviation | 2026-06-10 |
       | D101       | 3000   | Entity-B | 2026-06-10 |
     When the user runs the "Transaction deposits detail Report (receivable)" for today
     Then the report shows both receipts with correct amounts, dates, and entities
@@ -18,7 +18,7 @@ Feature: Transaction Deposits Detail Report (Receivable)
 
   @positive @filter
   Scenario: Filter by entity
-    When the user filters by Entity-A
+    When the user filters by Civil Aviation
     Then only D100 is displayed
 
   @negative

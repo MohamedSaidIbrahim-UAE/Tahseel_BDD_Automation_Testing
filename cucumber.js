@@ -53,5 +53,21 @@ module.exports = {
     ],
     parallel: 2,
     timeout: 60000
+  },
+  'report-automation': {
+    require: [
+      'src/steps/hooks.ts',
+      'src/steps/shared.steps.ts',
+      'src/steps/reports/report-automation-reconciliation.steps.ts',
+      'src/steps/core/**/*.steps.ts'
+    ],
+    requireModule: ['ts-node/register'],
+    format: [
+      'progress-bar',
+      'html:cucumber-report-automation.html',
+      'json:allure-results/automation-results.json'
+    ],
+    parallel: 1,
+    timeout: 600000
   }
 };

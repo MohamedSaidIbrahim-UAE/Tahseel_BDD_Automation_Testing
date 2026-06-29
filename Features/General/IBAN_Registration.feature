@@ -5,7 +5,7 @@ Feature: IBAN Registration
 
   @positive
   Scenario: Register a new IBAN
-    When the user submits a request with valid IBAN "AE070331234567890123456" for Entity-A
+    When the user submits a request with valid IBAN "AE070331234567890123456" for Civil Aviation
     And the request is approved
     Then the IBAN is linked to the entity and appears in the "IBAN Registration Requests" list
 

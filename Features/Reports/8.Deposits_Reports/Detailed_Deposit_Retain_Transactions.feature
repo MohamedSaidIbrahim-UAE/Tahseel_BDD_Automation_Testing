@@ -4,7 +4,7 @@ Feature: Detailed Deposit Retain Transactions
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And a deposit account "DEP-RET-01" belonging to Entity-A has a balance of 10000 AED
+    And a deposit account "DEP-RET-01" belonging to Civil Aviation has a balance of 10000 AED
     And a retain reason "Violation of terms" is configured
 
   @positive @e2e

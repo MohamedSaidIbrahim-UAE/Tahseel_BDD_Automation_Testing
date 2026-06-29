@@ -10,9 +10,9 @@ Feature: Tax Report – Transaction Summary Tax Report
   Scenario: Aggregate VAT summary for a day with mixed transactions
     Given the following transactions are posted on "2026-06-09":
       | Transaction | Service   | Base Amount | VAT Rate | Entity    |
-      | TXN-101     | SRV-100   | 1000        | 5%       | Entity-A  |
-      | TXN-102     | SRV-100   | 2000        | 5%       | Entity-A  |
-      | TXN-103     | SRV-200   | 500         | 0%       | Entity-A  |
+      | TXN-101     | SRV-100   | 1000        | 5%       | Civil Aviation  |
+      | TXN-102     | SRV-100   | 2000        | 5%       | Civil Aviation  |
+      | TXN-103     | SRV-200   | 500         | 0%       | Civil Aviation  |
     When the user generates the "Transaction Summary Tax Report" for "2026-06-09"
     Then the report shows:
       | Tax Rate | Number of Transactions | Total Base Amount | Total VAT |

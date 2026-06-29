@@ -4,16 +4,16 @@ Feature: Entities Deposits – Summary Report
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And entities "Entity-A" and "Entity-B" are configured to make deposits
+    And entities "Civil Aviation" and "Entity-B" are configured to make deposits
 
   @positive @e2e
   Scenario: Multiple entity deposits aggregated
-    Given Entity-A deposits 50000 AED on 2026-06-10
+    Given Civil Aviation deposits 50000 AED on 2026-06-10
     And Entity-B deposits 30000 AED on 2026-06-10
     When the user runs the "Entities Deposits - Summary Report" for today
     Then the report shows:
       | Entity   | Deposit Amount |
-      | Entity-A | 50000.00       |
+      | Civil Aviation | 50000.00       |
       | Entity-B | 30000.00       |
     And the grand total deposit is 80000.00 AED
 
@@ -24,5 +24,5 @@ Feature: Entities Deposits – Summary Report
 
   @negative @rbac
   Scenario: Entity‑restricted user only sees own entity deposits
-    Given the user is "Entity-A Accountant"
-    Then only Entity-A deposits are displayed
+    Given the user is "Civil Aviation Accountant"
+    Then only Civil Aviation deposits are displayed

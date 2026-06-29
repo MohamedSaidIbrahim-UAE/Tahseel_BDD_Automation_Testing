@@ -434,6 +434,15 @@ Then('the user cannot access shared revenue details', async function (this: Worl
 Given('the user is logged in as {string}', async function (this: World, userRole: string) {
   this.addLog(`User login: ${userRole}`);
   (this as any).userRole = userRole;
+
+  // Actually authenticate via AuthManager (loads storageState or performs full login)
+  if (this.authManager) {
+    this.addLog('Ensuring authenticated session...');
+    await this.authManager.ensureAuthenticated();
+    this.addLog(`✅ Authenticated as: ${userRole}`);
+  } else {
+    this.addLog('⚠️ AuthManager not available — relying on storageState from @authenticated tag');
+  }
 });
 
 Given('the revenue entities {string} and {string} are configured', async function (

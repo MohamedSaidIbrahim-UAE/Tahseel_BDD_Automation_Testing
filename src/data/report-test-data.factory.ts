@@ -84,12 +84,12 @@ export class ReportTestDataFactory {
   }
 
   /**
-   * Generate expected data for RBAC test (Entity-A only)
+   * Generate expected data for RBAC test (Civil Aviation only)
    */
   static getEntityARestrictedData(): ReportData[] {
     return [
       {
-        revenueEntity: 'Entity-A',
+        revenueEntity: 'Civil Aviation',
         transactionCount: 50,
         totalAmount: 100000.00
       }

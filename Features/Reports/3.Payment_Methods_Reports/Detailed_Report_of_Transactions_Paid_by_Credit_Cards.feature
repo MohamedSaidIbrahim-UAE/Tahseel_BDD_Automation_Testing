@@ -4,15 +4,15 @@ Feature: Detailed Report of Transactions Paid by Credit Cards
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And credit card merchant "MCC-1234" is configured for Entity-A
+    And credit card merchant "MCC-1234" is configured for Civil Aviation
     And credit card merchant "MCC-5678" is configured for Entity-B
 
   @positive @e2e
   Scenario: Full cycle – credit card transaction posting and detailed report
     When the user posts the following credit card transactions:
       | Transaction | Merchant | Amount (AED) | Entity   |
-      | CC-001      | MCC-1234 | 250.00       | Entity-A |
-      | CC-002      | MCC-1234 | 350.00       | Entity-A |
+      | CC-001      | MCC-1234 | 250.00       | Civil Aviation |
+      | CC-002      | MCC-1234 | 350.00       | Civil Aviation |
       | CC-003      | MCC-5678 | 120.00       | Entity-B |
     Then the user runs the "Detailed Credit Card Transactions Report"
     And the report lists all three transactions with correct merchant IDs and amounts

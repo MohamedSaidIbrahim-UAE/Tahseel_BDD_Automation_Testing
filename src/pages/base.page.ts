@@ -3,8 +3,8 @@ import { WaitHelper } from '../utils/wait.helper';
 import { config } from '../config/config';
 
 export abstract class BasePage {
-  protected readonly page: Page;
-  protected readonly wait: WaitHelper;
+  protected page: Page;
+  protected wait: WaitHelper;
 
   /**
    * Global AuthManager reference — set once by World.initialize() so every
@@ -98,22 +98,30 @@ export abstract class BasePage {
       if (!stillError) return false;
     }
 
-    // Check for login form (username, password, or Continue button visible)
+    // ── Comprehensive login-form detection (aligned with AuthManager._isLoginFormVisible) ──
     const loginFormVisible =
-      await page.locator('input#Username, input[name="Username"]').first().isVisible().catch(() => false) ||
-      await page.locator('input#Password, input[name="Password"]').first().isVisible().catch(() => false) ||
-      await page.locator('button span[translate="Login.Continue"]').first().isVisible().catch(() => false);
+      await page.locator(
+        'input#Username, input[name="Username"], input[id*="user" i], input[name*="user" i], input[placeholder*="username" i]'
+      ).first().isVisible().catch(() => false) ||
+      await page.locator(
+        'input#Password, input[name="Password"], input[id*="pass" i], input[name*="pass" i], input[placeholder*="password" i]'
+      ).first().isVisible().catch(() => false) ||
+      await page.locator(
+        'button span[translate="Login.Continue"], button:has-text("Continue"), button:has-text("Next"), button:has-text("Sign in"), button:has-text("Sign In")'
+      ).first().isVisible().catch(() => false);
 
     // Also check URL-based identity server redirect
     const isIdentityUrl =
       currentUrl.includes('/Users/VerifyUsername') ||
       currentUrl.includes('/Users/UnifiedLogin') ||
       currentUrl.includes('/auth/identity-login') ||
+      currentUrl.includes('/etc-identity/') ||
+      currentUrl.includes('/masar-sso/') ||
       currentUrl.includes('identity-login');
 
-    if (!loginFormVisible && !isIdentityUrl) return false;
+    if (!loginFormVisible && !isIdentityUrl && !isErrorPage) return false;
 
-    // Session expired — perform re-login
+    // ── Session expired — perform re-login via AuthManager ─────────────────────
     const authManager = BasePage._authManager;
     if (!authManager) {
       throw new Error(
@@ -122,7 +130,7 @@ export abstract class BasePage {
       );
     }
 
-    console.warn(`[BasePage] Session expired — re-logging in before navigating to "${originalUrl}"`);
+    console.warn(`[BasePage] 🔐 Session expired — performing automatic re-login for "${originalUrl}"`);
     await authManager.reLoginAndSaveState();
 
     // After re-login, navigate to the original target URL
@@ -131,6 +139,7 @@ export abstract class BasePage {
       timeout: config.timeout,
     });
 
+    console.log(`[BasePage] ✅ Re-login complete — returned to "${originalUrl}"`);
     return true;
   }
 

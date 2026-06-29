@@ -149,9 +149,10 @@ export class AuthManager {
   async isSessionValid(): Promise<boolean> {
     if (this.isOnLoginScreen()) return false;
 
-    // Check for the sidebar — present on every authenticated page
+    // Check for the sidebar — present on every authenticated page.
+    // The Tahseel Angular app uses kt_aside / kt_aside_menu (not app-sidebar).
     const sidebar = await this.page
-      .locator('app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]')
+      .locator('#kt_aside_menu, #kt_aside, app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]')
       .first()
       .isVisible()
       .catch(() => false);
@@ -293,7 +294,7 @@ export class AuthManager {
     // ── Step 6 (continued): Wait for the Angular dashboard ────────────────────
     await this.page.waitForURL('**/dashboard', { timeout: config.timeout });
     await this.page.waitForSelector(
-      'app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]',
+      '#kt_aside_menu, #kt_aside, app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]',
       { timeout: 20000 }
     );
 
@@ -358,7 +359,7 @@ export class AuthManager {
     if (onDashboard) {
       // Confirm the sidebar is actually rendered (not just URL match)
       const sidebarVisible = await this.page
-        .locator('app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]')
+        .locator('#kt_aside_menu, #kt_aside, app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]')
         .first()
         .isVisible({ timeout: 10000 })
         .catch(() => false);

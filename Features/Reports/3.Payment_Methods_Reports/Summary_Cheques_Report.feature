@@ -7,29 +7,29 @@ Feature: Summary Cheques Report
     And cheque payment method is enabled in the system
     And the following cheque master data is configured:
       | Cheque Number | Bank           | Entity    |
-      | CHQ-001       | Bank A         | Entity-A  |
-      | CHQ-002       | Bank B         | Entity-A  |
+      | CHQ-001       | Bank A         | Civil Aviation  |
+      | CHQ-002       | Bank B         | Civil Aviation  |
       | CHQ-003       | Bank A         | Entity-B  |
 
   @positive @e2e
   Scenario: Full cycle – post cheque transactions and verify summary
     When the user posts the following cheque transactions on 2026-06-09:
       | Service  | Cheque No | Amount (AED) | Entity   |
-      | SRV-100  | CHQ-001   | 1000.00      | Entity-A |
-      | SRV-200  | CHQ-002   | 2000.00      | Entity-A |
+      | SRV-100  | CHQ-001   | 1000.00      | Civil Aviation |
+      | SRV-200  | CHQ-002   | 2000.00      | Civil Aviation |
       | SRV-100  | CHQ-003   | 500.00       | Entity-B |
     And the user runs the "Summary Cheques Report" for 2026-06-09
     Then the report shows:
       | Metric                  | Value       |
       | Total Cheque Count      | 3           |
       | Total Amount            | 3500.00     |
-      | Total By Entity-A       | 3000.00     |
+      | Total By Civil Aviation       | 3000.00     |
       | Total By Entity-B       | 500.00      |
     And the report can be exported to PDF and Excel
 
   @positive @filter
   Scenario: Filter summary by entity
-    When the user filters the "Summary Cheques Report" by "Entity-A"
+    When the user filters the "Summary Cheques Report" by "Civil Aviation"
     Then the report shows 2 cheques totalling 3000.00 AED
 
   @negative

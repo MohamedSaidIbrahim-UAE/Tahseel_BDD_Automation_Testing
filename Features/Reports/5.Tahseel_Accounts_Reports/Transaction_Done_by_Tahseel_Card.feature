@@ -4,7 +4,7 @@ Feature: Transaction Done by Tahseel Card
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And a Tahseel card "TC-2001" exists for Entity-A
+    And a Tahseel card "TC-2001" exists for Civil Aviation
 
   @positive @e2e
   Scenario: Full cycle – load, deduct, fee, and history report

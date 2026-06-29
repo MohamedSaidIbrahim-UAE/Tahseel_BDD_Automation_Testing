@@ -9,12 +9,12 @@ Feature: Transaction Summary Report Based on Income (Receivable)
   @positive @e2e
   Scenario: Summary of receivables
     Given the following transactions are posted as receivables:
-      | Entity-A: 3000.00 AED |
+      | Civil Aviation: 3000.00 AED |
       | Entity-B: 2000.00 AED |
     When the user runs the "Transaction Summary Report Based on Income (receivable)"
     Then the report aggregates the totals per entity and shows a grand total of 5000.00 AED
 
   @negative @rbac
   Scenario: Collector can see only their collected entity data
-    Given the user is a "Collector" for Entity-A only
-    When running the report, only Entity-A receivables appear
+    Given the user is a "Collector" for Civil Aviation only
+    When running the report, only Civil Aviation receivables appear

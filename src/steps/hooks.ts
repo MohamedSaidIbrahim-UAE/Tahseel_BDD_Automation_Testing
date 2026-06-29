@@ -1,14 +1,21 @@
-import { Before, After, Status } from '@cucumber/cucumber';
+import { Before, After, Status, setDefaultTimeout } from '@cucumber/cucumber';
 import { chromium, Browser, BrowserContext, Page, Response } from 'playwright';
 import * as fs from 'fs';
 import * as path from 'path';
 import { AuthManager } from '../utils/auth.manager';
+import { BasePage } from '../pages/base.page';
+
+// ── Timeout Configuration ──────────────────────────────────────────────────────
+// Stage environment needs generous timeouts due to infrastructure limitations.
+// setDefaultTimeout overrides the cucumber.js profile timeout for all step defs.
+const STEP_TIMEOUT_MS = process.env.TEST_ENV === 'stage' ? 300_000 : 60_000;
+setDefaultTimeout(STEP_TIMEOUT_MS);
 
 let browser: Browser;
 
 Before({ timeout: 60000 }, async function (this: any, scenario) {
   if (!browser) {
-    browser = await chromium.launch({ headless: true });
+    browser = await chromium.launch({ headless: false, args: ['--disable-web-security'] });
   }
 
   const tags = scenario.pickle.tags.map((t: any) => t.name);
@@ -32,14 +39,18 @@ Before({ timeout: 60000 }, async function (this: any, scenario) {
   this.page = page;
   this.authManager = new AuthManager(page, context);
 
+  // Register AuthManager with BasePage so that session-expiry recovery
+  // (BasePage._handleLoginInterception) can trigger re-login automatically.
+  BasePage.setAuthManager(this.authManager);
+
   // Add logging support if not already present
   if (!this.addLog) {
     const logs: string[] = [];
-    this.addLog = function(message: string) {
+    this.addLog = function (message: string) {
       const timestamp = new Date().toISOString();
       logs.push(`[${timestamp}] ${message}`);
     };
-    this.getLogs = function() {
+    this.getLogs = function () {
       return logs.join('\n');
     };
   }

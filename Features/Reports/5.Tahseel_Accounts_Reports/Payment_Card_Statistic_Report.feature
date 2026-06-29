@@ -8,13 +8,13 @@ Feature: Payment Card Statistic Report
 
   @positive @e2e
   Scenario: Full lifecycle – issue cards and check statistics
-    When the user issues 5 new Tahseel cards today for Entity-A
+    When the user issues 5 new Tahseel cards today for Civil Aviation
     And the user issues 3 cards for Entity-B
-    And activates 4 of the Entity-A cards
+    And activates 4 of the Civil Aviation cards
     Then the user runs the "Payment Card Statistic Report" for today
     And the report shows:
       | Entity   | Issued | Active | Inactive |
-      | Entity-A | 5      | 4      | 1        |
+      | Civil Aviation | 5      | 4      | 1        |
       | Entity-B | 3      | 0      | 3        |
 
   @negative

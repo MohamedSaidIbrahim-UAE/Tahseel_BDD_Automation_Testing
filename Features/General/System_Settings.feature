@@ -11,9 +11,9 @@ Feature: System Settings
 
   @positive
   Scenario: Create custom role with limited scope
-    When a new role "Entity-A Agent" is created with scope only for Entity-A
+    When a new role "Civil Aviation Agent" is created with scope only for Civil Aviation
     And assigned to a user
-    Then that user sees only Entity-A data across all modules
+    Then that user sees only Civil Aviation data across all modules
 
   @negative
   Scenario: Delete a scope that is assigned to users

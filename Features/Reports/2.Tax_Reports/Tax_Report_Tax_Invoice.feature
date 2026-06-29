@@ -16,7 +16,7 @@ Feature: Tax Report – Tax Invoice
       | VAT Amount    | 250.00 AED           |
       | Total Amount  | 5250.00 AED          |
       | Payment Method| Credit Card          |
-      | Entity        | Entity-A             |
+      | Entity        | Civil Aviation             |
     When the user navigates to the "Tax Invoice" report and enters transaction ID "TXN-501"
     Then a VAT-compliant invoice is displayed with the following details:
       | Invoice Field      | Expected Value               |

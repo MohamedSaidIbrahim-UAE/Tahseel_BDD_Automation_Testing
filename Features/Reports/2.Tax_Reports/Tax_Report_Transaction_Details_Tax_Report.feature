@@ -7,7 +7,7 @@ Feature: Tax Report – Transaction Details Tax Report
     And the system has a standard VAT rate of 5% configured for all taxable services
     And the service "SRV-100" is taxable
     And the service "SRV-200" is exempt from VAT
-    And the entity "Entity-A" is a standard revenue entity
+    And the entity "Civil Aviation" is a standard revenue entity
     And the entity "Entity-B" is tax-exempt
 
   @positive @e2e

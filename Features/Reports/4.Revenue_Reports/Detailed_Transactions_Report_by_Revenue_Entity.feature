@@ -4,8 +4,8 @@ Feature: Detailed Transactions Report by Revenue Entity
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And the revenue entities "Entity-A" and "Entity-B" are configured
-    And services "SRV-100" and "SRV-200" are mapped to revenue entity "Entity-A"
+    And the revenue entities "Civil Aviation" and "Entity-B" are configured
+    And services "SRV-100" and "SRV-200" are mapped to revenue entity "Civil Aviation"
     And service "SRV-300" is mapped to revenue entity "Entity-B"
 
   @positive @e2e @automated
@@ -17,7 +17,7 @@ Feature: Detailed Transactions Report by Revenue Entity
       | TXN-003     | SRV-300  | 2000.00      | Direct Debit   |
     And the user runs the "Detailed Transactions report by revenue entity" for today
     Then the report shows all three transactions with correct revenue entity mapping
-    And the total amount for "Entity-A" is 1500.00 AED
+    And the total amount for "Civil Aviation" is 1500.00 AED
     And the total amount for "Entity-B" is 2000.00 AED
     And the grand total is 3500.00 AED
     And the report can be exported to Excel
@@ -25,7 +25,7 @@ Feature: Detailed Transactions Report by Revenue Entity
 
   @positive @filter @automated
   Scenario: Filter report by revenue entity
-    When the user filters by "Entity-A"
+    When the user filters by "Civil Aviation"
     And the user runs the "Detailed Transactions report by revenue entity" for today
     Then only TXN-001 and TXN-002 are displayed
     And the total amount shown is 1500.00 AED

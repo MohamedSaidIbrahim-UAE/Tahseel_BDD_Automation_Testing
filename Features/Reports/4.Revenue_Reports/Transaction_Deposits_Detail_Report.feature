@@ -8,7 +8,7 @@ Feature: Transaction Deposits Detail Report
 
   @positive @e2e
   Scenario: Detailed deposit listing
-    Given two deposit entries for Entity-A: 1000 AED via Bank X, and 500 AED via Bank Y
+    Given two deposit entries for Civil Aviation: 1000 AED via Bank X, and 500 AED via Bank Y
     When the user runs the "Transaction deposits detail Report"
     Then both deposits are listed with bank details, amounts, and entity references
     And the total deposit amount is 1500.00 AED

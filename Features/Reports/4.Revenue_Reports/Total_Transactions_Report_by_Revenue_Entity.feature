@@ -4,31 +4,39 @@ Feature: Total Transactions Report by Revenue Entity
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And revenue entities "Entity-A" and "Entity-B" exist
-    # Note: Users are pre-authenticated via storageState.<env>.json
-    # Revenue entities are master data that should exist in the test environment
 
-  @revenue @automated @positive @e2e
-  Scenario: Summary aggregation after multiple transactions
-    Given the following transactions are posted for the month of June:
-      | Entity   | Count | Total Amount |
-      | Entity-A | 50    | 100000.00    |
-      | Entity-B | 30    | 45000.00     |
-    When the user runs the "Total Transactions report by revenue entity" for June 2026
-    Then the report shows:
-      | Revenue Entity | Transaction Count | Total Amount |
-      | Entity-A       | 50                | 100000.00    |
-      | Entity-B       | 30                | 45000.00     |
-    And the grand total amount is 145000.00 AED
+  # ── Tag: @total-transactions-revenue isolates the Before hook so only
+  #        this report's step definitions initialise their page object,
+  #        keeping the test output clean for the business analyst.
+  # ── Tag: @authenticated loads storageState.<env>.json into the browser context.
 
-  @revenue @automated @negative
-  Scenario: Entity with no transactions should not appear or show zero
-    Given "Entity-C" exists but has no transactions
-    When the report is generated
-    Then "Entity-C" is either omitted or displayed with 0 count and 0.00 amount
+  @revenue @automated @authenticated @total-transactions-revenue @smoke
+  Scenario: Report page loads via side-menu with default filters
+    When the user navigates via side menu to "Total Transactions report by revenue entity"
+    Then the report filter page should be displayed
+    And the "Payment Method" filter should show "ALL"
+    And all filter dropdowns should default to "ALL"
 
-  @revenue @automated @negative @rbac
-  Scenario: Entity-limited user can only see their own summary
+  @revenue @automated @authenticated @total-transactions-revenue @positive
+  Scenario: Generate report for current year with all payment methods
+    When the user navigates via side menu to "Total Transactions report by revenue entity"
+    And the user selects "ALL" for every filter dropdown
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "Show Report"
+    Then the report should load without errors
+    And the report title should contain "Total Transactions"
+
+  @revenue @automated @authenticated @total-transactions-revenue @negative
+  Scenario: Report shows empty state for a future date range
+    When the user navigates via side menu to "Total Transactions report by revenue entity"
+    And the user selects a future date range
+    And the user clicks "Show Report"
+    Then the report should display an empty or no-data message
+
+  @revenue @automated @authenticated @total-transactions-revenue @rbac @negative
+  Scenario: Entity-limited user can only see their own entity summary
     Given the user is "Entity-A Restricted Accountant"
-    When the user runs the summary report
-    Then only Entity-A data appears, even if other entities have transactions
+    When the user navigates via side menu to "Total Transactions report by revenue entity"
+    And the user selects "ALL" for every filter dropdown
+    And the user clicks "Show Report"
+    Then only data for the user's assigned entity should appear

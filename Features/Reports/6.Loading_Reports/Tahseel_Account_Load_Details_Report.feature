@@ -4,7 +4,7 @@ Feature: Tahseel Account Load Details Report
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And Tahseel account "ACC-DET-01" for Entity-A exists with current balance 0
+    And Tahseel account "ACC-DET-01" for Civil Aviation exists with current balance 0
 
   @positive @e2e
   Scenario: Full cycle – two loads and report
@@ -26,5 +26,5 @@ Feature: Tahseel Account Load Details Report
 
   @negative @rbac
   Scenario: Entity‑limited user sees only their own account loads
-    Given the user is "Entity-A Accountant"
-    When viewing the report, only loads for Entity-A accounts are visible
+    Given the user is "Civil Aviation Accountant"
+    When viewing the report, only loads for Civil Aviation accounts are visible

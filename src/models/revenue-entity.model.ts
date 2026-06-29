@@ -31,7 +31,7 @@ export interface GrandTotal {
 export const REVENUE_ENTITIES = {
   ENTITY_A: {
     id: 'entity-a-001',
-    name: 'Entity-A',
+    name: 'Civil Aviation',
     isActive: true
   },
   ENTITY_B: {
@@ -48,7 +48,7 @@ export const REVENUE_ENTITIES = {
 
 export const TEST_TRANSACTIONS = {
   JUNE_2026: {
-    'Entity-A': { count: 50, amount: 100000.00 },
+    'Civil Aviation': { count: 50, amount: 100000.00 },
     'Entity-B': { count: 30, amount: 45000.00 },
     'Entity-C': { count: 0, amount: 0.00 }
   }
@@ -56,7 +56,7 @@ export const TEST_TRANSACTIONS = {
 
 export const EXPECTED_REPORT_DATA = {
   SUMMARY_AGGREGATION: [
-    { entity: 'Entity-A', count: 50, amount: 100000.00 },
+    { entity: 'Civil Aviation', count: 50, amount: 100000.00 },
     { entity: 'Entity-B', count: 30, amount: 45000.00 }
   ],
   GRAND_TOTAL: {

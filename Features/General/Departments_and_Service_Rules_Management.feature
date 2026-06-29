@@ -5,7 +5,7 @@ Feature: Departments and Service Rules Management
 
   @positive
   Scenario: Create department and assign to entity
-    When the user creates department "Finance" under Entity-A
+    When the user creates department "Finance" under Civil Aviation
     Then it appears in the hierarchy and can be assigned to users
 
   @positive

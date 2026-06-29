@@ -4,7 +4,7 @@ Feature: SFD Detailed Wallets Transactions Report
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And SFD wallet "W-SFD-01" is linked to Entity-A
+    And SFD wallet "W-SFD-01" is linked to Civil Aviation
 
   @positive @e2e
   Scenario: Wallet transactions reflected in SFD report
@@ -15,5 +15,5 @@ Feature: SFD Detailed Wallets Transactions Report
 
   @negative @rbac
   Scenario: Non-SFD user cannot view the report
-    Given the user is "Entity-A Accountant" (not SFD)
+    Given the user is "Civil Aviation Accountant" (not SFD)
     Then access is denied

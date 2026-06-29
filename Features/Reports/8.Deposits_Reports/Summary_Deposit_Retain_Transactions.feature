@@ -4,19 +4,19 @@ Feature: Summary Deposit Retain Transactions
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And deposit accounts for Entity-A and Entity-B exist with sufficient balances
+    And deposit accounts for Civil Aviation and Entity-B exist with sufficient balances
 
   @positive @e2e
   Scenario: Aggregate retain amounts per entity
     Given the following retains are processed:
       | Entity   | Amount | Date       |
-      | Entity-A | 5000   | 2026-06-10 |
-      | Entity-A | 3000   | 2026-06-11 |
+      | Civil Aviation | 5000   | 2026-06-10 |
+      | Civil Aviation | 3000   | 2026-06-11 |
       | Entity-B | 2000   | 2026-06-10 |
     When the user runs the "Summary Deposit Retain Transactions" report from 2026-06-10 to 2026-06-11
     Then the report shows:
       | Entity   | Total Retained |
-      | Entity-A | 8000.00        |
+      | Civil Aviation | 8000.00        |
       | Entity-B | 2000.00        |
     And the grand total retained is 10000.00 AED
 

@@ -4,7 +4,7 @@ Feature: Deposits Statement Report
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And a deposit account "DEP-STMT-01" is opened for Entity-A with initial balance 0
+    And a deposit account "DEP-STMT-01" is opened for Civil Aviation with initial balance 0
 
   @positive @e2e
   Scenario: Full lifecycle – statement generation after multiple transactions

@@ -31,6 +31,6 @@ Feature: Detailed Cheques Report
 
   @negative @rbac
   Scenario: Entity-limited user can only see own cheques
-    Given the user is an "Entity-A Accountant"
+    Given the user is an "Civil Aviation Accountant"
     When the user runs the detailed cheques report
-    Then only cheques for Entity-A appear, even if other entities have data
+    Then only cheques for Civil Aviation appear, even if other entities have data

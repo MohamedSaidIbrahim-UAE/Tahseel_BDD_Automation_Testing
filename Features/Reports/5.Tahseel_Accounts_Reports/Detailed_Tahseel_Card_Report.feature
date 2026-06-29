@@ -8,17 +8,17 @@ Feature: Detailed Tahseel Card Report
 
   @positive @e2e
   Scenario: Full lifecycle – card creation, load, and detail report
-    Given a new Tahseel card "TC-1001" is created for Entity-A with initial balance 0
+    Given a new Tahseel card "TC-1001" is created for Civil Aviation with initial balance 0
     When the user loads 500 AED onto "TC-1001" via a load request
     And the user runs the "Detailed Tahseel Card Report" for card "TC-1001"
     Then the report shows:
       | Card Number | Entity   | Balance | Status |
-      | TC-1001     | Entity-A | 500.00  | Active |
+      | TC-1001     | Civil Aviation | 500.00  | Active |
 
   @positive @filter
   Scenario: Filter by entity
-    When the user filters the report by Entity-A
-    Then only cards belonging to Entity-A are displayed
+    When the user filters the report by Civil Aviation
+    Then only cards belonging to Civil Aviation are displayed
 
   @negative
   Scenario: Inactive or blocked card appears with correct status
@@ -27,5 +27,5 @@ Feature: Detailed Tahseel Card Report
 
   @negative @rbac
   Scenario: Entity-limited user sees only their own entity cards
-    Given the user is an "Entity-A Accountant"
-    When the report is viewed, only Entity-A cards appear
+    Given the user is an "Civil Aviation Accountant"
+    When the report is viewed, only Civil Aviation cards appear

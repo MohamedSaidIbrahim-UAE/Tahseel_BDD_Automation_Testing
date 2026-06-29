@@ -4,18 +4,18 @@ Feature: Detailed Report of POS Transactions by Revenue Source
 
   Background:
     Given the user is logged in as "Finance Admin"
-    And POS terminals "POS-101" and "POS-102" are registered to Entity-A and Entity-B respectively
+    And POS terminals "POS-101" and "POS-102" are registered to Civil Aviation and Entity-B respectively
 
   @positive @e2e
   Scenario: POS transaction detail
     Given the following POS transactions are processed:
       | Terminal | Amount | Entity   |
-      | POS-101  | 500    | Entity-A |
-      | POS-101  | 300    | Entity-A |
+      | POS-101  | 500    | Civil Aviation |
+      | POS-101  | 300    | Civil Aviation |
       | POS-102  | 700    | Entity-B |
     When the user runs the "Detailed Report of POS Transactions by Revenue Source"
     Then all three transactions appear with terminal IDs and revenue entities
-    And the total for Entity-A is 800.00 AED and for Entity-B 700.00 AED
+    And the total for Civil Aviation is 800.00 AED and for Entity-B 700.00 AED
 
   @negative
   Scenario: POS terminal not mapped to any entity (orphan)

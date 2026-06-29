@@ -91,6 +91,14 @@ export class TotalTransactionsRevenueEntitySteps extends ReportStepDefinitions {
       await this.reportPage.setFromDate(dateRange.from.toISOString().split('T')[0]);
       await this.reportPage.setToDate(dateRange.to.toISOString().split('T')[0]);
       await this.reportPage.showReport();
+
+      // If the report opened in a new tab, sync the World's page reference
+      // so that subsequent steps and screenshots target the correct tab.
+      if (this.reportPage.openedInNewTab) {
+        const newPage = this.reportPage.getActivePage();
+        (this.world as any).page = newPage;
+        this.log('🔄 Synced World page to new report tab');
+      }
       
       this.storeTestData('lastReportMonth', monthYear);
       this.storeTestData('reportFromDate', dateRange.from.toISOString().split('T')[0]);
@@ -100,6 +108,171 @@ export class TotalTransactionsRevenueEntitySteps extends ReportStepDefinitions {
     } catch (error) {
       this.logError(`Failed: ${error instanceof Error ? error.message : String(error)}`);
       throw error;
+    }
+  }
+
+  async navigateToReportViaSideMenu(reportName: string): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      this.log(`Navigating via side-menu to: ${reportName}...`);
+      await this.reportPage.navigateToReport();
+      this.logSuccess(`Navigated to ${reportName}`);
+      // Sync World's page in case a new tab was opened during navigation
+      this.syncWorldPage();
+    } catch (error) {
+      this.logError(`Navigation failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async selectAllForAllDropdowns(): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      this.log('Setting all filter dropdowns to "ALL"...');
+      await this.reportPage.selectAllForAllDropdowns();
+      this.logSuccess('All dropdowns set to ALL');
+    } catch (error) {
+      this.logError(`Failed to set dropdowns: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async setCurrentYearDateRange(): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      const now = new Date();
+      const fromDate = `${now.getFullYear()}-01-01`;
+      const toDate = now.toISOString().split('T')[0];
+      this.log(`Setting date range: ${fromDate} to ${toDate}...`);
+      await this.reportPage.setFromDate(fromDate);
+      await this.reportPage.setToDate(toDate);
+      this.logSuccess(`Date range set: ${fromDate} → ${toDate}`);
+    } catch (error) {
+      this.logError(`Failed to set date range: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async setFutureDateRange(): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      const future = new Date();
+      future.setFullYear(future.getFullYear() + 1);
+      const dateStr = future.toISOString().split('T')[0];
+      this.log(`Setting future date range: ${dateStr} to ${dateStr}...`);
+      await this.reportPage.setFromDate(dateStr);
+      await this.reportPage.setToDate(dateStr);
+      this.logSuccess(`Future date range set: ${dateStr}`);
+    } catch (error) {
+      this.logError(`Failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async clickShowReport(): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      this.log('Clicking Show Report...');
+      await this.reportPage.showReport();
+      this.syncWorldPage();
+      this.logSuccess('Report generated');
+    } catch (error) {
+      this.logError(`Failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async verifyFilterPageDisplayed(): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      this.log('Verifying filter page is displayed...');
+      await this.reportPage.verifyFilterPageDisplayed();
+      this.logSuccess('Filter page is displayed');
+    } catch (error) {
+      this.logError(`Verification failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async verifyFilterDefaultValue(filterName: string, expectedValue: string): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      this.log(`Verifying "${filterName}" defaults to "${expectedValue}"...`);
+      await this.reportPage.verifyFilterDefaultValue(filterName, expectedValue);
+      this.logSuccess(`"${filterName}" = "${expectedValue}" ✓`);
+    } catch (error) {
+      this.logError(`Verification failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async verifyAllDropdownsDefaultTo(expectedValue: string): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      this.log(`Verifying all dropdowns default to "${expectedValue}"...`);
+      await this.reportPage.verifyAllDropdownsDefaultTo(expectedValue);
+      this.logSuccess(`All dropdowns = "${expectedValue}" ✓`);
+    } catch (error) {
+      this.logError(`Verification failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async verifyReportLoadedWithoutErrors(): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      this.log('Verifying report loaded without errors...');
+      await this.reportPage.verifyNoErrorDisplayed();
+      await this.reportPage.verifyReportHasContent();
+      this.logSuccess('Report loaded successfully — no errors');
+    } catch (error) {
+      this.logError(`Report load failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async verifyReportTitleContains(expectedTitle: string): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      this.log(`Verifying report title contains "${expectedTitle}"...`);
+      await this.reportPage.verifyReportTitleContains(expectedTitle);
+      this.logSuccess(`Report title contains "${expectedTitle}" ✓`);
+    } catch (error) {
+      this.logError(`Verification failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async verifyEmptyOrNoDataMessage(): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      this.log('Verifying empty/no-data message...');
+      await this.reportPage.verifyEmptyOrNoDataMessage();
+      this.logSuccess('Empty/no-data message displayed ✓');
+    } catch (error) {
+      this.logError(`Verification failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  async verifyOnlyAssignedEntityVisible(): Promise<void> {
+    try {
+      if (!this.reportPage) throw new Error('Report page not initialized');
+      this.log('Verifying RBAC: only assigned entity visible...');
+      await this.reportPage.verifyOnlyAssignedEntityVisible();
+      this.logSuccess('RBAC restriction verified — only assigned entity visible');
+    } catch (error) {
+      this.logError(`RBAC verification failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw error;
+    }
+  }
+
+  private syncWorldPage(): void {
+    if (this.reportPage) {
+      const activePage = this.reportPage.getActivePage();
+      if (activePage && !activePage.isClosed()) {
+        (this.world as any).page = activePage;
+      }
     }
   }
 
