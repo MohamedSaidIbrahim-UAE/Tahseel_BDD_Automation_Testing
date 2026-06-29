@@ -153,31 +153,50 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
     this.logSuccess('Status filter applied');
   }
 
-  async selectRevenueTransactionsRadio(): Promise<void> {
+  async selectAllPaymentMethods(): Promise<void> {
     if (!this.reportPage) throw new Error('Report page not initialized');
-    const fromDate = this.getStoredTestData<string>('fromDate') || this.dateRange.from;
-    const toDate = this.getStoredTestData<string>('toDate') || this.dateRange.to;
+    await this.reportPage.selectDropdownOption('div[data-dx_placeholder*="Choose"]', 'All', 0);
 
-    if (this.reportPage instanceof TransactionsFeeReportPage) {
-      await this.reportPage.applyRevenueFilters(fromDate, toDate);
-    } else {
-      await this.reportPage.selectRadioOption('Revenue Transactions');
-    }
+  }
+
+
+  async selectRevenueTransactionsOption(): Promise<void> {
+    if (!this.reportPage) throw new Error('Report page not initialized');
+    await this.reportPage.selectDropdownOption('div[data-dx_placeholder*="Choose"]', 'Revenue Transactions', 1);
     this.logSuccess('Revenue Transactions radio selected');
   }
 
-  async selectDepositTransactionsRadio(): Promise<void> {
+    async selectDepositTransactionsOption(): Promise<void> {
     if (!this.reportPage) throw new Error('Report page not initialized');
-    const fromDate = this.getStoredTestData<string>('fromDate') || this.dateRange.from;
-    const toDate = this.getStoredTestData<string>('toDate') || this.dateRange.to;
-
-    if (this.reportPage instanceof AmanatUniversalPaymentsPage) {
-      await this.reportPage.applyAmanatFilters(fromDate, toDate);
-    } else {
-      await this.reportPage.selectRadioOption('Deposit Transactions');
-    }
-    this.logSuccess('Deposit Transactions radio selected');
+    await this.reportPage.selectDropdownOption('div[data-dx_placeholder*="Choose"]', 'Deposit transactions', 1);
+    this.logSuccess('Revenue Transactions radio selected');
   }
+
+  // async selectRevenueTransactionsRadio(): Promise<void> {
+  //   if (!this.reportPage) throw new Error('Report page not initialized');
+  //   const fromDate = this.getStoredTestData<string>('fromDate') || this.dateRange.from;
+  //   const toDate = this.getStoredTestData<string>('toDate') || this.dateRange.to;
+
+  //   if (this.reportPage instanceof TransactionsFeeReportPage) {
+  //     await this.reportPage.applyRevenueFilters(fromDate, toDate);
+  //   } else {
+  //     await this.reportPage.selectDropdownOption('div[data-dx_placeholder*="Choose"]', 'Revenue Transactions', 1);
+  //   }
+  //   this.logSuccess('Revenue Transactions radio selected');
+  // }
+
+  // async selectDepositTransactionsRadio(): Promise<void> {
+  //   if (!this.reportPage) throw new Error('Report page not initialized');
+  //   const fromDate = this.getStoredTestData<string>('fromDate') || this.dateRange.from;
+  //   const toDate = this.getStoredTestData<string>('toDate') || this.dateRange.to;
+
+  //   if (this.reportPage instanceof AmanatUniversalPaymentsPage) {
+  //     await this.reportPage.applyAmanatFilters(fromDate, toDate);
+  //   } else {
+  //     await this.reportPage.selectRadioOption('Deposit Transactions');
+  //   }
+  //   this.logSuccess('Deposit Transactions radio selected');
+  // }
 
   async applyFeeTypeRevenueFees(): Promise<void> {
     if (!this.reportPage) throw new Error('Report page not initialized');
@@ -197,7 +216,7 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
     this.logSuccess(`Date range set: ${fromDate} → ${toDate}`);
   }
 
-  async selectUniversalPayments(): Promise<void> {
+  async selectUniversalPaymentsDate(): Promise<void> {
     if (!this.reportPage) throw new Error('Report page not initialized');
     const fromDate = this.getStoredTestData<string>('fromDate') || this.dateRange.from;
     const toDate = this.getStoredTestData<string>('toDate') || this.dateRange.to;
@@ -667,6 +686,11 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
     );
 
     this.logSuccess('Bank fee totals compared');
+  }
+
+  async selectAllPaymentMthods(): Promise<void> {
+
+
   }
 
   async compareUniversalPaymentTotals(): Promise<void> {

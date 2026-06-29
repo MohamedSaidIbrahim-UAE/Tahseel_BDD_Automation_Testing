@@ -69,14 +69,15 @@ When('the user applies the filter status {string}', async function (status: stri
   }
 });
 
-When('the user selects the {string} radio option', async function (option: string) {
+When('the user selects the {string} dropdown option', async function (option: string) {
   if (!steps) throw new Error('Steps not initialized');
   if (option === 'Revenue Transactions') {
-    await steps.selectRevenueTransactionsRadio();
+    await steps.selectRevenueTransactionsOption();
   } else if (option === 'Deposit Transactions') {
-    await steps.selectDepositTransactionsRadio();
+    await steps.selectDepositTransactionsOption();
   }
 });
+
 
 When('the user applies the filter fee type {string}', async function (feeType: string) {
   if (!steps) throw new Error('Steps not initialized');
@@ -90,9 +91,10 @@ When('the user sets the date range', async function () {
   await steps.setReportDateRange();
 });
 
+
 When('the user selects universal payment methods from the tag box', async function () {
   if (!steps) throw new Error('Steps not initialized');
-  await steps.selectUniversalPayments();
+  await steps.selectAllPaymentMethods();
 });
 
 When('the user selects transaction types from the tag box', async function () {

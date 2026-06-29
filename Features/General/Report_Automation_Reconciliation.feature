@@ -15,108 +15,150 @@ Feature: Report Automation and Cross-Report Reconciliation
 
   @export @revenue
   Scenario: Export Detailed Report of POS Transactions by Revenue Source to Excel
-    When the user navigates to the report "Detailed Report of POS Transactions by Revenue Source"
-    And the user applies the filter status "Paid"
-    And the user sets the date range
-    And the user clicks "Show Report"
+    When the user navigates to the report "Detailed_Report_of_POS_Transactions_by_Revenue_Source"
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "transactionpaymentservicessummaryreceivable_sec"
     Then the Excel file should be downloaded successfully
 
   @export @all-payment-methods
   Scenario: Export Transaction Fees For All Payment Methods to Excel
     When the user navigates to the report "Transaction Fees For All Payment Methods"
-    And the user selects the "Revenue Transactions" radio option
-    And the user sets the date range
-    And the user clicks "Show Report"
+    And the user selects the "Revenue Transactions" dropdown option
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "TransactionFeesForAllPaymentMethods"
     Then the Excel file should be downloaded successfully
 
   @export @universal-payments
   Scenario: Export Universal Payment Methods Report to Excel
-    When the user navigates to the report "Universal Payment Methods"
-    And the user sets the date range
+    When the user navigates to the report "Total Transactions report by revenue entity"
+    And the user sets the date range from the first day of the current year to today
     And the user selects universal payment methods from the tag box
-    And the user clicks "Show Report"
-    And the user exports the report to Excel with filename "BankPayments"
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "Total_Transactions_report_by_revenue_entity"
     Then the Excel file should be downloaded successfully
 
   @export @amanat
   Scenario: Export Amanat Universal Payments Report to Excel
-    When the user navigates to the report "Amanat Universal Payments"
-    And the user selects the "Deposit Transactions" radio option
-    And the user sets the date range
-    And the user clicks "Show Report"
-    And the user exports the report to Excel with filename "TransactionFeeReportforAllPaymentMethods(Deposit)"
+    When the user navigates to the report "Aggregated Transactions Report paid by Credit cards"
+    And the user selects universal payment methods from the tag box
+    And the user selects the "Deposit Transactions" dropdown option
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "Aggregated_Transactions_Report_paid_by_Credit_cards"
     Then the Excel file should be downloaded successfully
 
   @export @credit-card
   Scenario: Export Total Credit Card Report to Excel
-    When the user navigates to the report "Total Credit Card Report"
-    And the user selects transaction types from the tag box
-    And the user sets the date range
-    And the user clicks "Show Report"
-    And the user exports the report to Excel with filename "ShjCreditCardSummery"
+    When the user navigates to the report "Summary GITFees Report for smart Reciept"
+    And the user selects universal payment methods from the tag box
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "Summary_GITFees_Report_for_smart_Reciept"
     Then the Excel file should be downloaded successfully
 
   @export @smart-receipt
   Scenario: Export Smart Receipt Details Report to Excel
     When the user navigates to the report "Smart Receipt Details"
     And the user applies the filter status "Paid"
-    And the user sets the date range
-    And the user clicks "Show Report"
-    And the user exports the report to Excel with filename "GITFees_ShjGovTransStatistics"
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "Smart_Receipt_Details"
     Then the Excel file should be downloaded successfully
 
   @export @support-services
   Scenario: Export Support Services Reports Report to Excel
     When the user navigates to the report "Support Services Reports"
-    And the user selects the "Revenue Transactions" radio option
-    And the user applies the filter status "Paid"
-    And the user sets the date range
-    And the user clicks "Show Report"
-    And the user exports the report to Excel with filename "TRANSACTIONPAYMENTDEPENDANTSERVICESSUMMARY_sec"
+    And the user selects the "Revenue Transactions" dropdown option
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "Search"
+    And the user exports the report to Excel with filename "Support_Services_Reports"
     Then the Excel file should be downloaded successfully
 
   @export @total-charges
   Scenario: Export Report the total service charges for loading Transactions Report to Excel
     When the user navigates to the report "Report the total service charges for loading Transactions"
-    And the user applies the filter status "Paid"
-    And the user applies the filter fee type "Revenue Fees"
-    And the user sets the date range
-    And the user clicks "Show Report"
-    And the user exports the report to Excel with filename "SummaryReport_of_IncurredFees PerRevenueEntity"
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "Report_the_total_service_charges_for_loading_Transactions"
     Then the Excel file should be downloaded successfully
 
   @export @total-tax
-  Scenario: Export Total Tax Report to Excel
-    When the user navigates to the report "Total Tax Report"
+  Scenario: Export Total Revenue Tax Report to Excel
+    When the user navigates to the report "Transaction Summary Tax Report"
     And the user applies the filter status "Paid"
-    And the user selects the "Revenue Transactions" radio option
-    And the user sets the date range
-    And the user clicks "Show Report"
-    And the user exports the report to Excel with filename "TRANSACTIONTAXSUMARY"
+    And the user selects universal payment methods from the tag box
+    And the user selects the "Revenue Transactions" dropdown option
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "RevenueTRANSACTIONTAXSUMARY"
+    Then the Excel file should be downloaded successfully
+
+  @export @total-tax
+  Scenario: Export Total Deposit Tax Report to Excel
+    When the user navigates to the report "Transaction Summary Tax Report"
+    And the user applies the filter status "Paid"
+    And the user selects universal payment methods from the tag box
+    And the user selects the "Deposit Transactions" dropdown option
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "DepositTRANSACTIONTAXSUMARY"
     Then the Excel file should be downloaded successfully
 
   @export @total-transaction
-  Scenario: Export Total Transaction Report to Excel
-    When the user navigates to the report "Total Transaction Report"
+  Scenario: Export Total Revenue Transaction Report to Excel
+    When the user navigates to the report "Summary Transactions Report"
     And the user applies the filter status "Paid"
-    And the user selects the "Revenue Transactions" radio option
-    And the user sets the date range
-    And the user clicks "Show Report"
-    And the user exports the report to Excel with filename "ShjGovTransSummary_sec"
+    And the user selects universal payment methods from the tag box
+    And the user selects the "Revenue Transactions" dropdown option
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "ShjGovRevenueTransSummary_sec"
+    Then the Excel file should be downloaded successfully
+
+  @export @total-transaction
+  Scenario: Export Total Revenue Transaction Report to Excel
+    When the user navigates to the report "Summary Transactions Report"
+    And the user applies the filter status "Paid"
+    And the user selects universal payment methods from the tag box
+    And the user selects the "Deposit Transactions" dropdown option
+    And the user sets the date range from the first day of the current year to today
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "ShjGovDepositTransSummary_sec"
     Then the Excel file should be downloaded successfully
 
   @export @deposit-receivable
   Scenario: Export Transaction deposits detail Report (receivable) Report to Excel
     When the user navigates to the report "Transaction deposits detail Report (receivable)"
-    And the user sets the date range
-    And the user clicks "Show Report"
+    And the user sets the date range from the first day of the current year to today
+    And the user selects universal payment methods from the tag box
+    And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "transactionpaymentservicessummaryDepositreceivable"
     Then the Excel file should be downloaded successfully
 
+  @export @service-revenue
+  Scenario: Export Dependant services revenue summary Report to Excel
+    When the user navigates to the report "Dependant services revenue summary reports"
+    And the user sets the date range from the first day of the current year to today
+    And the user selects universal payment methods from the tag box
+    And the user selects the "Revenue Transactions" dropdown option
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "DependantServicesSummaryReport_RevenueTransaction"
+    Then the Excel file should be downloaded successfully
+
+  @export @service-revenue
+  Scenario: Export Dependant services revenue summary Report to Excel
+    When the user navigates to the report "Dependant services revenue summary reports"
+    And the user sets the date range from the first day of the current year to today
+    And the user selects universal payment methods from the tag box
+    And the user selects the "Deposit Transactions" dropdown option
+    And the user clicks "VIEW REPORT"
+    And the user exports the report to Excel with filename "DependantServicesSummaryReport_DepositTransaction"
+    Then the Excel file should be downloaded successfully
+
   # ═══════════════════════════════════════════════════════════════════════════════
-  # SCENARIO 12: Cross-Report Reconciliation
+  # SCENARIO 16: Cross-Report Reconciliation
   # ═══════════════════════════════════════════════════════════════════════════════
 
   @reconciliation @full-reconciliation
@@ -134,7 +176,6 @@ Feature: Report Automation and Cross-Report Reconciliation
     And the user extracts values from the "Incurred Fees" report
     And the user extracts values from the "Smart Receipt" report
     And the user extracts values from the "Transaction deposits detail Report (receivable)" report
-
     And the user compares transaction fee totals across reports
     And the user compares VAT totals across reports
     And the user compares service fee totals across reports
@@ -147,7 +188,7 @@ Feature: Report Automation and Cross-Report Reconciliation
     And all compared values should be within tolerance
 
   # ═══════════════════════════════════════════════════════════════════════════════
-  # SCENARIO 13: End-to-End Full Workflow
+  # SCENARIO 17: End-to-End Full Workflow
   # ═══════════════════════════════════════════════════════════════════════════════
 
   @e2e @smoke
