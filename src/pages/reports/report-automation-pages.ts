@@ -30,9 +30,9 @@ export class TotalTransactionsRevenueReceivablePage extends ReportViewerBasePage
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
   readonly paymentMethodSelector =
     "[data-dx_placeholder*='Choose']";
 
@@ -60,9 +60,9 @@ export class TransactionsFeeReportPage extends ReportViewerBasePage {
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -103,9 +103,9 @@ export class UniversalPaymentsPage extends ReportViewerBasePage {
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
   readonly tagBoxXPath =
     'dx-tag-box';
   readonly okButtonXPath =
@@ -142,9 +142,9 @@ export class AmanatUniversalPaymentsPage extends ReportViewerBasePage {
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -170,9 +170,9 @@ export class TotalCreditCardReportPage extends ReportViewerBasePage {
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
   readonly tagBoxXPath =
     'dx-tag-box';
   readonly okButtonXPath =
@@ -203,9 +203,9 @@ export class SmartReceiptPrintingFeesPage extends ReportViewerBasePage {
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
   readonly paymentMethodSelector =
     "[data-dx_placeholder*='Choose']";
 
@@ -233,9 +233,9 @@ export class SupportServicesTransactionsPage extends ReportViewerBasePage {
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
   readonly paymentMethodSelector =
     "[data-dx_placeholder*='Choose']";
 
@@ -264,9 +264,9 @@ export class TotalChargesByRevenuePage extends ReportViewerBasePage {
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
   readonly paymentMethodSelector =
     "[data-dx_placeholder*='Choose']";
   readonly feeTypeDropdownXPath =
@@ -298,9 +298,9 @@ export class TotalTaxReportPage extends ReportViewerBasePage {
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
   readonly paymentMethodSelector =
     "[data-dx_placeholder*='Choose']";
 
@@ -329,9 +329,9 @@ export class TotalTransactionReportPage extends ReportViewerBasePage {
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
   readonly paymentMethodSelector =
     "[data-dx_placeholder*='Choose']";
 
@@ -361,9 +361,9 @@ export class DepositReceivableReportPage extends ReportViewerBasePage {
   }
 
   readonly fromDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:first-of-type input[type='text'], input[placeholder*='From'], input[aria-label*='From']";
   readonly toDateInputXPath =
-    "dx-date-box input[type='text']";
+    "dx-date-box:last-of-type input[type='text'], input[placeholder*='To'], input[aria-label*='To']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }

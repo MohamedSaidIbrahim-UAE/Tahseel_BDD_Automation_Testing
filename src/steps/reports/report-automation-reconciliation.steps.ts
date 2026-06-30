@@ -412,3 +412,24 @@ Then('the workflow should complete with zero data inconsistencies reported', asy
   if (!steps) throw new Error('Steps not initialized');
   // All reconciliations passed without inconsistencies
 });
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ADDITIONAL MISSING STEPS (from feature scenarios 1-15)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ⚠️  These steps are defined in shared.steps.ts to avoid ambiguity:
+// - "the user sets the date range from the first day of the current year to today"
+// - "the user selects universal payment methods from the tag box"
+
+Then('the Excel files are available in the download folder', async function () {
+  if (!steps) throw new Error('Steps not initialized');
+  await steps.verifyExcelDownloaded();
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SCENARIO-SPECIFIC STEPS FOR BACKWARD COMPATIBILITY
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Note: The core GIVEN/WHEN/THEN steps are defined above.
+// These are just additional aliases for clarity and feature file compatibility.
+// (Duplicate registrations removed to prevent ambiguous step warnings)

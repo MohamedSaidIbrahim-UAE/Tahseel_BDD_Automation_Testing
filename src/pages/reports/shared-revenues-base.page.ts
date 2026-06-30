@@ -26,12 +26,13 @@ export class SharedRevenuesBasePage extends BaseListPage {
   readonly clearFilterButton = 'button:has-text("Clear"), button:has-text("Reset"), button[aria-label*="Clear"), button[aria-label*="Reset"], button:nth-of-type(2)';
 
   // ── Report table selectors ──────────────────────────────────────────────
-  readonly reportTable = 'dx-data-grid, table[role="grid"], table.report-table, [role="grid"], table[class*="table"], table[class*="data"], table[class*="grid"], .dx-datagrid, .report-table, .data-table, .grid-container, [class*="grid-wrapper"], table, [class*="dx-grid"]';
-  readonly revenueEntityColumn = '[data-field="revenueEntity"], td:has-text("Revenue Entity"), td:has-text("Entity"), td:has-text("Department"), [class*="entity"], td[data-field*="entity"]';
-  readonly transactionCountColumn = '[data-field="count"], td:has-text("Transaction Count"), td:has-text("Count"), td:has-text("Transactions"), td:has-text("Total Txns"), [data-field="transactionCount"], [data-field*="count"]';
-  readonly totalAmountColumn = '[data-field="amount"], td:has-text("Total Amount"), td:has-text("Amount"), td:has-text("Total"), td:has-text("Total Value"), [data-field="totalAmount"], [data-field*="amount"], td[align="right"]';
-  readonly grandTotalRow = '[role="row"][class*="summary"], tr:has-text("Grand Total"), tr:has-text("Total"), tr[class*="grand-total"], tr[class*="summary"], tr[class*="footer"], tr[class*="dx-row-focused"]';
-  readonly grandTotalAmount = '[data-field="amount"]:last-child, span:has-text("Grand Total") ~ span, td:has-text("Grand Total") ~ td, td[class*="grand-total"]';
+  // DevExtreme data grid selectors with multiple fallbacks for robust element location
+  readonly reportTable = 'dx-data-grid, .dx-datagrid, .dx-datagrid-rowsview, [role="grid"], table[role="grid"], table.report-table, [class*="grid-container"], [class*="dx-grid"]';
+  readonly revenueEntityColumn = '[data-field="revenueEntity"], [data-field="entity"], .dx-col-revenueEntity, td:has-text("Revenue Entity"), td:has-text("Entity"), td:has-text("Department")';
+  readonly transactionCountColumn = '[data-field="count"], [data-field="transactionCount"], .dx-col-count, td:has-text("Transaction Count"), td:has-text("Count"), td:has-text("Transactions")';
+  readonly totalAmountColumn = '[data-field="amount"], [data-field="totalAmount"], .dx-col-amount, td:has-text("Total Amount"), td:has-text("Amount"), td:has-text("Total")';
+  readonly grandTotalRow = '.dx-row-group-footer, .dx-group-footer, .dx-row-total, tr:has-text("Grand Total"), tr:has-text("Total"), tr[class*="grand-total"]';
+  readonly grandTotalAmount = '.dx-datagrid-group-footer [data-field="amount"], .dx-row-total [data-field="amount"], span:has-text("Grand Total") ~ span';
   readonly transactionIdColumn = '[data-field="transactionId"]';
   readonly serviceColumn = '[data-field="service"]';
   readonly amountColumn = '[data-field="amount"]';
