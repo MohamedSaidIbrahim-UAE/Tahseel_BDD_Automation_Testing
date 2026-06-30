@@ -147,7 +147,7 @@ Then('the grand total amount is {float} AED', async function (expectedTotal: num
   await steps.verifyGrandTotalAmount(expectedTotal.toString());
 });
 
-Then('the user is {string}', async function (userRole: string) {
+Given('the user is {string}', async function (userRole: string) {
   // Store user role for context
 });
 

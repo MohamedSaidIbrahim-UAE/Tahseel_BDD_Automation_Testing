@@ -100,76 +100,116 @@ export class SharedRevenuesBasePage extends ImprovedReportPageBase {
 
   /**
    * Setup custom locator configurations for shared revenues report
+   * Uses multi-layered selectors targeting DevExpress components and standard HTML inputs
    */
   private setupCustomLocatorConfigs(): void {
-    // Override from date input with additional fallbacks
+    // Override from date input with DevExpress-aware selectors
     this.fromDateInputConfig = {
-      primary: 'input[type="date"]:first-of-type',
+      primary: 'dx-date-box input',
       fallbacks: [
-        'input[placeholder*="From"]',
-        'input[name*="from_date"]',
         'input[aria-label*="From"]',
-        'dx-date-box:first-of-type input',
-        '[data-qa*="from-date"] input',
-        '.date-from input',
+        'input[placeholder*="From"]',
+        '[class*="dx-datebox"] input',
+        'input[name*="from"]',
+        'input[id*="from"]',
+        'input[data-qa*="from"]',
+        '.filter-from input',
+        'input[type="text"]:first-of-type',
+        '[class*="date"] input:first-of-type',
       ],
-      timeout: 20000,
-      retry: 4,
+      timeout: 25000,
+      waitForVisible: true,
+      retry: 5,
     };
 
-    // Override to date input with additional fallbacks
+    // Override to date input with DevExpress-aware selectors
     this.toDateInputConfig = {
-      primary: 'input[type="date"]:last-of-type',
+      primary: 'dx-date-box:last-of-type input',
       fallbacks: [
-        'input[placeholder*="To"]',
-        'input[name*="to_date"]',
+        'dx-date-box input:last-of-type',
         'input[aria-label*="To"]',
-        'dx-date-box:last-of-type input',
-        '[data-qa*="to-date"] input',
-        '.date-to input',
+        'input[placeholder*="To"]',
+        '[class*="dx-datebox"]:last-of-type input',
+        'input[name*="to"]',
+        'input[id*="to"]',
+        'input[data-qa*="to"]',
+        '.filter-to input',
+        'input[type="text"]:last-of-type',
+        '[class*="date"] input:last-of-type',
       ],
-      timeout: 20000,
-      retry: 4,
+      timeout: 25000,
+      waitForVisible: true,
+      retry: 5,
     };
 
-    // Override show report button with additional fallbacks
+    // Override show report button with expanded fallbacks
     this.showReportButtonConfig = {
-      primary: 'button:has-text("View Report")',
+      primary: 'button[type="submit"]',
       fallbacks: [
-        'button:has-text("Generate")',
+        'button.dx-button-submit',
+        'button[aria-label*="Submit"]',
         'button:has-text("Show Report")',
+        'button:has-text("Generate Report")',
         'button:has-text("Search")',
-        'button[type="button"]:first-of-type',
-        'button[aria-label*="Report"]',
-        'dx-button',
-        '[role="button"]',
+        'button:has-text("View Report")',
+        'button[class*="submit"]',
+        'button[class*="primary"]',
+        '[role="button"]:has-text("Generate")',
+        'dx-button[type="default"]',
       ],
-      timeout: 20000,
-      retry: 4,
+      timeout: 25000,
+      waitForVisible: true,
+      retry: 5,
     };
   }
 
   /**
-   * Set from date with production-grade locator helper
+   * Set from date with production-grade locator helper and error recovery
    */
   async setFromDate(date: string): Promise<void> {
     await this.locatorHelper.executeWithRetry(
       async () => {
-        await this.locatorHelper.safeFill(this.fromDateInputConfig, date);
+        try {
+          // First try to fill directly
+          await this.locatorHelper.safeFill(this.fromDateInputConfig, date);
+        } catch (firstAttemptError) {
+          // If direct fill fails, try clicking first then filling (for date pickers)
+          try {
+            await this.locatorHelper.safeClick(this.fromDateInputConfig);
+            await this.page.waitForTimeout(500);
+            await this.locatorHelper.safeFill(this.fromDateInputConfig, date);
+          } catch {
+            // Re-throw the original error with context
+            throw new Error(`Failed to set from date to ${date}. Error: ${firstAttemptError}`);
+          }
+        }
       },
-      { description: `Set from date to ${date}`, maxAttempts: 4 }
+      { description: `Set from date to ${date}`, maxAttempts: 5 }
     );
   }
 
   /**
-   * Set to date with production-grade locator helper
+   * Set to date with production-grade locator helper and error recovery
    */
   async setToDate(date: string): Promise<void> {
     await this.locatorHelper.executeWithRetry(
       async () => {
-        await this.locatorHelper.safeFill(this.toDateInputConfig, date);
+        try {
+          // First try to fill directly
+          await this.locatorHelper.safeFill(this.toDateInputConfig, date);
+        } catch (firstAttemptError) {
+          // If direct fill fails, try clicking first then filling (for date pickers)
+          try {
+            await this.locatorHelper.safeClick(this.toDateInputConfig);
+            await this.page.waitForTimeout(500);
+            await this.locatorHelper.safeFill(this.toDateInputConfig, date);
+          } catch {
+            // Re-throw the original error with context
+            throw new Error(`Failed to set to date to ${date}. Error: ${firstAttemptError}`);
+          }
+        }
       },
-      { description: `Set to date to ${date}`, maxAttempts: 4 }
+      { description: `Set to date to ${date}`, maxAttempts: 5 }
     );
   }
 

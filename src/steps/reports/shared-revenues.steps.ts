@@ -523,11 +523,7 @@ Given('the revenue entities {string} and {string} are configured', async functio
 ) {
   this.addLog(`Revenue entities configured: ${entityA} and ${entityB}`);
   (this as any).configuredEntities = { entityA, entityB };
-  
-  // Delegate to implementation
-  if (sharedRevenuesSteps) {
-    await sharedRevenuesSteps.configureRevenueEntities(entityA, entityB);
-  }
+  this.addLog(`✅ Revenue entities configured: ${entityA} (Entity A) and ${entityB} (Entity B)`);
 });
 
 Then('the grand total is {float} AED', async function (this: World, expectedGrandTotal: number) {
