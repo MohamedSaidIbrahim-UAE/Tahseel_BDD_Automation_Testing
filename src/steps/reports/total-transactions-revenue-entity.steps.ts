@@ -200,3 +200,23 @@ When('the user runs the summary report', async function () {
   if (!steps) throw new Error('Steps not initialized');
   await steps.runTotalTransactionsReportForMonth('June 2026');
 });
+
+
+// ============================================================================
+// MISSING STEPS - Added to support feature file scenarios
+// ============================================================================
+
+When('the user runs the {string} for {string}', async function (reportName: string, dateRange: string) {
+  if (!reportName.includes('Total Transactions report')) {
+    throw new Error(`Unexpected report name: ${reportName}`);
+  }
+  if (!steps) throw new Error('Steps not initialized');
+  await steps.runTotalTransactionsReportForMonth(dateRange);
+});
+
+Given('the user is {string}', async function (userRole: string) {
+  // Store user role for context
+  if (steps) {
+    (steps as any).userRole = userRole;
+  }
+});

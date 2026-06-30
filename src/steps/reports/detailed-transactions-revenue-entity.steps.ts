@@ -64,3 +64,50 @@ Then('the total transaction amount should be {string}', async function (expected
 // "the report can be exported to Excel" - defined in shared.steps.ts
 // "the report displays {string}" - defined in shared.steps.ts
 // Using shared definitions to avoid ambiguous step matches
+
+// ============================================================================
+// MISSING STEPS - Added to support feature file scenarios
+// ============================================================================
+
+When('the user posts the following transactions on {string}:', async function (dateStr: string, dataTable: DataTable) {
+  await steps.postTransactionsOnDate(dateStr, dataTable);
+});
+
+When('the user runs the {string} for today', async function (reportName: string) {
+  if (!reportName.includes('Detailed Transactions report')) {
+    throw new Error(`Unexpected report name: ${reportName}`);
+  }
+  await steps.runDetailedTransactionsReportForToday();
+});
+
+When('the user filters by {string}', async function (entityName: string) {
+  await steps.filterByRevenueEntity(entityName);
+});
+
+When('the user selects a date range with no transactions', async function () {
+  await steps.selectDateRangeWithNoTransactions();
+});
+
+When('the user attempts to open the detailed revenue entity report', async function () {
+  await steps.attemptToOpenDetailedReport();
+});
+
+Then('the report shows all three transactions with correct revenue entity mapping', async function () {
+  await steps.verifyAllTransactionsWithCorrectMapping();
+});
+
+Then('the total amount for {string} is {float} AED', async function (entityName: string, expectedAmount: number) {
+  await steps.verifyEntityTotal(entityName, expectedAmount);
+});
+
+Then('only TXN-001 and TXN-002 are displayed', async function () {
+  await steps.verifyOnlySpecificTransactionsDisplayed(['TXN-001', 'TXN-002']);
+});
+
+Then('the total amount shown is {float} AED', async function (expectedAmount: number) {
+  await steps.verifyTotalAmountShown(expectedAmount);
+});
+
+Then('an {string} message is shown', async function (messageType: string) {
+  await steps.verifyAccessDeniedMessage(messageType);
+});
