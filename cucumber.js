@@ -8,7 +8,10 @@ module.exports = {
       'json:cucumber-report.json'
     ],
     parallel: 4,
-    timeout: 60000
+    timeout: 60000,
+    formatOptions: {
+      snippetInterface: 'async-await'
+    }
   },
   chromium: {
     require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/reports/**/*.steps.ts', 'src/steps/core/**/*.steps.ts'],
@@ -19,7 +22,10 @@ module.exports = {
       'json:allure-results/chromium-results.json'
     ],
     parallel: 4,
-    timeout: 60000
+    timeout: 60000,
+    formatOptions: {
+      snippetInterface: 'async-await'
+    }
   },
   'revenue-tests': {
     require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/reports/total-transactions-revenue-entity.steps.ts', 'src/steps/reports/shared-revenues.steps.ts', 'src/steps/reports/detailed-transactions-revenue-entity.steps.ts'],
@@ -30,7 +36,10 @@ module.exports = {
       'json:allure-results/chromium-results.json'
     ],
     parallel: 1,
-    timeout: 120000
+    timeout: 120000,
+    formatOptions: {
+      snippetInterface: 'async-await'
+    }
   },
   firefox: {
     require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/reports/**/*.steps.ts', 'src/steps/core/**/*.steps.ts'],
@@ -41,7 +50,10 @@ module.exports = {
       'json:allure-results/firefox-results.json'
     ],
     parallel: 3,
-    timeout: 60000
+    timeout: 60000,
+    formatOptions: {
+      snippetInterface: 'async-await'
+    }
   },
   webkit: {
     require: ['src/steps/hooks.ts', 'src/steps/shared.steps.ts', 'src/steps/reports/**/*.steps.ts', 'src/steps/core/**/*.steps.ts'],
@@ -52,7 +64,10 @@ module.exports = {
       'json:allure-results/webkit-results.json'
     ],
     parallel: 2,
-    timeout: 60000
+    timeout: 60000,
+    formatOptions: {
+      snippetInterface: 'async-await'
+    }
   },
   'report-automation': {
     require: [
@@ -68,6 +83,11 @@ module.exports = {
       'json:allure-results/automation-results.json'
     ],
     parallel: 1,
-    timeout: 600000
+    timeout: 600000,
+    formatOptions: {
+      snippetInterface: 'async-await',
+      colorsEnabled: true
+    },
+    publishQuiet: false
   }
 };

@@ -118,6 +118,7 @@
     "verify": "node scripts/verify-setup.js",
     "report:analyze": "node scripts/generate-failure-report.mjs",
     "test:full": "npm run test || npm run report:analyze",
+    "testA": "cross-env TEST_ENV=stage HEADED=true BROWSER=chromium cucumber-js --profile report-automation --tags \"@report-automation\" Features/General/Report_Automation_Reconciliation.feature --name \"Export Transaction Fees For All Payment Methods to Excel\"",
     "debug": "cross-env TEST_ENV=local HEADED=true BROWSER=chromium PWDEBUG=1 npx cucumber-js --tags \"@debug and @company-profiles\" Features/Company-Profiles.feature"
   },
   "devDependencies": {

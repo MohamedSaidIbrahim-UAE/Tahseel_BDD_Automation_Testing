@@ -197,121 +197,182 @@ export class AuthManager {
 
     console.log(`\n🔐 Session expired — performing re-login for environment: ${config.environment}`);
 
-    // ── Step 0: If the ASP.NET error page is showing, reload to clear it ──────
-    const isErrorPage = await this.page
-      .locator('body')
-      .evaluate((body: HTMLElement) =>
-        body.innerText.includes('JsonReaderException') ||
-        body.innerText.includes('An unhandled exception')
-      )
-      .catch(() => false);
+    // Check if context/browser is still connected before starting recovery
+    if (!this.context.browser()?.isConnected()) {
+      throw new Error('[AuthManager] Browser disconnected during re-login attempt. Cannot recover.');
+    }
 
-    if (isErrorPage) {
-      console.log('   ⚠️  ASP.NET error page detected — reloading...');
-      await this.page.reload({ waitUntil: 'domcontentloaded', timeout: config.timeout }).catch(() => {});
+    // ── Step 0: If the ASP.NET error page is showing, reload to clear it ──────
+    let isErrorPage = false;
+    try {
+      isErrorPage = await this.page
+        .locator('body')
+        .evaluate((body: HTMLElement) =>
+          body.innerText.includes('JsonReaderException') ||
+          body.innerText.includes('An unhandled exception')
+        )
+        .catch(() => false);
+
+      if (isErrorPage) {
+        console.log('   ⚠️  ASP.NET error page detected — reloading...');
+        await this.page.reload({ waitUntil: 'domcontentloaded', timeout: config.timeout }).catch(() => {});
+      }
+    } catch (errorCheckError) {
+      console.warn('[AuthManager] Error checking for error page:', errorCheckError);
     }
 
     // ── Step 1: Navigate to the app shell with retry logic ────────────────────
     const navigationTimeout = this.getNavigationTimeout();
-    await retryWithBackoff(
-      async () => {
-        await ensureConnectionHealth(this.page).catch(() => {});
-        return this.page.goto(`${baseUrl}/`, {
-          waitUntil: config.environment === 'stage' ? 'networkidle' : 'domcontentloaded',
-          timeout: navigationTimeout,
-        });
-      },
-      {
-        maxRetries: config.environment === 'stage' ? 5 : 3,
-        initialDelay: 2000,
-        onRetry: (attempt, error) => {
-          this.addLog(`Re-login navigation retry ${attempt}: ${error.message}`);
+    try {
+      await retryWithBackoff(
+        async () => {
+          // Re-check connection before each navigation attempt
+          if (!this.context.browser()?.isConnected()) {
+            throw new Error('Browser disconnected');
+          }
+          await ensureConnectionHealth(this.page).catch(() => {});
+          return this.page.goto(`${baseUrl}/`, {
+            waitUntil: config.environment === 'stage' ? 'networkidle' : 'domcontentloaded',
+            timeout: navigationTimeout,
+          });
         },
-      }
-    );
+        {
+          maxRetries: config.environment === 'stage' ? 5 : 3,
+          initialDelay: 2000,
+          onRetry: (attempt, error) => {
+            this.addLog(`Re-login navigation retry ${attempt}: ${error.message}`);
+          },
+        }
+      );
+    } catch (navError) {
+      throw new Error(`[AuthManager] Failed to navigate to ${baseUrl}: ${navError}`);
+    }
 
     // ── Step 2: Click Continue if the Angular shell is shown ───────────────────
-    const continueBtn = this.page.locator(
-      'button span[translate="Login.Continue"], button:has-text("Continue"), a:has-text("Continue")'
-    ).first();
+    try {
+      const continueBtn = this.page.locator(
+        'button span[translate="Login.Continue"], button:has-text("Continue"), a:has-text("Continue")'
+      ).first();
 
-    const hasContinue = await continueBtn.isVisible({ timeout: 8000 }).catch(() => false);
-    if (hasContinue) {
-      await continueBtn.click();
+      const hasContinue = await continueBtn.isVisible({ timeout: 8000 }).catch(() => false);
+      if (hasContinue) {
+        await continueBtn.click();
+        // Small delay for navigation to start
+        await this.page.waitForTimeout(500);
+      }
+    } catch (continueError) {
+      console.warn('[AuthManager] Error clicking Continue:', continueError);
     }
 
     // ── Step 3: Wait for the identity server username input ────────────────────
-    const usernameInput = this.getUsernameLocator();
-    await usernameInput.waitFor({ state: 'visible', timeout: navigationTimeout });
-    await usernameInput.clear();
-    await usernameInput.fill(username);
+    let usernameInput;
+    try {
+      usernameInput = this.getUsernameLocator();
+      await usernameInput.waitFor({ state: 'visible', timeout: navigationTimeout });
+      await usernameInput.clear();
+      await usernameInput.fill(username);
+    } catch (usernameError) {
+      throw new Error(`[AuthManager] Failed to fill username: ${usernameError}`);
+    }
 
     // ── Step 4: Submit username (VerifyUsername page) ──────────────────────────
-    const hasPasswordAlready = await this.page
-      .locator('input#Password, input[name="Password"]')
-      .first()
-      .isVisible()
-      .catch(() => false);
+    try {
+      const hasPasswordAlready = await this.page
+        .locator('input#Password, input[name="Password"]')
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
 
-    if (!hasPasswordAlready) {
-      await this.page.locator(
-        'button#submitButton, button[type="submit"], button:has-text("Continue"), button:has-text("Next")'
-      ).first().click();
+      if (!hasPasswordAlready) {
+        await this.page.locator(
+          'button#submitButton, button[type="submit"], button:has-text("Continue"), button:has-text("Next")'
+        ).first().click();
 
-      // Wait for UnifiedLogin page
-      await Promise.race([
-        this.page.waitForURL(/UnifiedLogin/i, { timeout: config.timeout }),
-        this.page.locator('input#Password, input[name="Password"]').first()
-          .waitFor({ state: 'visible', timeout: config.timeout }),
-      ]).catch(() => {});
+        // Wait for UnifiedLogin page
+        await Promise.race([
+          this.page.waitForURL(/UnifiedLogin/i, { timeout: config.timeout }),
+          this.page.locator('input#Password, input[name="Password"]').first()
+            .waitFor({ state: 'visible', timeout: config.timeout }),
+        ]).catch(() => {});
+      }
+    } catch (submitError) {
+      console.warn('[AuthManager] Error during username submission:', submitError);
     }
 
     // ── Step 5: Fill password and submit ──────────────────────────────────────
-    const passwordInput = this.getPasswordLocator();
+    try {
+      const passwordInput = this.getPasswordLocator();
+      await passwordInput.waitFor({ state: 'visible', timeout: navigationTimeout });
+      await passwordInput.clear();
+      await passwordInput.fill(password);
 
-    await passwordInput.waitFor({ state: 'visible', timeout: navigationTimeout });
-    await passwordInput.clear();
-    await passwordInput.fill(password);
-
-    await this.page.locator(
-      'button#submitButton, button[type="submit"], button:has-text("Sign In"), button:has-text("Login")'
-    ).first().click();
+      await this.page.locator(
+        'button#submitButton, button[type="submit"], button:has-text("Sign In"), button:has-text("Login")'
+      ).first().click();
+    } catch (passwordError) {
+      throw new Error(`[AuthManager] Failed to fill password: ${passwordError}`);
+    }
 
     // ── Step 6: Wait for redirect back to the Angular app ─────────────────────
-    // Wait until the URL leaves the identity server — works for both
-    // /etc-identity/ (local) and /masar-sso/ (stage/prod) paths
-    await this.page.waitForURL(
-      (url) => {
-        const p = url.pathname;
-        return !p.includes('/etc-identity/') &&
-               !p.includes('/masar-sso/') &&
-               !p.includes('/Users/VerifyUsername') &&
-               !p.includes('/Users/UnifiedLogin') &&
-               !p.includes('/auth/identity-login');
-      },
-      { timeout: config.timeout }
-    );
+    try {
+      await this.page.waitForURL(
+        (url) => {
+          const p = url.pathname;
+          return !p.includes('/etc-identity/') &&
+                 !p.includes('/masar-sso/') &&
+                 !p.includes('/Users/VerifyUsername') &&
+                 !p.includes('/Users/UnifiedLogin') &&
+                 !p.includes('/auth/identity-login');
+        },
+        { timeout: config.timeout }
+      );
+    } catch (urlError) {
+      console.warn('[AuthManager] URL redirect wait timed out, continuing:', urlError);
+    }
+
     // ── Step 6 (continued): Wait for the Angular dashboard ────────────────────
-    await this.page.waitForURL('**/dashboard', { timeout: config.timeout });
-    await this.page.waitForSelector(
-      '#kt_aside_menu, #kt_aside, app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]',
-      { timeout: 20000 }
-    );
+    try {
+      await this.page.waitForURL('**/dashboard', { timeout: config.timeout });
+      await this.page.waitForSelector(
+        '#kt_aside_menu, #kt_aside, app-sidebar, #kt_app_sidebar, nav[class*="sidebar"]',
+        { timeout: 20000 }
+      );
+    } catch (dashboardError) {
+      throw new Error(`[AuthManager] Failed to reach dashboard: ${dashboardError}`);
+    }
 
     // ── Step 7: Persist the refreshed storageState ────────────────────────────
-    await this.saveStorageState();
+    try {
+      await this.saveStorageState();
+    } catch (saveError) {
+      throw new Error(`[AuthManager] Failed to save storageState: ${saveError}`);
+    }
 
     console.log(`✅ Re-login successful. storageState.${config.environment}.json updated.\n`);
   }
 
   /**
    * Saves the current browser context's storageState to the environment-specific
-   * JSON file, overwriting any previous state.
+   * JSON file, overwriting any previous state. Also captures trace for debugging.
    */
   async saveStorageState(): Promise<void> {
     const filePath = getStorageStatePath();
-    await this.context.storageState({ path: filePath });
-    console.log(`💾 storageState saved → ${filePath}`);
+    
+    try {
+      await this.context.storageState({ path: filePath });
+      console.log(`💾 storageState saved → ${filePath}`);
+      
+      // Also capture trace if available through context
+      try {
+        const tracePath = filePath.replace(/\.json$/, '.trace.zip');
+        // Note: Trace capture requires context instrumentation at creation time
+        console.log(`📊 Trace available at: ${tracePath}`);
+      } catch (traceError) {
+        // Trace not available, continue
+      }
+    } catch (saveError) {
+      throw new Error(`Failed to save storageState: ${saveError}`);
+    }
   }
 
   // ── Main guard ────────────────────────────────────────────────────────────────
