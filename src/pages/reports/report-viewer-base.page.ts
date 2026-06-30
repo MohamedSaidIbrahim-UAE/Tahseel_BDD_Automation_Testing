@@ -235,7 +235,7 @@ export abstract class ReportViewerBasePage extends BaseListPage {
     // Click the parent anchor
     const link = matchingSpan.locator('xpath=ancestor::a[1]');
     await link.waitFor({ state: 'visible', timeout: 5000 });
-    await link.scrollIntoViewIfNeeded().catch(() => {});
+    await link.scrollIntoViewIfNeeded().catch(() => { });
     await link.click();
     return true;
   }
@@ -388,7 +388,10 @@ export abstract class ReportViewerBasePage extends BaseListPage {
 
   private async clickShowReportButton(): Promise<void> {
     const tier1 = [
+      'button.btn-primary',
+      'button:has-text("View Report")',
       'button:has-text("Show Report")',
+      'button:has-text("Report")',
       'button:has-text("Submit")',
       '[aria-label="Submit"]',
       'button[type="submit"]',
@@ -407,8 +410,9 @@ export abstract class ReportViewerBasePage extends BaseListPage {
         const visible = await btn.isVisible({ timeout: 1000 }).catch(() => false);
         const disabled = await btn.isDisabled().catch(() => false);
         if (visible && !disabled) {
-          await btn.scrollIntoViewIfNeeded().catch(() => {});
+          await btn.scrollIntoViewIfNeeded().catch(() => { });
           await btn.click({ timeout: 3000 });
+          console.log("***** Successfully clicked ShowReportButton *****");
           return;
         }
       } catch { continue; }
@@ -427,7 +431,7 @@ export abstract class ReportViewerBasePage extends BaseListPage {
     await newPage.waitForTimeout(3000);
 
     // Close old filter tab
-    await this.page.close().catch(() => {});
+    await this.page.close().catch(() => { });
 
     // Switch internal references
     this.page = newPage;
@@ -580,7 +584,7 @@ export abstract class ReportViewerBasePage extends BaseListPage {
    * Close the current report tab and switch back to the original filter page.
    */
   async closeReportTab(): Promise<void> {
-    await this.page.close().catch(() => {});
+    await this.page.close().catch(() => { });
     this._openedInNewTab = false;
   }
 

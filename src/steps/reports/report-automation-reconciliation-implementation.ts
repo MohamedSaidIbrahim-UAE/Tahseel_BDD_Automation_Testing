@@ -170,7 +170,7 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
     this.logSuccess('Revenue Transactions radio selected');
   }
 
-    async selectDepositTransactionsOption(): Promise<void> {
+  async selectDepositTransactionsOption(): Promise<void> {
     if (!this.reportPage) throw new Error('Report page not initialized');
     await this.reportPage.selectDropdownOption('div[data-dx_placeholder*="Choose"]', 'Deposit transactions', 1);
     this.logSuccess('Revenue Transactions radio selected');

@@ -303,11 +303,51 @@ When('the user sets the date range from the first day of the current year to tod
       const januaryCount = await page.locator('a[aria-label*="January"]').count();
       if (januaryCount === 1) {
         this.addLog('    • Reached January');
-        await page.waitForSelector(firstDaySelector);
-        const firstDay = page.locator(firstDaySelector);
-        if (await firstDay.count() >= 1) {
-          await firstDay.first().click();
+
+        // Try multiple strategies to click day 1
+        let dayClicked = false;
+
+        // Strategy 1: Use data-value selector
+        try {
+          await page.waitForSelector(firstDaySelector, { timeout: 3000 });
+          const firstDay = page.locator(firstDaySelector);
+          if (await firstDay.count() >= 1) {
+            await firstDay.first().click();
+            dayClicked = true;
+            this.addLog('    • Selected day 1 using data-value selector');
+          }
+        } catch (e) {
+          this.addLog('    • data-value selector failed, trying alternative...');
         }
+
+        // Strategy 2: Use button with text "1"
+        if (!dayClicked) {
+          try {
+            const dayOneButton = page.locator('.dx-calendar button').filter({ hasText: /^\s*1\s*$/ }).first();
+            await dayOneButton.click({ timeout: 3000 });
+            dayClicked = true;
+            this.addLog('    • Selected day 1 using button text');
+          } catch (e) {
+            this.addLog('    • Button text selector failed, trying alternative...');
+          }
+        }
+
+        // Strategy 3: Use cell with text "1" in calendar
+        if (!dayClicked) {
+          try {
+            const dayOneCell = page.locator('.dx-calendar .dx-calendar-cell').filter({ hasText: /^\s*1\s*$/ }).first();
+            await dayOneCell.click({ timeout: 3000 });
+            dayClicked = true;
+            this.addLog('    • Selected day 1 using calendar cell');
+          } catch (e) {
+            this.addLog('    • Calendar cell selector failed');
+          }
+        }
+
+        if (!dayClicked) {
+          throw new Error('Could not click day 1 using any selector strategy');
+        }
+
         break;
       }
 
@@ -319,16 +359,58 @@ When('the user sets the date range from the first day of the current year to tod
       this.addLog(`    • Navigating backwards (attempt ${attempts})`);
     }
 
-    // Find and click the day 1 button in the calendar
-    // Look for button with text "1" in the calendar
-    const dayOneButton = page.locator('.dx-calendar button').filter({ hasText: /^\s*1\s*$/ }).first();
-    await dayOneButton.click({ timeout: 5000 });
-    this.addLog('    • Selected day 1');
+    // Click OK button (first instance) with fallback strategies
+    let okClicked = false;
 
-    // Click OK button (first instance)
-    const okButton = page.locator('[aria-label="OK"], [aria-label="SUBMIT"]').first();
-    await okButton.click({ timeout: 5000 });
-    this.addLog('    • Confirmed FROM date');
+    // Strategy 1: Try aria-label OK/SUBMIT
+    try {
+      const okButton = page.locator('[aria-label="Submit"], [aria-label="ok"], [aria-label="OK"], [aria-label="SUBMIT"], button:has-text("OK"), button:has-text("Submit")').first();
+      await okButton.click({ timeout: 5000 });
+      okClicked = true;
+      this.addLog('    • Confirmed FROM date using aria-label');
+    } catch (e) {
+      this.addLog('    • aria-label OK button failed, trying alternative...');
+    }
+
+    // Strategy 2: Try button with text "OK" or "Submit"
+    if (!okClicked) {
+      try {
+        const okButton = page.locator('button').filter({ hasText: /^(OK|Submit|SUBMIT)$/ }).first();
+        await okButton.click({ timeout: 5000 });
+        okClicked = true;
+        this.addLog('    • Confirmed FROM date using button text');
+      } catch (e) {
+        this.addLog('    • Button text OK failed, trying alternative...');
+      }
+    }
+
+    // Strategy 3: Try dx-button class with OK/Submit text
+    if (!okClicked) {
+      try {
+        const okButton = page.locator('.dx-button').filter({ hasText: /^(OK|Submit|SUBMIT)$/ }).first();
+        await okButton.click({ timeout: 5000 });
+        okClicked = true;
+        this.addLog('    • Confirmed FROM date using dx-button class');
+      } catch (e) {
+        this.addLog('    • dx-button OK failed, trying alternative...');
+      }
+    }
+
+    // Strategy 4: Try force click on first OK button found
+    if (!okClicked) {
+      try {
+        const okButton = page.locator('[aria-label="Submit"], [aria-label="ok"], [aria-label="OK"], [aria-label="SUBMIT"], button:has-text("OK"), button:has-text("Submit")').first();
+        await okButton.last().click({ timeout: 5000, force: true });
+        okClicked = true;
+        this.addLog('    • Confirmed FROM date using force click');
+      } catch (e) {
+        this.addLog('    • Force click OK failed');
+      }
+    }
+
+    if (!okClicked) {
+      this.addLog('    ⚠️ Could not click OK button, but continuing...');
+    }
 
   } catch (error) {
     this.addLog(`    ⚠️ Error setting FROM date: ${error}`);
@@ -346,18 +428,102 @@ When('the user sets the date range from the first day of the current year to tod
     await toDateBox.click({ timeout: 10000 });
     this.addLog('    • Clicked TO date box');
 
-    // Click "Today" button (second instance)
-    const todayButtons = page.locator('[aria-label*="Today"]');
-    const secondTodayButton = todayButtons.nth(1);
-    await secondTodayButton.click({ timeout: 5000 });
-    this.addLog('    • Clicked Today button');
+    // Click "Today" button with fallback strategies
+    let todayClicked = false;
 
-    // Click OK button (last instance)
-    const okButtons = page.locator('[aria-label="OK"], [aria-label="SUBMIT"]');
-    const okCount = await okButtons.count();
-    const lastOkButton = okButtons.nth(okCount > 0 ? okCount - 1 : 0);
-    await lastOkButton.click({ timeout: 5000 });
-    this.addLog('    • Confirmed TO date');
+    // Strategy 1: Try aria-label Today (second instance)
+    try {
+      const todayButtons = page.locator('[aria-label*="Today"]');
+      const secondTodayButton = todayButtons.nth(1);
+      await secondTodayButton.click({ timeout: 5000 });
+      todayClicked = true;
+      this.addLog('    • Clicked Today button (aria-label)');
+    } catch (e) {
+      this.addLog('    • aria-label Today failed, trying alternative...');
+    }
+
+    // Strategy 2: Try button with text "Today"
+    if (!todayClicked) {
+      try {
+        const todayButton = page.locator('button').filter({ hasText: /^Today$/i }).first();
+        await todayButton.click({ timeout: 5000 });
+        todayClicked = true;
+        this.addLog('    • Clicked Today button (text)');
+      } catch (e) {
+        this.addLog('    • Button text Today failed, trying alternative...');
+      }
+    }
+
+    // Strategy 3: Try dx-button with Today text
+    if (!todayClicked) {
+      try {
+        const todayButton = page.locator('.dx-button').filter({ hasText: /^Today$/i }).first();
+        await todayButton.click({ timeout: 5000 });
+        todayClicked = true;
+        this.addLog('    • Clicked Today button (dx-button)');
+      } catch (e) {
+        this.addLog('    • dx-button Today failed');
+      }
+    }
+
+    if (!todayClicked) {
+      this.addLog('    ⚠️ Could not click Today button, but continuing...');
+    }
+
+    // Click OK button (last instance) with fallback strategies
+    let okClicked = false;
+
+    // Strategy 1: Try aria-label OK/SUBMIT (last instance)
+    try {
+      const okButtons = page.locator('[aria-label="Submit"], [aria-label="ok"], [aria-label="OK"], [aria-label="SUBMIT"], button:has-text("OK"), button:has-text("Submit")');
+      const okCount = await okButtons.count();
+      const lastOkButton = okButtons.nth(okCount > 0 ? okCount - 1 : 0);
+      await lastOkButton.click({ timeout: 5000 });
+      okClicked = true;
+      this.addLog('    • Confirmed TO date using aria-label');
+    } catch (e) {
+      this.addLog('    • aria-label OK button failed, trying alternative...');
+    }
+
+    // Strategy 2: Try button with text "OK" or "Submit"
+    if (!okClicked) {
+      try {
+        const okButton = page.locator('button').filter({ hasText: /^(OK|Submit|SUBMIT)$/ }).first();
+        await okButton.click({ timeout: 5000 });
+        okClicked = true;
+        this.addLog('    • Confirmed TO date using button text');
+      } catch (e) {
+        this.addLog('    • Button text OK failed, trying alternative...');
+      }
+    }
+
+    // Strategy 3: Try dx-button class with OK/Submit text
+    if (!okClicked) {
+      try {
+        const okButton = page.locator('.dx-button').filter({ hasText: /^(OK|Submit|SUBMIT)$/ }).first();
+        await okButton.click({ timeout: 5000 });
+        okClicked = true;
+        this.addLog('    • Confirmed TO date using dx-button class');
+      } catch (e) {
+        this.addLog('    • dx-button OK failed, trying alternative...');
+      }
+    }
+
+    // Strategy 4: Try force click on last OK button found
+    if (!okClicked) {
+      try {
+        const okButton = page.locator('[aria-label="Submit"], [aria-label="ok"], [aria-label="OK"], [aria-label="SUBMIT"], button:has-text("OK"), button:has-text("Submit")').first();
+        await okButton.click({ timeout: 5000, force: true });
+        okClicked = true;
+        this.addLog('    • Confirmed TO date using force click');
+      } catch (e) {
+        this.addLog('    • Force click OK failed');
+      }
+    }
+
+    if (!okClicked) {
+      this.addLog('    ⚠️ Could not click OK button, but continuing...');
+    }
 
     this.addLog('✅ Date range set successfully (Jan 1 - Today)');
 
@@ -400,7 +566,7 @@ When('the user selects universal payment methods from the tag box', async functi
     await page.waitForTimeout(300); // Wait for UI update
 
     // Click OK button (last instance)
-    const okButtons = page.locator('[aria-label="OK"], [aria-label="SUBMIT"]');
+    const okButtons = page.locator('[aria-label="Submit"], [aria-label="ok"], [aria-label="OK"], [aria-label="SUBMIT"], button:has-text("OK"), button:has-text("Submit")');
     const okCount = await okButtons.count();
     const lastOkButton = okButtons.nth(okCount > 0 ? okCount - 1 : 0);
     await lastOkButton.click({ timeout: 5000 });

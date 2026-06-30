@@ -23,7 +23,7 @@ Feature: Report Automation and Cross-Report Reconciliation
   Scenario: Export Transaction Fees For All Payment Methods to Excel
     When the user navigates to the report "Transaction Fees For All Payment Methods"
     And the user sets the date range from the first day of the current year to today
-    And the user selects the "Revenue Transactions" dropdown option
+    And the user selects universal payment methods from the tag box
     And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "TransactionFeesForAllPaymentMethods"
     Then the Excel file should be downloaded successfully

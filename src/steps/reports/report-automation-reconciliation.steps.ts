@@ -97,10 +97,10 @@ When('the user sets the date range', async function () {
   await steps.setReportDateRange();
 });
 
-When('the user selects universal payment methods from the tag box', async function () {
-  if (!steps) throw new Error('Steps not initialized');
-  await steps.selectAllPaymentMethods();
-});
+// When('the user selects universal payment methods from the tag box', async function () {
+//   if (!steps) throw new Error('Steps not initialized');
+//   await steps.selectAllPaymentMethods();
+// });
 
 When('the user selects transaction types from the tag box', async function () {
   if (!steps) throw new Error('Steps not initialized');

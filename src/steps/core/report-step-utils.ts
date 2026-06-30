@@ -103,6 +103,8 @@ export class ReportStepUtils {
   static async clickShowReportButton(page: Page): Promise<boolean> {
     // Comprehensive button selector list (31 options)
     const buttonSelectors = [
+      'button.btn-primary',
+      'button:has-text("View Report")',
       'button:has-text("Show Report")',
       'button:has-text("Display Report")',
       'button:has-text("Generate Report")',
@@ -143,7 +145,7 @@ export class ReportStepUtils {
             // Check if button is visible
             if (await element.isVisible().catch(() => false)) {
               // Scroll into view if needed
-              await element.scrollIntoViewIfNeeded().catch(() => {});
+              await element.scrollIntoViewIfNeeded().catch(() => { });
 
               // Check computed styles for visibility
               const isHidden = await element
@@ -263,8 +265,8 @@ export class ReportStepUtils {
 
     throw new Error(
       `Report table did not render within ${timeout}ms. ` +
-        `Tried selectors: ${tableSelectors.join(', ')}. ` +
-        `Last error: ${lastError?.message || 'Unknown'}`
+      `Tried selectors: ${tableSelectors.join(', ')}. ` +
+      `Last error: ${lastError?.message || 'Unknown'}`
     );
   }
 
@@ -404,19 +406,19 @@ export class ReportStepUtils {
     const exportButtonSelectors =
       format === 'excel'
         ? [
-            'button:has-text("Export to Excel")',
-            'button:has-text("Excel")',
-            'button:has-text("Download")',
-            '[data-test-id="export-excel"]',
-            '.btn-export-excel',
-          ]
+          'button:has-text("Export to Excel")',
+          'button:has-text("Excel")',
+          'button:has-text("Download")',
+          '[data-test-id="export-excel"]',
+          '.btn-export-excel',
+        ]
         : [
-            'button:has-text("Export to PDF")',
-            'button:has-text("PDF")',
-            'button:has-text("Download")',
-            '[data-test-id="export-pdf"]',
-            '.btn-export-pdf',
-          ];
+          'button:has-text("Export to PDF")',
+          'button:has-text("PDF")',
+          'button:has-text("Download")',
+          '[data-test-id="export-pdf"]',
+          '.btn-export-pdf',
+        ];
 
     for (const selector of exportButtonSelectors) {
       const button = await page.$(selector);
