@@ -1,15 +1,17 @@
 /**
- * Shared Revenues Report - DTPS & Sharjah Municipality Page
+ * Shared Revenues Report - DTPS & Sharjah Municipality Page (Production Grade)
  *
  * 50/50 revenue split between:
  * - DTPS (Department of Tourism and Planning Services)
  * - Sharjah Municipality
  *
  * Handles transaction-level split verification and summary reporting.
+ * Uses production-grade ImprovedReportPageBase for reliable locator handling.
  */
 
 import { Page } from '@playwright/test';
 import { SharedRevenuesBasePage } from './shared-revenues-base.page';
+import { LocatorConfig } from '../base-page-locator-helper';
 
 export class SharedRevenuesDTPSSharjahPage extends SharedRevenuesBasePage {
   readonly SPLIT_PERCENTAGE_DTPS = 50;

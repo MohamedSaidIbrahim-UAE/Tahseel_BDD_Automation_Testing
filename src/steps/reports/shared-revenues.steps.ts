@@ -15,13 +15,18 @@ import { parseGherkinDate, getMonthDateRange } from '../../utils/date-parser';
 import { expect } from '@playwright/test';
 import { SharedRevenuesDTPSSharjahPage } from '../../pages/reports/shared-revenues-dtps-sharjah.page';
 import { testContext } from '../test-context';
+import { SharedRevenuesReportSteps } from './shared-revenues-implementation';
 
 let reportPage: SharedRevenuesDTPSSharjahPage;
+let sharedRevenuesSteps: SharedRevenuesReportSteps;
 
 Before(function (this: World) {
   if (this.page) {
     reportPage = new SharedRevenuesDTPSSharjahPage(this.page);
     testContext.setPage(reportPage);
+    
+    // Initialize implementation class
+    sharedRevenuesSteps = new SharedRevenuesReportSteps(this);
   }
 });
 
@@ -523,6 +528,11 @@ Given('the revenue entities {string} and {string} are configured', async functio
 ) {
   this.addLog(`Revenue entities configured: ${entityA} and ${entityB}`);
   (this as any).configuredEntities = { entityA, entityB };
+  
+  // Delegate to implementation
+  if (sharedRevenuesSteps) {
+    await sharedRevenuesSteps.configureRevenueEntities(entityA, entityB);
+  }
 });
 
 Then('the grand total is {float} AED', async function (this: World, expectedGrandTotal: number) {
@@ -535,4 +545,26 @@ Then('the grand total is {float} AED', async function (this: World, expectedGran
   this.addLog(`Actual grand total: ${actualGrandTotal} AED`);
   expect(actualGrandTotal).toBeCloseTo(expectedGrandTotal, 2);
   this.addLog(`✅ Grand total verified: ${expectedGrandTotal} AED`);
+});
+
+// ────────────────────────────────────────────────────────────────────────────
+// Delegated Implementation Steps
+// ────────────────────────────────────────────────────────────────────────────
+
+Then('the report can be exported to PDF', async function (this: World) {
+  if (!sharedRevenuesSteps) {
+    throw new Error('Shared revenues implementation not initialized');
+  }
+  this.addLog('Verifying PDF export capability...');
+  await sharedRevenuesSteps.verifyExportToPDF();
+  this.addLog('✅ PDF export verified');
+});
+
+Then('the report can be exported to Excel', async function (this: World) {
+  if (!sharedRevenuesSteps) {
+    throw new Error('Shared revenues implementation not initialized');
+  }
+  this.addLog('Verifying Excel export capability...');
+  await sharedRevenuesSteps.verifyExportToExcel();
+  this.addLog('✅ Excel export verified');
 });
