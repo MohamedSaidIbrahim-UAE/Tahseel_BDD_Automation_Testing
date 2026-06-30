@@ -219,7 +219,8 @@ export class ImprovedReportPageBase extends BaseListPage {
     await this.waitForReportTable();
     const table = await this.locatorHelper.findElement(this.reportTableConfig);
     const cell = table.locator(`[role="row"]:nth-child(${rowIndex + 1}) [role="gridcell"]:nth-child(${columnIndex + 1})`);
-    return await this.locatorHelper.safeGetText({ primary: cell.locator });
+    const cellText = await cell.textContent({ timeout: 5000 });
+    return cellText?.trim() || '';
   }
 
   /**
