@@ -101,10 +101,10 @@ export abstract class BasePage {
     // ── Comprehensive login-form detection (aligned with AuthManager._isLoginFormVisible) ──
     const loginFormVisible =
       await page.locator(
-        'input#Username, input[name="Username"], input[id*="user" i], input[name*="user" i], input[placeholder*="username" i]'
+        'input#Username, input[name="username"], [formcontrolname="username"], [placeholder="إسم المستخدم"], input[id*="user" i], input[name*="user" i], input[placeholder*="username" i]'
       ).first().isVisible().catch(() => false) ||
       await page.locator(
-        'input#Password, input[name="Password"], input[id*="pass" i], input[name*="pass" i], input[placeholder*="password" i]'
+        'input#Password, input[name="password"], [formcontrolname="password"], [placeholder="كلمة المرور"], [type="password"], input[id*="pass" i], input[name*="pass" i], input[placeholder*="password" i]'
       ).first().isVisible().catch(() => false) ||
       await page.locator(
         'button span[translate="Login.Continue"], button:has-text("Continue"), button:has-text("Next"), button:has-text("Sign in"), button:has-text("Sign In")'
@@ -128,6 +128,13 @@ export abstract class BasePage {
         `[BasePage] Session expired navigating to "${originalUrl}" but AuthManager is not set. ` +
         `Ensure World.initialize() calls BasePage.setAuthManager().`
       );
+    }
+
+    // Check if AuthManager is already recovering to prevent concurrent attempts
+    const AuthManagerClass = authManager.constructor as any;
+    if (AuthManagerClass.isRecoveryInProgress && AuthManagerClass.isRecoveryInProgress()) {
+      console.warn('[BasePage] AuthManager recovery already in progress, skipping duplicate re-login');
+      return false;
     }
 
     console.warn(`[BasePage] 🔐 Session expired — performing automatic re-login for "${originalUrl}"`);

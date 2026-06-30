@@ -120,7 +120,7 @@ export class MCPInspector {
     const formSelectors = [
       'input[type="text"]',
       'input[type="email"]',
-      'input[type="password"]',
+      'input[type="password"], [formcontrolname="password"], [placeholder="كلمة المرور"], [type="password"]',
       'input[type="number"]',
       'textarea',
       'select',

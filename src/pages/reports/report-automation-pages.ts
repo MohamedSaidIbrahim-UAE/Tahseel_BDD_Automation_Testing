@@ -34,7 +34,7 @@ export class TotalTransactionsRevenueReceivablePage extends ReportViewerBasePage
   readonly toDateInputXPath =
     "dx-date-box input[type='text']";
   readonly paymentMethodSelector =
-    "[data-dx_placeholder*='Choose'] ";
+    "[data-dx_placeholder*='Choose']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -207,7 +207,7 @@ export class SmartReceiptPrintingFeesPage extends ReportViewerBasePage {
   readonly toDateInputXPath =
     "dx-date-box input[type='text']";
   readonly paymentMethodSelector =
-    "[data-dx_placeholder*='Choose'] ";
+    "[data-dx_placeholder*='Choose']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -237,7 +237,7 @@ export class SupportServicesTransactionsPage extends ReportViewerBasePage {
   readonly toDateInputXPath =
     "dx-date-box input[type='text']";
   readonly paymentMethodSelector =
-    "[data-dx_placeholder*='Choose'] ";
+    "[data-dx_placeholder*='Choose']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -268,9 +268,9 @@ export class TotalChargesByRevenuePage extends ReportViewerBasePage {
   readonly toDateInputXPath =
     "dx-date-box input[type='text']";
   readonly paymentMethodSelector =
-    "[data-dx_placeholder*='Choose'] ";
+    "[data-dx_placeholder*='Choose']";
   readonly feeTypeDropdownXPath =
-    "[data-dx_placeholder*='Choose'] ";
+    "[data-dx_placeholder*='Choose']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -302,7 +302,7 @@ export class TotalTaxReportPage extends ReportViewerBasePage {
   readonly toDateInputXPath =
     "dx-date-box input[type='text']";
   readonly paymentMethodSelector =
-    "[data-dx_placeholder*='Choose'] ";
+    "[data-dx_placeholder*='Choose']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }
@@ -333,7 +333,7 @@ export class TotalTransactionReportPage extends ReportViewerBasePage {
   readonly toDateInputXPath =
     "dx-date-box input[type='text']";
   readonly paymentMethodSelector =
-    "[data-dx_placeholder*='Choose'] ";
+    "[data-dx_placeholder*='Choose']";
 
   override getDefaultFromDateSelector(): string { return this.fromDateInputXPath; }
   override getDefaultToDateSelector(): string { return this.toDateInputXPath; }

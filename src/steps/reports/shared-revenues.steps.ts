@@ -55,6 +55,28 @@ Given('the following transactions are posted under shared service on {string}:',
   this.addLog(`Transaction date set to: ${transactionDate.toISOString().split('T')[0]}`);
 });
 
+// Handle numeric date format from Gherkin (2026-06-15 parsed as three ints)
+Given('the following transactions are posted under shared service on {int}-{int}-{int}:', async function (
+  this: World,
+  year: number,
+  month: number,
+  day: number,
+  dataTable: DataTable
+) {
+  const data = dataTable.hashes();
+  const transactionDate = new Date(year, month - 1, day);
+  
+  this.addLog(`Setting up shared service transactions for ${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}:`);
+  data.forEach((row: any) => {
+    this.addLog(`  - Service: ${row.Service}, Amount: ${row.Amount} AED, Entities: ${row.Entities}`);
+  });
+  
+  // Store parsed date and data for later verification
+  (this as any).transactionDate = transactionDate;
+  (this as any).transactionData = data;
+  this.addLog(`Transaction date set to: ${transactionDate.toISOString().split('T')[0]}`);
+});
+
 Given('sharing rule for {string} is {string}', async function (
   this: World,
   serviceName: string,
@@ -78,6 +100,24 @@ Given('the sharing rule is updated on {string} to {string}', async function (
   }
   
   this.addLog(`Sharing rule updated on ${dateStr} to: ${newSplitRule}`);
+  
+  // Store for later verification
+  (this as any).ruleChangeDate = changeDate;
+  (this as any).newSharingRule = newSplitRule;
+  this.addLog(`Rule change date stored: ${changeDate.toISOString().split('T')[0]}`);
+});
+
+// Handle numeric date format from Gherkin (2026-06-15 parsed as three ints)
+Given('the sharing rule is updated on {int}-{int}-{int} to {string}', async function (
+  this: World,
+  year: number,
+  month: number,
+  day: number,
+  newSplitRule: string
+) {
+  const changeDate = new Date(year, month - 1, day);
+  
+  this.addLog(`Sharing rule updated on ${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} to: ${newSplitRule}`);
   
   // Store for later verification
   (this as any).ruleChangeDate = changeDate;
@@ -328,6 +368,37 @@ Then('the report reflects the updated sharing rule from {string} onwards', async
   }
 
   this.addLog(`Verifying rule change from ${changeDateStr}...`);
+  
+  // Retrieve the new sharing rule from context (set in earlier Given step)
+  const newRule = (this as any).newSharingRule || '60/40';
+  const [beforePercent, afterPercent] = newRule.split('/').map(Number);
+
+  const midPeriodImpact = await reportPage.verifyMidPeriodRuleChange(
+    changeDate.toISOString(),
+    beforePercent,
+    afterPercent
+  );
+
+  this.addLog(`Before rule change: ${midPeriodImpact.beforeChange} AED`);
+  this.addLog(`After rule change: ${midPeriodImpact.afterChange} AED`);
+  this.addLog(`Difference: ${midPeriodImpact.differenceInSplit} AED`);
+  this.addLog('✅ Mid-period rule change verified in report');
+});
+
+// Handle numeric date format from Gherkin (2026-06-15 parsed as three ints)
+Then('the report reflects the updated sharing rule from {int}-{int}-{int} onwards', async function (
+  this: World,
+  year: number,
+  month: number,
+  day: number
+) {
+  if (!reportPage) {
+    throw new Error('Report page not initialized');
+  }
+
+  const changeDate = new Date(year, month - 1, day);
+
+  this.addLog(`Verifying rule change from ${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}...`);
   
   // Retrieve the new sharing rule from context (set in earlier Given step)
   const newRule = (this as any).newSharingRule || '60/40';

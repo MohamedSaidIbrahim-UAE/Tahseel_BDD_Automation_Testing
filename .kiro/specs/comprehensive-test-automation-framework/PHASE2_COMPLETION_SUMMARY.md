@@ -67,7 +67,7 @@ const validations = await resolver.validateAll('[role="button"]');
 ```typescript
 {
   primary: '[data-testid="user-name"]',
-  fallbacks: ['[aria-label="User Name"]', 'input[name="userName"]'],
+  fallbacks: ['[aria-label="User Name"]', 'input[name="username"], [formcontrolname="username"], [placeholder="إسم المستخدم"]'],
   strategies: ['data-testid', 'aria-label', 'name']
 }
 ```

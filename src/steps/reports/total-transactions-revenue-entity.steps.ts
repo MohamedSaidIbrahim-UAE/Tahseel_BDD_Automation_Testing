@@ -68,11 +68,6 @@ When('the user selects {string} for every filter dropdown', async function (_all
   await steps.selectAllForAllDropdowns();
 });
 
-When('the user sets the date range from the first day of the current year to today', async function () {
-  if (!steps) throw new Error('Steps not initialized');
-  await steps.setCurrentYearDateRange();
-});
-
 When('the user selects a future date range', async function () {
   if (!steps) throw new Error('Steps not initialized');
   await steps.setFutureDateRange();
@@ -81,11 +76,6 @@ When('the user selects a future date range', async function () {
 When('the user runs the "Total Transactions report by revenue entity" for {string}', async function (monthYear: string) {
   if (!steps) throw new Error('Steps not initialized');
   await steps.runTotalTransactionsReportForMonth(monthYear);
-});
-
-When('the user clicks "Show Report"', async function () {
-  if (!steps) throw new Error('Steps not initialized');
-  await steps.clickShowReport();
 });
 
 When('the user filters the report by revenue entity', async function () {

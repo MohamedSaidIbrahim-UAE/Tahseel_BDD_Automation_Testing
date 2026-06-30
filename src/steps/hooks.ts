@@ -20,6 +20,80 @@ interface ScenarioContext {
   getLogs: () => string;
 }
 
+// ── Recovery Helper Functions ──────────────────────────────────────────────────
+
+/**
+ * Validates all preconditions needed for session recovery.
+ * Returns false if any critical component is invalid.
+ */
+function validateRecoveryPreconditions(context: BrowserContext, page: Page): boolean {
+  // Check browser connection
+  if (!context?.browser?.()) {
+    console.error('[Hooks] Context missing browser reference');
+    return false;
+  }
+
+  if (!context.browser()!.isConnected()) {
+    console.error('[Hooks] Browser disconnected');
+    return false;
+  }
+
+  // Check page state
+  if (!page) {
+    console.error('[Hooks] Page reference missing');
+    return false;
+  }
+
+  if (page.isClosed()) {
+    console.error('[Hooks] Page is closed');
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Re-navigates to the original page after successful recovery.
+ * Silently fails if the re-navigation doesn't work.
+ */
+async function reNavigateAfterRecovery(page: Page): Promise<void> {
+  try {
+    if (page && !page.isClosed()) {
+      const currentUrl = page.url();
+      console.log(`[Hooks] Re-navigating to ${currentUrl} after recovery`);
+      await page.goto(currentUrl, { 
+        waitUntil: 'domcontentloaded', 
+        timeout: 30000 
+      }).catch((err: any) => {
+        console.warn('[Hooks] Re-navigation warning (continuing anyway):', err);
+      });
+    }
+  } catch (error) {
+    console.warn('[Hooks] Error during re-navigation:', error);
+  }
+}
+
+/**
+ * Handles recovery failures by determining if the error is recoverable.
+ */
+function handleRecoveryFailure(error: any): void {
+  const errorMsg = error instanceof Error ? error.message : String(error);
+  console.error('[Hooks] Auto-recovery failed:', errorMsg);
+  
+  // Check if the error indicates browser/context closure
+  const isBrowserClosed = errorMsg.includes('closed') || 
+                         errorMsg.includes('disconnected') ||
+                         errorMsg.includes('Target page, context or browser has been closed');
+  
+  if (isBrowserClosed) {
+    console.error('[Hooks] Browser/Context is closed — recovery aborted');
+  } else {
+    console.warn('[Hooks] Recovery failed but browser still connected — test may continue');
+  }
+}
+
+// ── Before Hook ────────────────────────────────────────────────────────────────
+
 Before({ timeout: 60000 }, async function (this: any, scenario) {
   if (!browser) {
     browser = await chromium.launch({ headless: false, args: ['--disable-web-security'] });
@@ -76,7 +150,7 @@ Before({ timeout: 60000 }, async function (this: any, scenario) {
     return logs.join('\n');
   };
 
-  // Session violation recovery (401/403)
+  // Session violation recovery (401/403) - Professional orchestrated recovery
   if (tags.includes('@authenticated')) {
     page.on('response', async (response: Response) => {
       if (![401, 403].includes(response.status())) {
@@ -91,9 +165,9 @@ Before({ timeout: 60000 }, async function (this: any, scenario) {
         return;
       }
 
-      // Check if context/browser is still valid
-      if (context.browser()?.isConnected() === false) {
-        console.error('[Hooks] Browser disconnected, cannot recover');
+      // Pre-flight validation
+      if (!validateRecoveryPreconditions(context, page)) {
+        console.error('[Hooks] Recovery preconditions not met, aborting');
         return;
       }
 
@@ -101,39 +175,26 @@ Before({ timeout: 60000 }, async function (this: any, scenario) {
       const recoveryStartTime = Date.now();
 
       try {
-        console.warn(`[Hooks] Session violation (${response.status()}). Triggering re-login...`);
+        console.warn(`[Hooks] Session violation (${response.status()}). Triggering professional re-login recovery...`);
+        
+        // Perform re-login
         await this.authManager.reLoginAndSaveState();
         
-        // Re-navigate to the original URL after recovery
-        try {
-          const currentUrl = page.url();
-          console.log(`[Hooks] Re-navigating to ${currentUrl} after recovery`);
-          await page.goto(currentUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
-        } catch (navError) {
-          console.warn('[Hooks] Re-navigation failed after recovery:', navError);
-        }
+        // Re-navigate after successful recovery
+        await reNavigateAfterRecovery(page);
         
         const recoveryTime = Date.now() - recoveryStartTime;
         console.log(`✅ [Hooks] Auto-recovery successful in ${recoveryTime}ms`);
       } catch (error) {
-        const errorMsg = error instanceof Error ? error.message : String(error);
-        console.error('[Hooks] Auto-recovery failed:', errorMsg);
-        
-        // If recovery fails, try to close and re-establish
-        try {
-          if (!context.browser()?.isConnected()) {
-            console.log('[Hooks] Context lost, attempting browser reconnect');
-            // Browser will be recreated on next Before hook
-          }
-        } catch (e) {
-          console.error('[Hooks] Error checking context state:', e);
-        }
+        handleRecoveryFailure(error);
       } finally {
         ctx.isRecovering = false;
       }
     });
   }
 });
+
+// ── After Hook ────────────────────────────────────────────────────────────────
 
 After(async function (this: any, scenario) {
   const traceDir = path.join(process.cwd(), 'traces');
@@ -175,17 +236,17 @@ After(async function (this: any, scenario) {
           if (!fs.existsSync(traceDir)) {
             fs.mkdirSync(traceDir, { recursive: true });
           }
-          const tracePath = path.join(
+          const traceFilePath = path.join(
             traceDir,
             `${this.scenarioName.replace(/\s+/g, '_')}_FAILED_${Date.now()}.trace.zip`
           );
-          await this.context.tracing.stop({ path: tracePath });
+          await this.context.tracing.stop({ path: traceFilePath });
           
           // Also attach trace reference to report
-          const traceRelativePath = path.relative(process.cwd(), tracePath);
+          const traceRelativePath = path.relative(process.cwd(), traceFilePath);
           this.attach(`Trace file: ${traceRelativePath}`, 'text/plain');
           
-          console.log(`[After Hook] Trace saved → ${tracePath}`);
+          console.log(`[After Hook] Trace saved → ${traceFilePath}`);
           console.log(`[After Hook] Trace reference attached to report`);
         } catch (traceError) {
           console.warn('[After Hook] Failed to save trace:', traceError);

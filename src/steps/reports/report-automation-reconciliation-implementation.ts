@@ -138,6 +138,10 @@ export class ReportAutomationReconciliationSteps extends ReportStepDefinitions {
     const PageClass = ReportPageRegistry[key];
     this.reportPage = new PageClass(page);
 
+    // Set the page in testContext for downstream steps to access
+    const { testContext } = require('../../steps/test-context');
+    testContext.setPage(this.reportPage);
+
     this.log(`Navigating to: ${reportName}`);
     await this.reportPage.navigateToReportViaSideMenu();
     this.logSuccess(`Navigated to: ${reportName}`);

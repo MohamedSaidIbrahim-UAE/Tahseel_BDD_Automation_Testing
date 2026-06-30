@@ -20,7 +20,7 @@ export class LoginPage extends BasePage {
 
     // Self‑healing selectors
     this.usernameInput = [
-      'input[name="username"]',
+      'input[name="username"], [formcontrolname="username"], [placeholder="إسم المستخدم"]',
       'input[type="email"]',
       'input[placeholder*="username" i]',
       '#username',
@@ -28,8 +28,8 @@ export class LoginPage extends BasePage {
     ].join(', ');
 
     this.passwordInput = [
-      'input[name="password"]',
-      'input[type="password"]',
+      'input[name="password"], [formcontrolname="password"], [placeholder="كلمة المرور"], [type="password"]',
+      'input[type="password"], [formcontrolname="password"], [placeholder="كلمة المرور"], [type="password"]',
       'input[placeholder*="password" i]',
       '#password',
       'input.login-password'

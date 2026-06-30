@@ -120,24 +120,6 @@ When('the user clicks {string}', async function (buttonName: string) {
   }
 });
 
-When('the user sets the date range from the first day of the current year to today', async function () {
-  if (!steps) throw new Error('Steps not initialized');
-  const today = new Date();
-  const firstDay = new Date(today.getFullYear(), 0, 1);
-
-  const formatDate = (date: Date) => {
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-  };
-
-  const fromDate = formatDate(firstDay);
-  const toDate = formatDate(today);
-
-  await steps.setDateRange(fromDate, toDate);
-});
-
 When('the user exports the report to Excel with filename {string}', async function (filename: string) {
   if (!steps) throw new Error('Steps not initialized');
   await steps.exportReportToExcel(filename);

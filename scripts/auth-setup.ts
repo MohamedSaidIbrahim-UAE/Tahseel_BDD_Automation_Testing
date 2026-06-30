@@ -105,9 +105,9 @@ const SEL = {
   ].join(', '),
 
   usernameInput: [
-    '[formcontrolname="username"]',
+    '[formcontrolname="username"], [formcontrolname="username"], [placeholder="إسم المستخدم"]',
     'input#Username',
-    'input[name="Username"]',
+    'input[name="username"], [formcontrolname="username"], [placeholder="إسم المستخدم"]',
     'input[placeholder*="username" i]',
   ].join(', '),
   verifyBtn: [
@@ -118,9 +118,9 @@ const SEL = {
   ].join(', '),
 
   passwordInput: [
-    '[formcontrolname="password"]',
+    '[formcontrolname="password"], [formcontrolname="password"], [placeholder="كلمة المرور"], [type="password"]',
     'input#Password',
-    'input[name="Password"]',
+    'input[name="password"], [formcontrolname="password"], [placeholder="كلمة المرور"], [type="password"]',
     'input[placeholder*="password" i]',
   ].join(', '),
   loginBtn: [
