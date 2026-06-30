@@ -15,18 +15,13 @@ import { parseGherkinDate, getMonthDateRange } from '../../utils/date-parser';
 import { expect } from '@playwright/test';
 import { SharedRevenuesDTPSSharjahPage } from '../../pages/reports/shared-revenues-dtps-sharjah.page';
 import { testContext } from '../test-context';
-import { SharedRevenuesReportSteps } from './shared-revenues-implementation';
 
 let reportPage: SharedRevenuesDTPSSharjahPage;
-let sharedRevenuesSteps: SharedRevenuesReportSteps;
 
 Before(function (this: World) {
   if (this.page) {
     reportPage = new SharedRevenuesDTPSSharjahPage(this.page);
     testContext.setPage(reportPage);
-    
-    // Initialize implementation class
-    sharedRevenuesSteps = new SharedRevenuesReportSteps(this);
   }
 });
 
@@ -547,24 +542,7 @@ Then('the grand total is {float} AED', async function (this: World, expectedGran
   this.addLog(`✅ Grand total verified: ${expectedGrandTotal} AED`);
 });
 
-// ────────────────────────────────────────────────────────────────────────────
-// Delegated Implementation Steps
-// ────────────────────────────────────────────────────────────────────────────
-
-Then('the report can be exported to PDF', async function (this: World) {
-  if (!sharedRevenuesSteps) {
-    throw new Error('Shared revenues implementation not initialized');
-  }
-  this.addLog('Verifying PDF export capability...');
-  await sharedRevenuesSteps.verifyExportToPDF();
-  this.addLog('✅ PDF export verified');
-});
-
-Then('the report can be exported to Excel', async function (this: World) {
-  if (!sharedRevenuesSteps) {
-    throw new Error('Shared revenues implementation not initialized');
-  }
-  this.addLog('Verifying Excel export capability...');
-  await sharedRevenuesSteps.verifyExportToExcel();
-  this.addLog('✅ Excel export verified');
-});
+// Export steps inherited from src/steps/shared.steps.ts
+// - the report can be exported to PDF
+// - the report can be exported to Excel
+// No duplicate definitions needed here

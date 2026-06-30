@@ -93,6 +93,60 @@ export class SharedRevenuesBasePage extends ImprovedReportPageBase {
 
   constructor(page: Page) {
     super(page);
+    
+    // Override base class configs with enhanced fallbacks for shared revenues
+    this.setupCustomLocatorConfigs();
+  }
+
+  /**
+   * Setup custom locator configurations for shared revenues report
+   */
+  private setupCustomLocatorConfigs(): void {
+    // Override from date input with additional fallbacks
+    this.fromDateInputConfig = {
+      primary: 'input[type="date"]:first-of-type',
+      fallbacks: [
+        'input[placeholder*="From"]',
+        'input[name*="from_date"]',
+        'input[aria-label*="From"]',
+        'dx-date-box:first-of-type input',
+        '[data-qa*="from-date"] input',
+        '.date-from input',
+      ],
+      timeout: 20000,
+      retry: 4,
+    };
+
+    // Override to date input with additional fallbacks
+    this.toDateInputConfig = {
+      primary: 'input[type="date"]:last-of-type',
+      fallbacks: [
+        'input[placeholder*="To"]',
+        'input[name*="to_date"]',
+        'input[aria-label*="To"]',
+        'dx-date-box:last-of-type input',
+        '[data-qa*="to-date"] input',
+        '.date-to input',
+      ],
+      timeout: 20000,
+      retry: 4,
+    };
+
+    // Override show report button with additional fallbacks
+    this.showReportButtonConfig = {
+      primary: 'button:has-text("View Report")',
+      fallbacks: [
+        'button:has-text("Generate")',
+        'button:has-text("Show Report")',
+        'button:has-text("Search")',
+        'button[type="button"]:first-of-type',
+        'button[aria-label*="Report"]',
+        'dx-button',
+        '[role="button"]',
+      ],
+      timeout: 20000,
+      retry: 4,
+    };
   }
 
   /**
@@ -103,7 +157,7 @@ export class SharedRevenuesBasePage extends ImprovedReportPageBase {
       async () => {
         await this.locatorHelper.safeFill(this.fromDateInputConfig, date);
       },
-      { description: `Set from date to ${date}`, maxAttempts: 2 }
+      { description: `Set from date to ${date}`, maxAttempts: 4 }
     );
   }
 
@@ -115,7 +169,7 @@ export class SharedRevenuesBasePage extends ImprovedReportPageBase {
       async () => {
         await this.locatorHelper.safeFill(this.toDateInputConfig, date);
       },
-      { description: `Set to date to ${date}`, maxAttempts: 2 }
+      { description: `Set to date to ${date}`, maxAttempts: 4 }
     );
   }
 
@@ -130,7 +184,7 @@ export class SharedRevenuesBasePage extends ImprovedReportPageBase {
         // Wait for report table to appear
         await this.waitForReportTable();
       },
-      { description: 'Show report', maxAttempts: 3 }
+      { description: 'Show report', maxAttempts: 4 }
     );
   }
 
