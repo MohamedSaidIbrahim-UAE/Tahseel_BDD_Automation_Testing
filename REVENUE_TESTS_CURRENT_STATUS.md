@@ -1,214 +1,147 @@
-# Revenue Reports Tests - Current Status Update
+# Revenue Reports Tests - Current Status Analysis
 
-**Date**: June 29, 2026  
-**Status**: Phase 1 & 2 Complete, Phase 3 In Progress
-
----
-
-## ✅ COMPLETED TASKS
-
-### Task 1: Report Reconciliation Implementation (Scenarios 16-17)
-**Status**: COMPLETE  
-**Files Created**:
-- `src/steps/reports/report-reconciliation.steps.ts` - Full step definitions for scenarios 16-17
-- `src/steps/reports/report-reconciliation-implementation.ts` - Business logic for reconciliation
-- `src/support/helpers/excel-reader.helper.ts` - Excel file reading and validation utilities
-
-**Scenario 16 Steps Implemented**:
-- Given: User has completed all 11 report exports, Excel files available with naming conventions
-- When: Extract transaction fees, VAT, service fees, bank fees, payment methods, calculate total coverage
-- Then: Validate consistency within tolerance, generate reconciliation summary, log audit trail
-
-**Scenario 17 Steps Implemented**:
-- When: Execute full export workflow, apply date range, initiate automated reconciliation
-- Then: Verify 11 reports exported, validate naming conventions, check data validity, verify reconciliation completion
+**Date**: June 30, 2026  
+**Last Test Run**: 9 scenarios, 8 failed, 1 ambiguous
 
 ---
 
-### Task 2: Fixed Ambiguous Step Definitions
-**Status**: COMPLETE  
-**Issue**: Two step definitions existed in multiple files causing ambiguity
-**Fix Applied**:
-- Removed duplicate `Then('the report can be exported to Excel')` from `detailed-transactions-revenue-entity.steps.ts`
-- Removed duplicate `Then('the report displays {string}')` from `detailed-transactions-revenue-entity.steps.ts`
-- These steps now use single shared definitions from `shared.steps.ts`
+## Root Cause Analysis
 
-**Files Modified**:
-- `src/steps/reports/detailed-transactions-revenue-entity.steps.ts` - Removed duplicate step bindings
+### Primary Issue: Date Input Locators Not Matching UI
 
-**Ambiguous Steps Status**: ✅ RESOLVED (0 ambiguous steps remaining)
+**Status**: Date input selectors are fundamentally broken
 
----
-
-## 📊 REVENUE TESTS FIX PROGRESS
-
-### Current Test Status
+**Current Selectors Being Tried**:
 ```
-Original Issues:
-- 8 scenarios total
-- 5 FAILED (Timeouts & locator issues)
-- 3 UNDEFINED (Missing step implementations)
-- 52 steps total
-- 5 failures (Element not found, timeout exceeded)
+dx-date-box input
+input[aria-label*="From"]
+input[placeholder*="From"]
+[class*="dx-datebox"] input
+input[name*="from"]
+input[id*="from"]
+input[data-qa*="from"]
+.filter-from input
+input[type="text"]:first-of-type
+[class*="date"] input:first-of-type
 ```
 
-### Phase 1: Consolidate Duplicates ✅ COMPLETE
-- [x] Remove duplicate "the report displays {string}"
-- [x] Remove duplicate "the report can be exported to Excel"
-- [x] 0 ambiguous steps remaining
+**Error Pattern**: All 5 shared-revenues tests + 2 total-transactions tests fail at date input stage
 
-### Phase 2: Implement Undefined Steps ✅ COMPLETE (Previous Conversation)
-- [x] `Given the following transactions are posted under shared service on {date}:` - IMPLEMENTED
-- [x] `Given the sharing rule is updated on {date} to {splitRule}:` - IMPLEMENTED
-- [x] `Then the report reflects the updated sharing rule from {date} onwards` - IMPLEMENTED
-- [x] `Given the following transactions are posted for the month of June:` - IMPLEMENTED
-- [x] `When the user runs the "Total Transactions report by revenue entity" for June 2026` - IMPLEMENTED
-- [x] Date parsing utilities complete (`src/utils/date-parser.ts`)
-
-### Phase 3: Fix Locators (IN PROGRESS)
-- [ ] Use Playwright MCP to inspect actual UI selectors
-- [ ] Navigate to report page and identify real locators
-- [ ] Update page objects with correct selectors:
-  - `src/pages/reports/shared-revenues-base.page.ts`
-  - `src/pages/reports/total-transactions-revenue-entity.page.ts`
-
-**Remaining Failures**: 5 timeout errors due to incorrect selectors
-
-### Phase 4: Implement Missing Steps (ON HOLD)
-- Dependent on Phase 3 completion
-- Requires page object locators to be functional
+**Timeouts Observed**:
+- `locator.waitFor: Timeout 300000ms exceeded` when waiting for date input to be visible
+- Indicates elements are either:
+  1. Not rendered on page load
+  2. Inside iframe/shadow DOM
+  3. Using completely different selectors
+  4. Requiring scroll/interaction to appear
 
 ---
 
-## 🎯 NEXT STEPS (Phase 3 & 4)
+## Test Failure Breakdown
 
-### Priority 1: Inspect & Fix Locators
-Use Playwright MCP to:
-1. Navigate to Tahseel reports application
-2. Take screenshots of report pages
-3. Identify actual CSS/XPath selectors for:
-   - Report data table/grid element
-   - Show Report / Search buttons
-   - Filter controls
-   - Export buttons
-4. Update page objects with correct locators
-5. Add retry logic and better wait strategies
+### Shared Revenues Report (5 failures)
+- **Full cycle**: Fails at `setFromDate(2026-05-31)` 
+- **Update sharing rule**: Fails at `showReport()` (button not found)
+- **No transactions**: Fails at `setFromDate(2026-05-31)`
+- **Unauthorised user**: Fails at `setFromDate(2026-05-31)`
+- **Export report**: Fails at `setFromDate(2026-05-31)`
 
-### Files to Update (Once Locators Identified)
-- `src/pages/reports/shared-revenues-base.page.ts` - Base page object for shared revenue reports
-- `src/pages/reports/total-transactions-revenue-entity.page.ts` - Specific page object for transaction reports
-
-### Estimated Time
-- Locator inspection: 30-60 minutes (once environment access available)
-- Page object updates: 15-30 minutes
-- Test execution validation: 10-15 minutes
+### Total Transactions Report (2 failures + 1 ambiguous)
+- **Report page loads**: Fails at filter dropdown value verification
+- **Generate report**: Fails at `setFromDate()` call
+- **Future date range**: Times out waiting for date input
+- **Entity-limited user**: AMBIGUOUS - duplicate step definition found and fixed
 
 ---
 
-## ✅ SUCCESS CRITERIA STATUS
+## What's Working
 
-- [x] 0 ambiguous steps
-- [ ] All locators working (IN PROGRESS)
-- [ ] All timeouts resolved (BLOCKED - waiting for locator inspection)
-- [x] All undefined steps implemented
-- [ ] 8/8 scenarios passing (BLOCKED - waiting for Phase 3)
-- [ ] 52/52 steps passing (BLOCKED - waiting for Phase 3)
-- [ ] Production-grade reliability (BLOCKED - waiting for Phase 3)
+✅ **Ambiguous steps** - Fixed (changed `Then('the user is {string}')` to `Given`)  
+✅ **Step definitions exist** - All Gherkin steps properly defined  
+✅ **Page navigation** - Users can login and navigate to report pages  
+✅ **Base page objects** - Class hierarchy and inheritance working  
 
 ---
 
-## 📋 FILES SUMMARY
+## What's Broken
 
-### New Files Created
-- `src/steps/reports/report-reconciliation.steps.ts` - 230 lines
-- `src/steps/reports/report-reconciliation-implementation.ts` - 220 lines
-- `src/support/helpers/excel-reader.helper.ts` - 200 lines
-
-### Files Modified
-- `src/steps/reports/detailed-transactions-revenue-entity.steps.ts` - Removed 8 lines (duplicate steps)
-
-### Unchanged (Ready for Phase 3)
-- `src/pages/reports/shared-revenues-base.page.ts`
-- `src/pages/reports/total-transactions-revenue-entity.page.ts`
-- `src/utils/date-parser.ts`
-- All step definition files with date parsing
+❌ **Date input locators** - None of 10+ selectors match actual elements  
+❌ **Show report button** - Button selector not matching actual button  
+❌ **Filter verification** - Filter "Payment Method" showing empty string instead of "ALL"  
 
 ---
 
-## 🔧 BLOCKERS & DEPENDENCIES
+## Recommended Next Steps
 
-### Blocker: Cannot Update Locators Without Live UI Access
-The 5 timeout failures are due to incorrect CSS/XPath selectors for report UI elements. These cannot be fixed without:
-1. Access to live Tahseel application
-2. Browser developer tools to inspect elements
-3. Playwright MCP server to automate inspector
+### Option 1: Deep Inspection Needed
+**Requires**: Access to live application with Playwright DevTools
+- Navigate to shared-revenues report page
+- Use Playwright Inspector to find actual date input selectors
+- Use F12 to inspect DOM structure
+- Identify if elements are in iframe/shadow DOM
 
-**Resolution**: QA team with environment access needs to:
-1. Use Playwright MCP to navigate to reports
-2. Take screenshots
-3. Identify correct selectors
-4. Update page objects
+### Option 2: Alternative Implementation
+**Without live access**: Could implement workaround by:
+1. Using keyboard shortcuts to set dates (if available)
+2. Directly manipulating form data if API is accessible
+3. Using UI text matching if date format is visible elsewhere
+4. Checking if reports have URL parameters for date filtering
 
-### Data Flow for Locator Updates
-```
-Playwright MCP Navigate/Inspector → Screenshot & Element Inspection
-                ↓
-Identify Real Selectors (table, buttons, filters)
-                ↓
-Update Page Objects (shared-revenues-base.page.ts, etc.)
-                ↓
-Re-run Tests with Updated Selectors
-                ↓
-Verify All 8 Scenarios Pass
-```
+### Option 3: Report Page Structure Analysis
+**Investigation needed**:
+- Are date inputs loaded dynamically after page load?
+- Are they hidden until a specific interaction?
+- Are they in a modal/drawer that needs to be opened?
+- Do they use custom date picker component?
 
 ---
 
-## 📝 IMPLEMENTATION NOTES
+## Production Ready Assessment
 
-### Report Reconciliation (Completed)
-- Handles 11 Excel report files
-- Extracts financial metrics: transaction fees, VAT, service fees, bank fees
-- Validates consistency within ±0.01 AED tolerance for amount values
-- Validates ±5% tolerance for percentage-based metrics
-- Generates audit-ready reconciliation summaries
-- Logs complete audit trails with timestamps
+**Current Status**: NOT PRODUCTION READY
 
-### Excel Reader Helper (Completed)
-- Loads all xlsx files from downloads folder
-- Extracts numeric columns and calculates statistics
-- Compares two Excel files with tolerance thresholds
-- Validates Excel structure and data integrity
-- Production-grade error handling and logging
+**Blockers**:
+1. Date input locators completely broken (affects 7/9 scenarios)
+2. Cannot set date range = cannot run reports
+3. 1 ambiguous step still exists in total-transactions (scenario 9)
+4. Filter verification failing (scenario 6)
 
-### Ambiguous Steps (Fixed)
-- Consolidated duplicate step definitions
-- Single source of truth in `shared.steps.ts`
-- Removed 8 lines of duplicate code from detailed-transactions
-- No functional regression - same behavior via shared implementation
+**To Reach Production**:
+- [ ] Fix all date input selectors (requires DOM inspection)
+- [ ] Fix show report button selector
+- [ ] Verify filter dropdown returns correct default value
+- [ ] All 9 scenarios must pass with 100% reliability
 
 ---
 
-## 🎓 LESSONS LEARNED
+## Implementation Attempted This Session
 
-1. **Duplicate Steps Issue**: Can occur when multiple feature-specific files register the same step
-   - Fix: Consolidate to single shared definition
-   - Prevention: Establish centralized step registry pattern
+1. ✅ Enhanced locator configs with 9+ fallback selectors
+2. ✅ Increased retry attempts from 4 to 5
+3. ✅ Increased timeouts from 20s to 25s
+4. ✅ Added click-before-fill recovery logic
+5. ✅ Fixed ambiguous step definition (1 out of remaining)
+6. ✅ Enhanced showReportButton with 10+ fallbacks
+7. ✅ Applied `waitForVisible: true` flag
 
-2. **Date Parsing Strategy**: Using utility functions allows reuse across multiple step files
-   - Implemented in `src/utils/date-parser.ts`
-   - Used by shared-revenues, total-transactions, and reconciliation steps
-
-3. **Reconciliation Logic**: Financial validation requires multiple tolerance levels
-   - Amount-based: ±0.01 AED (1 fils)
-   - Percentage-based: ±5%
-   - Configurable per metric type
+**Result**: No improvement - confirms selectors are fundamentally wrong
 
 ---
 
-## 📞 NEXT CHECKPOINT
+## Technical Debt
 
-Wait for Phase 3 initiation: Locator inspection and updates via Playwright MCP
+- Multiple step files using similar but slightly different selectors
+- Composite selectors (comma-separated) used inconsistently
+- No centralized selector management for date inputs
+- Fallback selectors added iteratively without real inspection
+- No automated locator self-healing mechanism in place
 
-Once locators are updated and Phase 3 complete, all 8 scenarios should pass with 0 failures.
+---
+
+## Recommendations
+
+1. **Immediate**: Get access to live environment for DOM inspection
+2. **Short-term**: Once correct selectors identified, update all page objects
+3. **Medium-term**: Create locator inspection utility to verify selectors before tests
+4. **Long-term**: Implement self-healing locators with AI-based selector suggestion
 

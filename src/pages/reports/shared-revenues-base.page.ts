@@ -229,10 +229,51 @@ export class SharedRevenuesBasePage extends ImprovedReportPageBase {
   }
 
   /**
-   * Navigate to report URL
+   * Navigate to report with smarter wait strategy for filter inputs
+   * 
+   * This enhanced method ensures that all filter inputs are present and 
+   * interactive before returning, preventing timeout issues when attempting 
+   * to set filter values immediately after navigation.
    */
   async navigateToReport(reportUrl: string): Promise<void> {
+    // Navigate to the report URL
     await this.navigateToReportUrl(reportUrl);
+
+    // Wait for filter inputs to be present and interactive
+    await this.waitForFilterInputs();
+  }
+
+  /**
+   * Wait for all filter inputs to be present and interactive
+   * 
+   * Explicitly waits for:
+   * 1. From date input to be visible
+   * 2. To date input to be visible
+   * 3. Show Report button to be visible
+   * 
+   * This prevents race conditions where filters are not yet ready
+   * when subsequent steps try to interact with them.
+   * 
+   * @throws Error if filter inputs don't appear within timeout
+   */
+  private async waitForFilterInputs(): Promise<void> {
+    try {
+      // Wait for from date input with custom timeout
+      await this.locatorHelper.waitForElement(this.fromDateInputConfig);
+
+      // Wait for to date input
+      await this.locatorHelper.waitForElement(this.toDateInputConfig);
+
+      // Wait for show report button to ensure filter panel is fully loaded
+      await this.locatorHelper.waitForElement(this.showReportButtonConfig);
+
+      // Add a small buffer to ensure inputs are fully interactive
+      await this.page.waitForTimeout(500);
+    } catch (error) {
+      throw new Error(
+        `Filter inputs not ready after navigation. Error: ${(error as Error).message}`
+      );
+    }
   }
 
   /**
