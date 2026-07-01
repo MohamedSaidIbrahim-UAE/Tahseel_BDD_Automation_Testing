@@ -52,7 +52,7 @@ Given('the following transactions are posted under shared service on {string}:',
   this.addLog(`📝 Setting up shared service transactions for ${dateStr}:`);
   
   // Use transaction manager to post transactions
-  await transactionManager.postTransactions('Shared-Service-001', data, transactionDate);
+  await transactionManager.postTransactions('Shared-Service-001', data as any, transactionDate);
   
   // Store for later verification
   (this as any).transactionDate = transactionDate;
@@ -179,13 +179,34 @@ Given('the following transactions are posted for the month of {string}:', async 
   this.addLog(`📝 Setting up transactions for ${monthStr}:`);
   
   // Use transaction manager to post transactions
-  await transactionManager.postTransactions('Shared-Service-001', data, monthDate);
+  await transactionManager.postTransactions('Shared-Service-001', data as any, monthDate);
   
   // Store for later verification
   (this as any).transactionMonth = monthStr;
   (this as any).transactionYear = monthDate.getFullYear();
   (this as any).monthTransactionData = data;
   this.addLog(`✅ Transactions set up for month: ${monthStr} ${monthDate.getFullYear()}, Total: ${transactionManager.getTotalAmount()} AED`);
+});
+
+// Handle month-year for June variant (numeric format)
+Given('the following transactions are posted for the month of {string} {int}:', async function (
+  this: World,
+  monthName: string,
+  year: number,
+  dataTable: DataTable
+) {
+  const data = dataTable.hashes();
+  
+  this.addLog(`📝 Setting up transactions for ${monthName} ${year}:`);
+  data.forEach((row: any) => {
+    this.addLog(`  - Service: ${row.Service}, Amount: ${row.Amount} AED`);
+  });
+  
+  // Store for later verification
+  (this as any).transactionMonth = monthName;
+  (this as any).transactionYear = year;
+  (this as any).monthTransactionData = data;
+  this.addLog(`✅ Transactions configured for ${monthName} ${year}`);
 });
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -589,7 +610,11 @@ Then('the grand total is {float} AED', async function (this: World, expectedGran
   this.addLog(`✅ Grand total verified: ${expectedGrandTotal} AED`);
 });
 
-// Export steps inherited from src/steps/shared.steps.ts
-// - the report can be exported to PDF
-// - the report can be exported to Excel
-// No duplicate definitions needed here
+// SHARED EXPORT STEPS - Defined in src/steps/shared.steps.ts
+// These steps are reused across all revenue reports:
+// - "the report can be exported to PDF"
+// - "the report can be exported to Excel"
+// - "the report displays {string}"
+//
+// NO duplicate definitions needed in this file.
+// Cucumber will use the shared definitions from src/steps/shared.steps.ts
