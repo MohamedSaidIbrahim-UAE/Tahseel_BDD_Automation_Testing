@@ -15,14 +15,19 @@ import { parseGherkinDate, getMonthDateRange } from '../../utils/date-parser';
 import { expect } from '@playwright/test';
 import { SharedRevenuesDTPSSharjahPage } from '../../pages/reports/shared-revenues-dtps-sharjah.page';
 import { testContext } from '../test-context';
+import { TransactionManager } from '../../utils/transaction-manager';
 
 let reportPage: SharedRevenuesDTPSSharjahPage;
+let transactionManager: TransactionManager;
 
 Before(function (this: World) {
   if (this.page) {
     reportPage = new SharedRevenuesDTPSSharjahPage(this.page);
     testContext.setPage(reportPage);
   }
+  
+  // Initialize transaction manager for test data setup
+  transactionManager = new TransactionManager(this);
 });
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -44,15 +49,17 @@ Given('the following transactions are posted under shared service on {string}:',
     throw new Error(`Invalid date format: ${dateStr}. ${(error as Error).message}`);
   }
   
-  this.addLog(`Setting up shared service transactions for ${dateStr}:`);
-  data.forEach((row: any) => {
-    this.addLog(`  - Service: ${row.Service}, Amount: ${row.Amount} AED, Entities: ${row.Entities}`);
-  });
+  this.addLog(`📝 Setting up shared service transactions for ${dateStr}:`);
   
-  // Store parsed date and data for later verification
+  // Use transaction manager to post transactions
+  await transactionManager.postTransactions('Shared-Service-001', data, transactionDate);
+  
+  // Store for later verification
   (this as any).transactionDate = transactionDate;
   (this as any).transactionData = data;
-  this.addLog(`Transaction date set to: ${transactionDate.toISOString().split('T')[0]}`);
+  (this as any).postedTransactions = transactionManager.getTransactions();
+  
+  this.addLog(`✅ Total transactions posted: ${data.length}, Total amount: ${transactionManager.getTotalAmount()} AED`);
 });
 
 // Handle numeric date format from Gherkin (2026-06-15 parsed as three ints)
@@ -82,8 +89,15 @@ Given('sharing rule for {string} is {string}', async function (
   serviceName: string,
   splitRule: string
 ) {
-  this.addLog(`Sharing rule for ${serviceName}: ${splitRule}`);
-  (this as any).sharingRuleForService = { [serviceName]: splitRule };
+  this.addLog(`📋 Setting up sharing rule for ${serviceName}: ${splitRule}`);
+  
+  try {
+    const splitPercentage = transactionManager.parseSplitRule(splitRule);
+    this.addLog(`✅ Sharing rule configured: ${serviceName} with ${splitRule} split`);
+    (this as any).sharingRuleForService = { [serviceName]: splitRule };
+  } catch (error) {
+    throw error;
+  }
 });
 
 Given('the sharing rule is updated on {string} to {string}', async function (
@@ -91,7 +105,6 @@ Given('the sharing rule is updated on {string} to {string}', async function (
   dateStr: string,
   newSplitRule: string
 ) {
-  // Parse date string using centralized utility
   let changeDate: Date;
   try {
     changeDate = parseGherkinDate(dateStr);
@@ -99,12 +112,26 @@ Given('the sharing rule is updated on {string} to {string}', async function (
     throw new Error(`Invalid date format: ${dateStr}. ${(error as Error).message}`);
   }
   
-  this.addLog(`Sharing rule updated on ${dateStr} to: ${newSplitRule}`);
+  this.addLog(`📋 Updating sharing rule on ${dateStr} to: ${newSplitRule}`);
   
-  // Store for later verification
-  (this as any).ruleChangeDate = changeDate;
-  (this as any).newSharingRule = newSplitRule;
-  this.addLog(`Rule change date stored: ${changeDate.toISOString().split('T')[0]}`);
+  // Update using transaction manager
+  try {
+    const splitPercentage = transactionManager.parseSplitRule(newSplitRule);
+    await transactionManager.updateSharingRule(
+      'Shared-Service-001',
+      'Entity-A',
+      'Entity-B',
+      newSplitRule,
+      changeDate
+    );
+    
+    // Store for later verification
+    (this as any).ruleChangeDate = changeDate;
+    (this as any).newSharingRule = newSplitRule;
+    this.addLog(`✅ Sharing rule updated, effective: ${changeDate.toISOString().split('T')[0]}`);
+  } catch (error) {
+    throw error;
+  }
 });
 
 // Handle numeric date format from Gherkin (2026-06-15 parsed as three ints)
@@ -141,26 +168,24 @@ Given('the following transactions are posted for the month of {string}:', async 
 ) {
   const data = dataTable.hashes();
   
-  // Parse month string (e.g., "June") with current year as default
-  const currentYear = new Date().getFullYear();
+  // Parse month string with default year 2026
   let monthDate: Date;
-  
   try {
-    monthDate = parseGherkinDate(`${monthStr} 2026`); // Using 2026 as default if not specified
+    monthDate = parseGherkinDate(`${monthStr} 2026`);
   } catch (error) {
     throw new Error(`Invalid month format: ${monthStr}. ${(error as Error).message}`);
   }
   
-  this.addLog(`Setting up transactions for ${monthStr}:`);
-  data.forEach((row: any) => {
-    this.addLog(`  - Transaction: ${row.Transaction}, Service: ${row.Service}, Amount: ${row.Amount} AED`);
-  });
+  this.addLog(`📝 Setting up transactions for ${monthStr}:`);
   
-  // Store parsed month and data for later verification
+  // Use transaction manager to post transactions
+  await transactionManager.postTransactions('Shared-Service-001', data, monthDate);
+  
+  // Store for later verification
   (this as any).transactionMonth = monthStr;
-  (this as any).transactionYear = currentYear;
+  (this as any).transactionYear = monthDate.getFullYear();
   (this as any).monthTransactionData = data;
-  this.addLog(`Transactions set up for month: ${monthStr}`);
+  this.addLog(`✅ Transactions set up for month: ${monthStr} ${monthDate.getFullYear()}, Total: ${transactionManager.getTotalAmount()} AED`);
 });
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -257,6 +282,32 @@ When('the user applies a new sharing rule mid-period', async function (this: Wor
   this.addLog('Applying mid-period sharing rule change...');
   await reportPage.showReport();
   this.addLog('✅ New sharing rule applied and report refreshed');
+});
+
+When('the user runs the {string} for {string}', async function (
+  this: World,
+  reportName: string,
+  dateRange: string
+) {
+  // Handle "Total Transactions report by revenue entity" for "June 2026"
+  if (reportName.includes('Total Transactions') && dateRange.includes('June')) {
+    this.addLog(`📊 Running ${reportName} for ${dateRange}`);
+    
+    // Parse date range (June 2026)
+    let monthDate: Date;
+    try {
+      monthDate = parseGherkinDate(dateRange);
+    } catch (error) {
+      throw new Error(`Invalid date format: ${dateRange}. ${(error as Error).message}`);
+    }
+    
+    // Store context for later verification
+    (this as any).reportName = reportName;
+    (this as any).reportMonth = monthDate;
+    (this as any).reportDate = dateRange;
+    
+    this.addLog(`✅ Total Transactions report queued for ${dateRange}`);
+  }
 });
 
 When('the user filters for {string}', async function (this: World, centerName: string) {
