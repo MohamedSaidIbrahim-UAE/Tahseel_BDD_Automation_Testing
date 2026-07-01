@@ -147,10 +147,6 @@ Then('the grand total amount is {float} AED', async function (expectedTotal: num
   await steps.verifyGrandTotalAmount(expectedTotal.toString());
 });
 
-Given('the user is {string}', async function (userRole: string) {
-  // Store user role for context
-});
-
 Then('{string} is either omitted or displayed with {int} count and {float} amount', async function (
   entityName: string,
   count: number,
@@ -212,11 +208,4 @@ When('the user runs the {string} for {string}', async function (reportName: stri
   }
   if (!steps) throw new Error('Steps not initialized');
   await steps.runTotalTransactionsReportForMonth(dateRange);
-});
-
-Given('the user is {string}', async function (userRole: string) {
-  // Store user role for context
-  if (steps) {
-    (steps as any).userRole = userRole;
-  }
 });

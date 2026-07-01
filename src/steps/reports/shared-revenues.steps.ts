@@ -554,9 +554,17 @@ Then('the user cannot access shared revenue details', async function (this: Worl
   }
 });
 
-// Export steps are inherited from BaseListPage and defined in shared.steps.ts
-// Steps "the report can be exported to Excel" and "the report can be exported to PDF" are reused across all revenue reports
-// Step "the report displays {string}" is defined in shared.steps.ts
+// ────────────────────────────────────────────────────────────────────────────
+// SHARED STEPS - NO DUPLICATES
+// ────────────────────────────────────────────────────────────────────────────
+// 
+// The following steps are REUSED from shared.steps.ts:
+// - "the report displays {string}" 
+// - "the report can be exported to Excel"
+// - "the report can be exported to PDF"
+//
+// These are implemented once in shared.steps.ts and available to all feature files.
+// No duplicate definitions in this file.
 
 // ────────────────────────────────────────────────────────────────────────────
 // Helper Functions (now imported from src/utils/date-parser.ts)
@@ -571,7 +579,7 @@ Then('the user cannot access shared revenue details', async function (this: Worl
 
 
 // ────────────────────────────────────────────────────────────────────────────
-// Additional Missing Steps - Add now to match feature file
+// Additional Non-Duplicated Steps
 // ────────────────────────────────────────────────────────────────────────────
 
 Given('the user is logged in as {string}', async function (this: World, userRole: string) {
@@ -586,6 +594,12 @@ Given('the user is logged in as {string}', async function (this: World, userRole
   } else {
     this.addLog('⚠️ AuthManager not available — relying on storageState from @authenticated tag');
   }
+});
+
+Given('the user is {string}', async function (this: World, userRole: string) {
+  this.addLog(`Setting user role context: ${userRole}`);
+  (this as any).userRole = userRole;
+  this.addLog(`✅ User role set: ${userRole}`);
 });
 
 Given('the revenue entities {string} and {string} are configured', async function (
@@ -609,12 +623,3 @@ Then('the grand total is {float} AED', async function (this: World, expectedGran
   expect(actualGrandTotal).toBeCloseTo(expectedGrandTotal, 2);
   this.addLog(`✅ Grand total verified: ${expectedGrandTotal} AED`);
 });
-
-// SHARED EXPORT STEPS - Defined in src/steps/shared.steps.ts
-// These steps are reused across all revenue reports:
-// - "the report can be exported to PDF"
-// - "the report can be exported to Excel"
-// - "the report displays {string}"
-//
-// NO duplicate definitions needed in this file.
-// Cucumber will use the shared definitions from src/steps/shared.steps.ts

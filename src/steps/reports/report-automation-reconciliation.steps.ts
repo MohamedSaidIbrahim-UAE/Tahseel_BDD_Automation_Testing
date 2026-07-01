@@ -111,14 +111,8 @@ When('the user selects transaction types from the tag box', async function () {
 // WHEN: SHOW REPORT & EXPORT
 // ═══════════════════════════════════════════════════════════════════════════════
 
-When('the user clicks {string}', async function (buttonName: string) {
-  if (!steps) throw new Error('Steps not initialized');
-  if (buttonName === 'Show Report' || buttonName === 'VIEW REPORT') {
-    await steps.clickShowReport();
-  } else if (buttonName === 'Search') {
-    await steps.clickShowReport(); // Search button performs similar function
-  }
-});
+// NOTE: Using generic "the user clicks {string}" step from src/steps/shared.steps.ts
+// This avoids ambiguity and handles button clicks generically
 
 When('the user exports the report to Excel with filename {string}', async function (filename: string) {
   if (!steps) throw new Error('Steps not initialized');

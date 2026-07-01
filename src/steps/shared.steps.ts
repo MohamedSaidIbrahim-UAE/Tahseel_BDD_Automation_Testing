@@ -27,6 +27,13 @@ When('I click the {string} button', async function (this: World, buttonText: str
   this.addLog(`Successfully clicked the primary action button: "${buttonText}"`);
 });
 
+When('the user clicks {string}', async function (this: World, buttonText: string) {
+  const activePage = resolveActivePage(this, 'rawPage');
+  const actionButton = new ButtonHelper(activePage);
+  await actionButton.clickButtonByText(buttonText);
+  this.addLog(`Successfully clicked: "${buttonText}"`);
+});
+
 When(
   'I configure the {string} datepicker field to {string} and time {string}',
   async function (this: World, labelText: string, targetDate: string, targetTime: string) {
