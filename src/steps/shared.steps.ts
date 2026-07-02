@@ -14,12 +14,14 @@ import { resolveActivePage } from './active-page-resolver';
 import { DxDropdownHelper } from '../support/components/dx-dropdown.helper';
 import { DxDateBoxHelper } from '../support/components/dx-datebox.helper';
 import { ButtonHelper } from '../support/components/button.helper';
+import { DxRadioButtonHelper } from '../support/components/dx-radio-button.helper';
 
 
 When('I click the {string} button', async function (this: World, buttonText: string) {
   const activePage = resolveActivePage(this, 'rawPage');
-  // 1. Initialize the button helper onto the active page thread context
-  const actionButton = new ButtonHelper(activePage);
+  // 1. Initialize the button helper using the raw Playwright page
+  const rawPlaywrightPage = activePage.rawPage || activePage;
+  const actionButton = new ButtonHelper(rawPlaywrightPage);
 
   // 2. Dispatch the safe interaction call routine
   await actionButton.clickButtonByText(buttonText);
@@ -29,7 +31,8 @@ When('I click the {string} button', async function (this: World, buttonText: str
 
 When('the user clicks {string}', async function (this: World, buttonText: string) {
   const activePage = resolveActivePage(this, 'rawPage');
-  const actionButton = new ButtonHelper(activePage);
+  const rawPlaywrightPage = activePage.rawPage || activePage;
+  const actionButton = new ButtonHelper(rawPlaywrightPage);
   await actionButton.clickButtonByText(buttonText);
   this.addLog(`Successfully clicked: "${buttonText}"`);
 });
@@ -39,8 +42,9 @@ When(
   async function (this: World, labelText: string, targetDate: string, targetTime: string) {
     const activePage = resolveActivePage(this, 'rawPage');
 
-    // 1. Instantiating the clean dynamic component helper onto current active page thread context
-    const dxDateBox = new DxDateBoxHelper(activePage);
+    // 1. Instantiating the component helper using the raw Playwright page
+    const rawPlaywrightPage = activePage.rawPage || activePage;
+    const dxDateBox = new DxDateBoxHelper(rawPlaywrightPage);
 
     // 2. Dispatch programmatic data entry routine safely
     await dxDateBox.setDateTimeByLabel(labelText, targetDate, targetTime);
@@ -53,13 +57,30 @@ When(
   async function (this: World, optionText: string, labelText: string) {
     const activePage = resolveActivePage(this, 'rawPage');
 
-    // Initialize the component helper using the current active page context layer
-    const dxSelect = new DxDropdownHelper(activePage);
+    // Initialize the component helper using the raw Playwright page
+    const rawPlaywrightPage = activePage.rawPage || activePage;
+    const dxSelect = new DxDropdownHelper(rawPlaywrightPage);
 
     // Execute the unified layout selector mechanism safely
     await dxSelect.selectOptionByLabel(labelText, optionText);
 
     this.addLog(`Successfully chose dropdown item "${optionText}" relative to label field: "${labelText}".`);
+  }
+);
+
+When(
+  'I select {string} from the {string} radio options',
+  async function (this: World, optionText: string, labelText: string) {
+    const activePage = resolveActivePage(this, 'rawPage');
+
+    // Initialize the component helper using the raw Playwright page
+    const rawPlaywrightPage = activePage.rawPage || activePage;
+    const dxSelect = new DxRadioButtonHelper(rawPlaywrightPage);
+
+    // Execute the unified layout selector mechanism safely
+    await dxSelect.selectOptionByLabel(labelText, optionText);
+
+    this.addLog(`Successfully chose radio option "${optionText}" relative to label field: "${labelText}".`);
   }
 );
 

@@ -41,7 +41,7 @@ Feature: Report Automation and Cross-Report Reconciliation
   Scenario: Export Amanat Universal Payments Report to Excel
     When the user navigates to the report "Aggregated Transactions Report paid by Credit cards"
     And the user selects universal payment methods from the tag box
-    And the user selects the "Deposit Transactions" dropdown option
+    And I select "Deposit Transactions" from the "Transaction Type" radio options
     And the user sets the date range from the first day of the current year to today
     And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "Aggregated_Transactions_Report_paid_by_Credit_cards"
@@ -59,7 +59,7 @@ Feature: Report Automation and Cross-Report Reconciliation
   @export @smart-receipt
   Scenario: Export Smart Receipt Details Report to Excel
     When the user navigates to the report "Smart Receipt Details"
-    And the user applies the filter status "Paid"
+    And I select "Paid" from the "Transaction Status" select dropdown
     And the user sets the date range from the first day of the current year to today
     And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "Smart_Receipt_Details"
@@ -68,7 +68,7 @@ Feature: Report Automation and Cross-Report Reconciliation
   @export @support-services
   Scenario: Export Support Services Reports Report to Excel
     When the user navigates to the report "Support Services Reports"
-    And the user selects the "Revenue Transactions" dropdown option
+    And I select "Revenue Transactions" from the "Transaction Type" radio options
     And the user sets the date range from the first day of the current year to today
     And the user clicks "Search"
     And the user exports the report to Excel with filename "Support_Services_Reports"
@@ -85,9 +85,9 @@ Feature: Report Automation and Cross-Report Reconciliation
   @export @total-tax
   Scenario: Export Total Revenue Tax Report to Excel
     When the user navigates to the report "Transaction Summary Tax Report"
-    And the user applies the filter status "Paid"
+    And I select "Paid" from the "Transaction Status" select dropdown
     And the user selects universal payment methods from the tag box
-    And the user selects the "Revenue Transactions" dropdown option
+    And I select "Revenue Transactions" from the "Transaction Type" radio options
     And the user sets the date range from the first day of the current year to today
     And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "RevenueTRANSACTIONTAXSUMARY"
@@ -96,9 +96,9 @@ Feature: Report Automation and Cross-Report Reconciliation
   @export @total-tax
   Scenario: Export Total Deposit Tax Report to Excel
     When the user navigates to the report "Transaction Summary Tax Report"
-    And the user applies the filter status "Paid"
+    And I select "Paid" from the "Transaction Status" select dropdown
     And the user selects universal payment methods from the tag box
-    And the user selects the "Deposit Transactions" dropdown option
+    And I select "Deposit Transactions" from the "Transaction Type" radio options
     And the user sets the date range from the first day of the current year to today
     And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "DepositTRANSACTIONTAXSUMARY"
@@ -107,9 +107,9 @@ Feature: Report Automation and Cross-Report Reconciliation
   @export @total-transaction
   Scenario: Export Total Revenue Transaction Report to Excel
     When the user navigates to the report "Summary Transactions Report"
-    And the user applies the filter status "Paid"
+    And I select "Paid" from the "Transaction Status" select dropdown
     And the user selects universal payment methods from the tag box
-    And the user selects the "Revenue Transactions" dropdown option
+    And I select "Revenue Transactions" from the "Transaction Type" radio options
     And the user sets the date range from the first day of the current year to today
     And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "ShjGovRevenueTransSummary_sec"
@@ -118,9 +118,9 @@ Feature: Report Automation and Cross-Report Reconciliation
   @export @total-transaction
   Scenario: Export Total Revenue Transaction Report to Excel
     When the user navigates to the report "Summary Transactions Report"
-    And the user applies the filter status "Paid"
+    And I select "Paid" from the "Transaction Status" select dropdown
     And the user selects universal payment methods from the tag box
-    And the user selects the "Deposit Transactions" dropdown option
+    And I select "Deposit Transactions" from the "Transaction Type" radio options
     And the user sets the date range from the first day of the current year to today
     And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "ShjGovDepositTransSummary_sec"
@@ -140,7 +140,7 @@ Feature: Report Automation and Cross-Report Reconciliation
     When the user navigates to the report "Dependant services revenue summary reports"
     And the user sets the date range from the first day of the current year to today
     And the user selects universal payment methods from the tag box
-    And the user selects the "Revenue Transactions" dropdown option
+    And I select "Revenue Transactions" from the "Transaction Type" radio options
     And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "DependantServicesSummaryReport_RevenueTransaction"
     Then the Excel file should be downloaded successfully
@@ -150,7 +150,7 @@ Feature: Report Automation and Cross-Report Reconciliation
     When the user navigates to the report "Dependant services revenue summary reports"
     And the user sets the date range from the first day of the current year to today
     And the user selects universal payment methods from the tag box
-    And the user selects the "Deposit Transactions" dropdown option
+    And I select "Deposit Transactions" from the "Transaction Type" radio options
     And the user clicks "VIEW REPORT"
     And the user exports the report to Excel with filename "DependantServicesSummaryReport_DepositTransaction"
     Then the Excel file should be downloaded successfully
